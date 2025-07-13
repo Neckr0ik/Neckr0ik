@@ -22,7 +22,7 @@ This portfolio is organized into three key areas. Each project includes a dedica
 *   **Incident Response:** Playbooks and bots for automated incident handling.
     *   *Key Skills:* NIST Framework, Python, Slack API
 
-### ☁️ 2. Cloud Engineering
+### ☁️ 2. Cloud Engineering (Work in progress... ⚒️🚧🏗️)
 *Infrastructure as Code (IaC) and cloud-native solutions designed for security and scalability. This section is actively being developed. 🏗️*
 
 *   **Infrastructure as Code:** A secure blueprint for deploying cloud resources.
@@ -30,7 +30,7 @@ This portfolio is organized into three key areas. Each project includes a dedica
 *   **Cloud Security:** ⏳ *(In progress)* Tools for auditing cloud environments.
     *   *Key Skills:* IAM, Cloud Security Posture
 
-### 📊 3. Data Analytics
+### 📊 3. Data Analytics (Work in progress... ⚒️🚧🏗️)
 *Work involving the secure handling, analysis, and visualization of data to drive informed decisions. More projects are on the way. 📈*
 
 *   **Data Protection:** A hands-on lab for preventing SQL injection attacks.
