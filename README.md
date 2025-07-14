@@ -235,6 +235,6 @@ timeline
 
 *"In the forge of digital transformation, we shape tools that serve humanity."*
 
-[![Profile Views](https://komarev.com/ghpvc/?username=giovannide&color=2E8B57&style=flat-square&label=Profile+Views)](https://github.com/giovannide)
+[![Profile Views](https://komarev.com/ghpvc/?username=neckr0ik&color=2E8B57&style=flat-square&label=Profile+Views)](https://github.com/Neckr0ik)
 
 </div>
