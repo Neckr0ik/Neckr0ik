@@ -35,5 +35,5 @@ Comprehensive mapping of technical and soft skills to projects and learning reso
 ## Contact Information
 
 - **LinkedIn**: [giovannide](https://www.linkedin.com/in/giovannide)
-- **GitHub**: [giovannide](https://github.com/giovannide)
+- **GitHub**: [giovannide](https://github.com/Neckr0ik)
 - **Languages**: Portuguese (Native), Spanish (Fluent), English (Fluent)
