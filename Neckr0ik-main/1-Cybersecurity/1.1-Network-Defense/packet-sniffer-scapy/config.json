@@ -1,0 +1,40 @@
+{
+  "suspicious_ports": [
+    22,
+    23,
+    135,
+    139,
+    445,
+    1433,
+    1521,
+    3389,
+    5432,
+    5900,
+    6379
+  ],
+  "max_connections_per_ip": 100,
+  "scan_threshold": 10,
+  "log_level": "INFO",
+  "output_file": "packet_analysis.log",
+  "threat_detection": {
+    "enable_port_scan_detection": true,
+    "enable_arp_spoofing_detection": true,
+    "enable_dos_detection": true,
+    "dos_threshold_packets_per_second": 1000
+  },
+  "filters": {
+    "ignore_local_traffic": true,
+    "local_networks": [
+      "127.0.0.0/8",
+      "10.0.0.0/8",
+      "172.16.0.0/12",
+      "192.168.0.0/16"
+    ]
+  },
+  "export": {
+    "enable_pcap_export": false,
+    "pcap_file": "captured_packets.pcap",
+    "enable_json_export": true,
+    "json_file": "packet_analysis.json"
+  }
+}
