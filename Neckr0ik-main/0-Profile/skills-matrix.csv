@@ -1,0 +1,14 @@
+Domain,Skill,Project,Source Document
+Cybersecurity,Linux Permissions,System-Hardening/linux-basics-lab,File permissions in Linux.docx
+Cybersecurity,Network Traffic Analysis,Network-Defense/tcpdump-analysis,Cybersecurity Incident Report Network Traffic Analysis.docx
+Cybersecurity,Security Auditing,System-Hardening/Botium-Toys-Audit,Botium Toys Security Audit documents
+Cybersecurity,Incident Response,Incident-Response/ir-playbooks,Phishing Playbook.docx
+Cybersecurity,Incident Handling,Incident-Response/Incident-Journal,Incident handler's journal.docx
+Cybersecurity,Risk Assessment,Incident-Response/Case-Studies,Data leak worksheet.docx
+Cybersecurity,Physical Security,Incident-Response/Case-Studies,Parking lot USB exercise.docx
+Cybersecurity,Packet Analysis,Network-Defense/packet-sniffer-scapy,Custom development
+Data Analytics,SQL Filtering,Data-Protection/sql-defence-playground,Apply filters to SQL queries.docx
+Data Analytics,SQL Reference,Data-Protection/sql-defence-playground,Reference guide SQL.docx
+Data Analytics,Log Analysis,Log-Analysis/auth-log-parser,Custom development
+Cloud Engineering,Infrastructure as Code,Infrastructure-as-Code/azure-secure-blueprint,Custom development
+Cloud Engineering,Azure Security,Infrastructure-as-Code/azure-secure-blueprint,Custom development

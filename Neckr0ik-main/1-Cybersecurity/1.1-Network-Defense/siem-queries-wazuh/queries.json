@@ -1,0 +1,464 @@
+{
+  "wazuh_security_queries": {
+    "failed_authentication": {
+      "name": "Failed Authentication Attempts",
+      "description": "Detect multiple failed login attempts from same source",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gte": "now-1h"
+                }
+              }
+            },
+            {
+              "terms": {
+                "rule.id": ["5503", "5551", "18152"]
+              }
+            }
+          ]
+        }
+      },
+      "aggregations": {
+        "failed_logins_by_ip": {
+          "terms": {
+            "field": "data.srcip",
+            "size": 10,
+            "min_doc_count": 5
+          }
+        }
+      },
+      "threshold": 5,
+      "time_window": "1h"
+    },
+    "privilege_escalation": {
+      "name": "Privilege Escalation Detection",
+      "description": "Detect unauthorized privilege escalation attempts",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gte": "now-24h"
+                }
+              }
+            },
+            {
+              "bool": {
+                "should": [
+                  {
+                    "match": {
+                      "full_log": "sudo"
+                    }
+                  },
+                  {
+                    "match": {
+                      "full_log": "su -"
+                    }
+                  },
+                  {
+                    "terms": {
+                      "rule.id": ["5401", "5402", "5403"]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "alert_level": "high",
+      "notification": true
+    },
+    "web_attacks": {
+      "name": "Web Application Attacks",
+      "description": "Detect common web application attack patterns",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gte": "now-1h"
+                }
+              }
+            }
+          ],
+          "should": [
+            {
+              "match": {
+                "full_log": "SQL injection"
+              }
+            },
+            {
+              "match": {
+                "full_log": "XSS"
+              }
+            },
+            {
+              "match": {
+                "full_log": "../../"
+              }
+            },
+            {
+              "match": {
+                "full_log": "<script>"
+              }
+            },
+            {
+              "regexp": {
+                "full_log": ".*union.*select.*"
+              }
+            }
+          ],
+          "minimum_should_match": 1
+        }
+      },
+      "tags": ["web_security", "application_security"],
+      "severity": "medium"
+    },
+    "network_anomalies": {
+      "name": "Network Traffic Anomalies",
+      "description": "Detect unusual network traffic patterns",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gte": "now-30m"
+                }
+              }
+            },
+            {
+              "terms": {
+                "rule.groups": ["firewall", "ids"]
+              }
+            }
+          ],
+          "should": [
+            {
+              "range": {
+                "rule.level": {
+                  "gte": 8
+                }
+              }
+            },
+            {
+              "terms": {
+                "rule.id": ["4001", "4002", "4003"]
+              }
+            }
+          ]
+        }
+      },
+      "aggregations": {
+        "top_source_ips": {
+          "terms": {
+            "field": "data.srcip",
+            "size": 20
+          }
+        },
+        "attack_types": {
+          "terms": {
+            "field": "rule.description",
+            "size": 10
+          }
+        }
+      }
+    },
+    "malware_detection": {
+      "name": "Malware and Suspicious File Activity",
+      "description": "Detect malware infections and suspicious file operations",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gte": "now-2h"
+                }
+              }
+            }
+          ],
+          "should": [
+            {
+              "terms": {
+                "rule.groups": ["rootcheck", "syscheck"]
+              }
+            },
+            {
+              "match": {
+                "full_log": "virus"
+              }
+            },
+            {
+              "match": {
+                "full_log": "malware"
+              }
+            },
+            {
+              "match": {
+                "full_log": "trojan"
+              }
+            },
+            {
+              "regexp": {
+                "data.file": ".*\\.(exe|bat|cmd|scr|pif)$"
+              }
+            }
+          ],
+          "minimum_should_match": 1
+        }
+      },
+      "alert_priority": "critical",
+      "auto_response": true
+    },
+    "data_exfiltration": {
+      "name": "Data Exfiltration Detection",
+      "description": "Detect potential data theft and unauthorized data transfers",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gte": "now-1h"
+                }
+              }
+            }
+          ],
+          "should": [
+            {
+              "range": {
+                "data.size": {
+                  "gte": 10485760
+                }
+              }
+            },
+            {
+              "terms": {
+                "data.protocol": ["ftp", "sftp", "scp"]
+              }
+            },
+            {
+              "match": {
+                "full_log": "large file transfer"
+              }
+            },
+            {
+              "bool": {
+                "must": [
+                  {
+                    "match": {
+                      "data.action": "download"
+                    }
+                  },
+                  {
+                    "range": {
+                      "data.bytes": {
+                        "gte": 5242880
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "minimum_should_match": 1
+        }
+      },
+      "compliance_tags": ["DLP", "GDPR", "PCI_DSS"]
+    },
+    "compliance_monitoring": {
+      "name": "Compliance and Audit Events",
+      "description": "Monitor events required for regulatory compliance",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gte": "now-24h"
+                }
+              }
+            }
+          ],
+          "should": [
+            {
+              "terms": {
+                "rule.groups": ["authentication", "account_changed"]
+              }
+            },
+            {
+              "match": {
+                "data.action": "user_add"
+              }
+            },
+            {
+              "match": {
+                "data.action": "user_delete"
+              }
+            },
+            {
+              "match": {
+                "data.action": "permission_change"
+              }
+            },
+            {
+              "terms": {
+                "rule.id": ["5902", "5903", "5904"]
+              }
+            }
+          ],
+          "minimum_should_match": 1
+        }
+      },
+      "retention_period": "7_years",
+      "audit_required": true
+    },
+    "threat_hunting": {
+      "name": "Advanced Threat Hunting",
+      "description": "Complex queries for proactive threat hunting",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gte": "now-7d"
+                }
+              }
+            }
+          ],
+          "should": [
+            {
+              "bool": {
+                "must": [
+                  {
+                    "match": {
+                      "data.process": "powershell.exe"
+                    }
+                  },
+                  {
+                    "match": {
+                      "data.command": "encoded"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "bool": {
+                "must": [
+                  {
+                    "match": {
+                      "data.protocol": "dns"
+                    }
+                  },
+                  {
+                    "regexp": {
+                      "data.query": ".*[0-9a-f]{32,}.*"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "bool": {
+                "must": [
+                  {
+                    "range": {
+                      "data.connections": {
+                        "gte": 100
+                      }
+                    }
+                  },
+                  {
+                    "range": {
+                      "data.duration": {
+                        "lte": 60
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "minimum_should_match": 1
+        }
+      },
+      "analysis_type": "behavioral",
+      "ml_enabled": true
+    }
+  },
+  "saved_searches": {
+    "high_priority_alerts": {
+      "name": "High Priority Security Alerts",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gte": "now-24h"
+                }
+              }
+            },
+            {
+              "range": {
+                "rule.level": {
+                  "gte": 10
+                }
+              }
+            }
+          ]
+        }
+      },
+      "sort": [
+        {
+          "@timestamp": {
+            "order": "desc"
+          }
+        }
+      ]
+    },
+    "authentication_summary": {
+      "name": "Authentication Events Summary",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gte": "now-1d"
+                }
+              }
+            },
+            {
+              "terms": {
+                "rule.groups": ["authentication"]
+              }
+            }
+          ]
+        }
+      },
+      "aggregations": {
+        "auth_status": {
+          "terms": {
+            "field": "data.status"
+          }
+        },
+        "top_users": {
+          "terms": {
+            "field": "data.user",
+            "size": 20
+          }
+        }
+      }
+    }
+  }
+}
