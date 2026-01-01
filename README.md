@@ -184,11 +184,11 @@ timeline
 
 <div align="center">
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=giovannide&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=2E8B57&icon_color=FFD700)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Neckr0ik&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=2E8B57&icon_color=FFD700)
 
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=giovannide&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=2E8B57)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Neckr0ik&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=2E8B57)
 
-![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=giovannide&theme=tokyonight&hide_border=true&background=0d1117&stroke=2E8B57&ring=FFD700&fire=FF6B6B)
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=Neckr0ik&theme=tokyonight&hide_border=true&background=0d1117&stroke=2E8B57&ring=FFD700&fire=FF6B6B)
 
 </div>
 
