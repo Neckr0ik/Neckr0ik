@@ -13,8 +13,8 @@ Data Analytics,Log Analysis,Log-Analysis/auth-log-parser,Custom Python developme
 Data Analytics,Bulk Scanning,Log-Analysis/nmap-bulk-scanner-reporter,Custom Python development
 Cloud Engineering,Infrastructure as Code,Infrastructure-as-Code/azure-secure-blueprint,Custom Terraform development
 Cloud Engineering,Azure Security,Infrastructure-as-Code/azure-secure-blueprint,Custom Terraform development
-GRC,Policy Development,Business-Admin/policy-framework,Based on ISC2 & NIST frameworks
-GRC,Risk Management,Business-Admin/risk-assessment,Six Sigma FMEA application
+GRC,Policy Development,5-Business-Admin/policy-framework,Based on ISC2 & NIST frameworks
+GRC,Risk Management,5-Business-Admin/risk-assessment,Six Sigma FMEA application
 Process Improvement,Root Cause Analysis,Six-Sigma/process-optimization,DMAIC Case Studies
 Human Factors,Social Engineering Defense,Psychology/phishing-analysis,Psychological triggers in phishing
 Human Factors,Security Culture,Psychology/awareness-training,Behavioral change strategies
