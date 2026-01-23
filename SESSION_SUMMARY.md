@@ -5,7 +5,7 @@
 ### 1. Portfolio & Branding (`Neckr0ik/Neckr0ik`)
 - **README.md Refinement**: Consolidated domains (Cyber, Data, Cloud, Process, Psychology). Fixed broken links and markup errors. Added "Media Production & Legacy" section to highlight 20+ years of experience.
 - **Human Factors Domain**: Established `4-Psychology/` with foundational docs on phishing psychological triggers and behavioral security culture change.
-- **GRC Framework**: Created `Business-Admin/policy-framework/` with templates for AUP, Access Control, and IR policies. Added `risk-assessment/` with a Q1 2026 report draft.
+- **GRC Framework**: Created `5-Business-Admin/policy-framework/` with templates for AUP, Access Control, and IR policies. Added `risk-assessment/` with a Q1 2026 report draft.
 - **Incident Response**: Developed 3 standardized playbooks (Malware, Data Breach, Network Intrusion) in the `ir-playbooks` directory.
 - **Lint Cleanup**: Performed multiple passes to fix markdown formatting (headings, lists, blank lines).
 
@@ -18,8 +18,8 @@
 - `Neckr0ik/1-Cybersecurity/1.3-Incident-Response/ir-playbooks/Malware_Playbook.md` (Updated)
 - `Neckr0ik/1-Cybersecurity/1.3-Incident-Response/ir-playbooks/Data_Breach_Playbook.md` (New)
 - `Neckr0ik/1-Cybersecurity/1.3-Incident-Response/ir-playbooks/Network_Intrusion_Playbook.md` (New)
-- `Neckr0ik/Business-Admin/policy-framework/README.md` (New + Policy templates)
-- `Neckr0ik/Business-Admin/risk-assessment/README.md` (New + Assessment templates)
+- `Neckr0ik/5-Business-Admin/policy-framework/README.md` (New + Policy templates)
+- `Neckr0ik/5-Business-Admin/risk-assessment/README.md` (New + Assessment templates)
 - `Neckr0ik/4-Psychology/README.md` (New + Analysis docs)
 - `ImpulseLabsB2B/02_technical/itaas_architecture.md` (New)
 - `ImpulseLabsB2B/02_technical/nocaas_architecture.md` (New)

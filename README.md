@@ -98,7 +98,7 @@ timeline
 [![Network Defense](https://img.shields.io/badge/🌐_Network_Defense-FF4444?style=flat-square&logo=wireshark&logoColor=white)](1-Cybersecurity/1.1-Network-Defense) 
 [![System Hardening](https://img.shields.io/badge/🔧_System_Hardening-44FF44?style=flat-square&logo=linux&logoColor=black)](1-Cybersecurity/1.2-System-Hardening) 
 [![Incident Response](https://img.shields.io/badge/🚨_Incident_Response-4444FF?style=flat-square&logo=prometheus&logoColor=white)](1-Cybersecurity/1.3-Incident-Response)
-[![GRC Policy](https://img.shields.io/badge/📜_GRC_Policy-Blue?style=flat-square&logo=security&logoColor=white)](Business-Admin/policy-framework)
+[![GRC Policy](https://img.shields.io/badge/📜_GRC_Policy-Blue?style=flat-square&logo=security&logoColor=white)](5-Business-Admin/policy-framework)
 
 </div>
 
