@@ -14,9 +14,9 @@
 
 ### 👋 Welcome to My Digital Forge
 
-*Transforming 20+ years of media production and IT expertise into cutting-edge cybersecurity, cloud engineering, and data analytics solutions.*
+*Forging resilient systems at the intersection of Cybersecurity, Business Strategy, and Human Psychology.*
 
-> *"Technology is a tool for human flourishing. My work is to ensure it remains a safe and reliable one."*
+> *"Security is not just code; it's a culture of continuous improvement (Kaizen) and human-centric design. I apply Six Sigma precision to protect digital assets and Business Intelligence to drive value."*
 
 </div>
 
@@ -44,42 +44,61 @@
 
 ```mermaid
 timeline
-    title Giovanni's Tech Evolution
+    title Giovanni's Evolution: The Triad of Expertise
     
-    Media Production (20+ years) : Broadcast IT Management
-                                 : Live TV Operations
-                                 : Global Film Releases
-                                 : Digital Workflows
+    Media & Ops (20+ years) : Broadcast IT Management
+                            : Global Operations
+                            : Process Optimization
     
-    Transition Phase : Cross-Cultural Leadership
-                     : Trilingual Communication
-                     : Audience Analytics
-                     : Content Strategy
+    Academic Foundation : BS Business Administration
+                        : Six Sigma White Belt
+                        : BS Psychology (In Progress)
     
-    Tech Forge (Current) : Cybersecurity
-                         : Cloud Engineering
-                         : Data Analytics
-                         : Secure Systems
+    Cybersecurity Forge : ISC2 Certified (CC)
+                        : Google Cyber Professional
+                        : Google Cloud Cyber (In Progress)
+                        : GRC & Strategy
 ```
 
 </div>
 
-**From Broadcasting to Cybersecurity**: Transitioning from media leadership to tech, my background in broadcasting (managing IT for live TV, global film releases at Record TV) provides unique insights into secure digital workflows, audience analytics, and cross-cultural collaboration. As a trilingual professional (🇧🇷 Portuguese, 🇲🇽 Spanish, 🇺🇸 English), I apply methodical problem-solving from Broadcast IT Manager roles to forge resilient tech solutions.
+**The Triad: Tech, Business, & Mind**: My approach is unique because it blends three critical disciplines:
+
+1. **Technical Mastery**: Deep roots in Broadcast IT and modern Cybersecurity (ISC2 & Google certified).
+2. **Business Acumen**: A BS in Business Administration and Six Sigma methodology ensures my security solutions align with business goals and ROI.
+3. **Human Factors**: Pursuing a BS in Psychology allows me to understand the "human element" of security—social engineering, insider threats, and security culture.
+
+---
+
+---
+
+## 🎓 Certifications & Academia
+
+<div align="center">
+
+| **Cybersecurity & Cloud** | **Business & Process** | **Academia** |
+| :--- | :--- | :--- |
+| ![ISC2](https://img.shields.io/badge/ISC2-Certified_in_Cybersecurity-2E8B57?logo=isc2&logoColor=white) | ![Six Sigma](https://img.shields.io/badge/Six_Sigma-White_Belt-black?logo=leanpub&logoColor=white) | **BS Business Admin** (UoPeople) |
+| ![Google Cyber](https://img.shields.io/badge/Google-Cybersecurity_Pro-4285F4?logo=google&logoColor=white) | **Business Strategy** | **BS Psychology** (Capella U - *Enrolled*) |
+| ![Google Cloud](https://img.shields.io/badge/Google_Cloud-Cyber_Pro_(Enrolled)-4285F4?logo=google-cloud&logoColor=white) | **Marketing & Brand** | |
+
+</div>
 
 ---
 
 ## 📂 Domains of Practice
 
 <details open>
-<summary><h3>🛡️ Cybersecurity</h3></summary>
+<summary><h3>🛡️ Cybersecurity & GRC</h3></summary>
 
-*Defending systems, detecting threats, and responding with precision. Built on IT troubleshooting experience in broadcast environments.*
+*Defending systems through Defense-in-Depth and Six Sigma Root Cause Analysis. I don't just patch vulnerabilities; I optimize the processes that allowed them.*
 
 <div align="center">
 
-[![Network Defense](https://img.shields.io/badge/🌐_Network_Defense-FF4444?style=flat-square&logo=wireshark&logoColor=white)](.) 
-[![System Hardening](https://img.shields.io/badge/🔧_System_Hardening-44FF44?style=flat-square&logo=linux&logoColor=black)](.) 
-[![Incident Response](https://img.shields.io/badge/🚨_Incident_Response-4444FF?style=flat-square&logo=prometheus&logoColor=white)](.)
+[![Network Defense](https://img.shields.io/badge/🌐_Network_Defense-FF4444?style=flat-square&logo=wireshark&logoColor=white)](1-Cybersecurity/1.1-Network-Defense) 
+[![System Hardening](https://img.shields.io/badge/🔧_System_Hardening-44FF44?style=flat-square&logo=linux&logoColor=black)](1-Cybersecurity/1.2-System-Hardening) 
+[![Incident Response](https://img.shields.io/badge/🚨_Incident_Response-4444FF?style=flat-square&logo=prometheus&logoColor=white)](1-Cybersecurity/1.3-Incident-Response)
+[![GRC Policy](https://img.shields.io/badge/📜_GRC_Policy-Blue?style=flat-square&logo=security&logoColor=white)](Business-Admin/policy-framework)
 
 </div>
 
@@ -87,19 +106,55 @@ timeline
 |:---|:---|:---|
 | **Network Defense** | Tools for traffic analysis and threat detection | ![Scapy](https://img.shields.io/badge/Scapy-00599C?style=flat&logo=python&logoColor=white) ![Wazuh](https://img.shields.io/badge/Wazuh-005571?style=flat&logo=security&logoColor=white) ![SIEM](https://img.shields.io/badge/SIEM-FF6B6B?style=flat&logo=splunk&logoColor=white) |
 | **System Hardening** | Labs and scripts for securing operating systems | ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black) ![Bash](https://img.shields.io/badge/Bash-4EAA25?style=flat&logo=gnu-bash&logoColor=white) ![STIG](https://img.shields.io/badge/STIG/CIS-DC143C?style=flat&logo=security&logoColor=white) |
-| **Incident Response** | Playbooks and bots for automated handling | ![NIST](https://img.shields.io/badge/NIST_Framework-0066CC?style=flat&logo=security&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Slack](https://img.shields.io/badge/Slack_API-4A154B?style=flat&logo=slack&logoColor=white) |
+| **Incident Response** | [Standardized Playbooks](1-Cybersecurity/1.3-Incident-Response/ir-playbooks) and automated handling | ![NIST](https://img.shields.io/badge/NIST_Framework-0066CC?style=flat&logo=security&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Slack](https://img.shields.io/badge/Slack_API-4A154B?style=flat&logo=slack&logoColor=white) |
+
+</details>
+
+<details open>
+<summary><h3>📊 Data Analytics</h3></summary>
+
+*Transforming raw logs into actionable intelligence. Using Python and SQL to detect patterns that humans miss.*
+
+<div align="center">
+
+[![Log Analysis](https://img.shields.io/badge/📑_Log_Analysis-2E8B57?style=flat-square&logo=python&logoColor=white)](3-Data-Analytics/3.2-Log-Analysis) [![Data Protection](https://img.shields.io/badge/🔐_Data_Protection-4444FF?style=flat-square&logo=sqlite&logoColor=white)](3-Data-Analytics/3.1-Data-Protection)
+
+</div>
+
+| Project Area | Description | Key Technologies |
+|:---|:---|:---|
+| **Log Analysis** | High-performance parsers for security logs | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Regex](https://img.shields.io/badge/Regex-4285F4?style=flat&logo=google&logoColor=white) |
+| **Data Protection** | SQL hardening and injection defense | ![SQL](https://img.shields.io/badge/SQL-336791?style=flat&logo=postgresql&logoColor=white) ![Flask](https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white) |
 
 </details>
 
 <details>
-<summary><h3>☁️ Cloud Engineering <img src="https://img.shields.io/badge/Work_in_Progress-FFA500?style=flat-square&logo=construction&logoColor=white" alt="WIP"></h3></summary>
+<summary><h3>🚀 Process Improvement & Business Excellence</h3></summary>
+
+*Applying Six Sigma precision and Business Administration principles to optimize security operations and ROI.*
+
+<div align="center">
+
+[![Six Sigma](https://img.shields.io/badge/📈_Six_Sigma-black?style=flat-square&logo=leanpub&logoColor=white)](.) [![Root Cause Analysis](https://img.shields.io/badge/🔍_Root_Cause_Analysis-FF9800?style=flat-square&logo=search&logoColor=white)](.)
+
+</div>
+
+| Project Area | Description | Key Technologies |
+|:---|:---|:---|
+| **Root Cause Analysis** | DMAIC application for security incidents | ![Six Sigma](https://img.shields.io/badge/DMAIC-000000?style=flat&logo=leanpub&logoColor=white) |
+| **Strategy & ROI** | Aligning security spend with business goals | ![ROI](https://img.shields.io/badge/Business_Strategy-4CAF50?style=flat&logo=google&logoColor=white) |
+
+</details>
+
+<details>
+<summary><h3>☁️ Cloud Engineering</h3></summary>
 
 *Infrastructure as Code and cloud-native solutions for secure scalability. Inspired by digital content delivery and OTT optimizations.*
 
 <div align="center">
 
-[![Infrastructure as Code](https://img.shields.io/badge/🏗️_Infrastructure_as_Code-0078D4?style=flat-square&logo=terraform&logoColor=white)](.) 
-[![Cloud Security](https://img.shields.io/badge/🔒_Cloud_Security-FF9500?style=flat-square&logo=microsoftazure&logoColor=white)](.)
+[![Infrastructure as Code](https://img.shields.io/badge/🏗️_Infrastructure_as_Code-0078D4?style=flat-square&logo=terraform&logoColor=white)](2-Cloud-Engineering/2.1-Infrastructure-as-Code) 
+[![Cloud Security](https://img.shields.io/badge/🔒_Cloud_Security-FF9500?style=flat-square&logo=microsoftazure&logoColor=white)](2-Cloud-Engineering)
 
 </div>
 
@@ -111,21 +166,21 @@ timeline
 </details>
 
 <details>
-<summary><h3>📊 Data Analytics <img src="https://img.shields.io/badge/Work_in_Progress-FFA500?style=flat-square&logo=construction&logoColor=white" alt="WIP"></h3></summary>
+<summary><h3>🧠 Psychology & Human Factors</h3></summary>
 
-*Secure data handling and visualization for informed decisions. Leverages audience analytics experience from UNIFE and Record marketing strategies.*
+*Understanding the human element the target of 90% of cyber attacks. Applying psychological principles to defense.*
 
 <div align="center">
 
-[![Data Protection](https://img.shields.io/badge/🛡️_Data_Protection-2E8B57?style=flat-square&logo=postgresql&logoColor=white)](.) 
-[![Log Analysis](https://img.shields.io/badge/📈_Log_Analysis-FF6347?style=flat-square&logo=grafana&logoColor=white)](.)
+[![Social Engineering](https://img.shields.io/badge/🧠_Social_Engineering-FFD700?style=flat-square&logo=psychology&logoColor=black)](4-Psychology/phishing-analysis.md)
+[![Security Culture](https://img.shields.io/badge/👥_Security_Culture-4CAF50?style=flat-square&logo=human&logoColor=white)](4-Psychology/awareness-training.md)
 
 </div>
 
 | Project Area | Description | Key Technologies |
 |:---|:---|:---|
-| **Data Protection** | Labs for preventing SQL injection attacks | ![SQL](https://img.shields.io/badge/SQL-336791?style=flat&logo=postgresql&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Flask](https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white) |
-| **Log Analysis** | Scripts for parsing logs and risk reports | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Regex](https://img.shields.io/badge/Regex-FF6B6B?style=flat&logo=regexpal&logoColor=white) ![Data Analysis](https://img.shields.io/badge/Data_Analysis-FF6F61?style=flat&logo=pandas&logoColor=white) |
+| **Phishing Analysis** | Psychological trigger identification | ![Analysis](https://img.shields.io/badge/Analysis-FFD700?style=flat) |
+| **Culture Change** | Behavioral security training models | ![Behavioral](https://img.shields.io/badge/Behavioral-4CAF50?style=flat) |
 
 </details>
 
@@ -159,7 +214,10 @@ timeline
 ![MITRE ATT&CK](https://img.shields.io/badge/MITRE_ATT&CK-FF6B6B?style=for-the-badge&logo=security&logoColor=white)
 ![OWASP](https://img.shields.io/badge/OWASP_Top_10-000000?style=for-the-badge&logo=owasp&logoColor=white)
 
-### Media Production Legacy
+### Media Production & Legacy
+
+*20+ years of experience in broadcast operations, digital content delivery, and technical management. This background provides a unique perspective on secure content workflows and system resilience.*
+
 ![Adobe Premiere](https://img.shields.io/badge/Adobe_Premiere-9999FF?style=for-the-badge&logo=adobe-premiere-pro&logoColor=white)
 ![Final Cut Pro](https://img.shields.io/badge/Final_Cut_Pro-D9D9D9?style=for-the-badge&logo=apple&logoColor=black)
 
@@ -167,7 +225,7 @@ timeline
 
 ---
 
-## 🌍 Soft Skills & Leadership
+## 🧠 Human Factors & Leadership
 
 <div align="center">
 
