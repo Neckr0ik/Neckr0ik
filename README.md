@@ -113,7 +113,7 @@ timeline
 <details open>
 <summary><h3>📊 Data Analytics</h3></summary>
 
-*Transforming raw logs into actionable intelligence. Using Python and SQL to detect patterns that humans miss.*
+*From security logs to media strategy — Python, SQL, and NLP turning raw data into business decisions. 20+ years of broadcast operations shape how I frame analytics: not just what the data says, but what action it drives.*
 
 <div align="center">
 
@@ -121,10 +121,20 @@ timeline
 
 </div>
 
+**Security Analytics** (in this repo)
+
 | Project Area | Description | Key Technologies |
 |:---|:---|:---|
-| **Log Analysis** | High-performance parsers for security logs | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Regex](https://img.shields.io/badge/Regex-4285F4?style=flat&logo=google&logoColor=white) |
-| **Data Protection** | SQL hardening and injection defense | ![SQL](https://img.shields.io/badge/SQL-336791?style=flat&logo=postgresql&logoColor=white) ![Flask](https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white) |
+| **Log Analysis** | SSH/auth log parsers with brute-force & credential-stuffing detection | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Regex](https://img.shields.io/badge/Regex-4285F4?style=flat&logo=google&logoColor=white) |
+| **Data Protection** | SQL injection defence playground — intentionally vulnerable app with remediation demos | ![SQL](https://img.shields.io/badge/SQL-336791?style=flat&logo=postgresql&logoColor=white) ![Flask](https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white) |
+
+**Portfolio Projects** (standalone repos)
+
+| Project | Description | Key Technologies |
+|:---|:---|:---|
+| [**Content Analytics Dashboard**](https://github.com/Neckr0ik/content-analytics-dashboard) | Audience growth, genre/slot analysis & content ROI for media/OTT | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white) ![Seaborn](https://img.shields.io/badge/Seaborn-3776AB?style=flat&logo=python&logoColor=white) |
+| [**News Sentiment Analyzer**](https://github.com/Neckr0ik/news-sentiment-analyzer) | Live RSS feed scoring by topic using VADER NLP | ![VADER](https://img.shields.io/badge/VADER_NLP-2E8B57?style=flat&logo=python&logoColor=white) ![RSS](https://img.shields.io/badge/RSS_Feeds-FF6600?style=flat&logo=rss&logoColor=white) |
+| [**YouTube Revenue Simulator**](https://github.com/Neckr0ik/youtube-revenue-simulator) | YPP milestone tracker + 36-month niche CPM/revenue comparison | ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=flat&logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat&logo=numpy&logoColor=white) |
 
 </details>
 
