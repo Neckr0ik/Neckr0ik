@@ -28,7 +28,7 @@
 
 [![Skills Matrix](https://img.shields.io/badge/📊_Skills_Matrix-2E8B57?style=for-the-badge&logo=microsoft-excel&logoColor=white)](0-Profile/skills-matrix.csv)
 [![Ethics Statement](https://img.shields.io/badge/📜_Ethics_Statement-FF6B6B?style=for-the-badge&logo=balance-scale&logoColor=white)](docs/ETHICS.md)
-[![LinkedIn](https://img.shields.io/badge/💼_LinkedIn_Profile-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/giovannide)
+[![LinkedIn](https://img.shields.io/badge/💼_LinkedIn_Profile-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gzoliveira)
 
 [![Contributing](https://img.shields.io/badge/🤝_Contributing-4CAF50?style=for-the-badge&logo=git&logoColor=white)](docs/CONTRIBUTING.md)
 [![Security Policy](https://img.shields.io/badge/🛡️_Security_Policy-DC143C?style=for-the-badge&logo=security&logoColor=white)](docs/SECURITY.md)
@@ -51,13 +51,13 @@ timeline
                             : Process Optimization
     
     Academic Foundation : BS Business Administration
-                        : Six Sigma White Belt
-                        : BS Psychology (In Progress)
+                        : Global MBA — AI & Data Science
+                        : BS Psychology (Conferred 2026)
     
-    Cybersecurity Forge : ISC2 Certified (CC)
+    Cybersecurity & AI  : ISC2 Certified (CC)
                         : Google Cyber Professional
-                        : Google Cloud Cyber (In Progress)
-                        : GRC & Strategy
+                        : IBM Data Science (In Progress)
+                        : GRC & Data Strategy
 ```
 
 </div>
@@ -65,8 +65,8 @@ timeline
 **The Triad: Tech, Business, & Mind**: My approach is unique because it blends three critical disciplines:
 
 1. **Technical Mastery**: Deep roots in Broadcast IT and modern Cybersecurity (ISC2 & Google certified).
-2. **Business Acumen**: A BS in Business Administration and Six Sigma methodology ensures my security solutions align with business goals and ROI.
-3. **Human Factors**: Pursuing a BS in Psychology allows me to understand the "human element" of security—social engineering, insider threats, and security culture.
+2. **Business Acumen**: Global MBA in AI & Data Science (ENEB, 2026), BS Business Administration, and Six Sigma methodology ensure solutions align with business goals and measurable ROI.
+3. **Human Factors**: BS in Psychology (Capella University, 2026) informs my understanding of the human element in security—social engineering, insider threats, and security culture.
 
 ---
 
@@ -79,8 +79,8 @@ timeline
 | **Cybersecurity & Cloud** | **Business & Process** | **Academia** |
 | :--- | :--- | :--- |
 | ![ISC2](https://img.shields.io/badge/ISC2-Certified_in_Cybersecurity-2E8B57?logo=isc2&logoColor=white) | ![Six Sigma](https://img.shields.io/badge/Six_Sigma-White_Belt-black?logo=leanpub&logoColor=white) | **BS Business Admin** (UoPeople) |
-| ![Google Cyber](https://img.shields.io/badge/Google-Cybersecurity_Pro-4285F4?logo=google&logoColor=white) | **Business Strategy** | **BS Psychology** (Capella U - *Enrolled*) |
-| ![Google Cloud](https://img.shields.io/badge/Google_Cloud-Cyber_Pro_(Enrolled)-4285F4?logo=google-cloud&logoColor=white) | **Marketing & Brand** | |
+| ![Google Cyber](https://img.shields.io/badge/Google-Cybersecurity_Pro-4285F4?logo=google&logoColor=white) | **Business Strategy** | **BS Psychology** (Capella U, Apr 2026) |
+| ![IBM DS](https://img.shields.io/badge/IBM-Data_Science_Pro_(In_Progress)-052FAD?logo=ibm&logoColor=white) | **Marketing & Brand** | **Global MBA** — AI & Data Science (ENEB, Apr 2026) |
 
 </div>
 
