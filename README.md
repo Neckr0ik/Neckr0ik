@@ -34,6 +34,13 @@
 [![Security Policy](https://img.shields.io/badge/🛡️_Security_Policy-DC143C?style=for-the-badge&logo=security&logoColor=white)](docs/SECURITY.md)
 [![Code of Conduct](https://img.shields.io/badge/📋_Code_of_Conduct-9C27B0?style=for-the-badge&logo=balance-scale&logoColor=white)](docs/CODE_OF_CONDUCT.md)
 
+
+[![Content Analytics](https://img.shields.io/badge/📊_Content_Analytics-1F6FEB?style=for-the-badge&logo=python&logoColor=white)](https://github.com/Neckr0ik/content-analytics-dashboard)
+[![News Sentiment](https://img.shields.io/badge/📰_News_Sentiment-2E8B57?style=for-the-badge&logo=python&logoColor=white)](https://github.com/Neckr0ik/news-sentiment-analyzer)
+[![YT Revenue Sim](https://img.shields.io/badge/▶_YT_Revenue-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://github.com/Neckr0ik/youtube-revenue-simulator)
+[![Phishing Psych](https://img.shields.io/badge/🧠_Phishing_Psych-DC143C?style=for-the-badge&logo=python&logoColor=white)](https://github.com/Neckr0ik/phishing-psychology-analyzer)
+[![Content Psych](https://img.shields.io/badge/📺_Content_Psych-9B59B6?style=for-the-badge&logo=python&logoColor=white)](https://github.com/Neckr0ik/content-psychology-analyzer)
+
 </div>
 
 ---
