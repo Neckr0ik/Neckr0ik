@@ -135,6 +135,8 @@ timeline
 | [**Content Analytics Dashboard**](https://github.com/Neckr0ik/content-analytics-dashboard) | Audience growth, genre/slot analysis & content ROI for media/OTT | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white) ![Seaborn](https://img.shields.io/badge/Seaborn-3776AB?style=flat&logo=python&logoColor=white) |
 | [**News Sentiment Analyzer**](https://github.com/Neckr0ik/news-sentiment-analyzer) | Live RSS feed scoring by topic using VADER NLP | ![VADER](https://img.shields.io/badge/VADER_NLP-2E8B57?style=flat&logo=python&logoColor=white) ![RSS](https://img.shields.io/badge/RSS_Feeds-FF6600?style=flat&logo=rss&logoColor=white) |
 | [**YouTube Revenue Simulator**](https://github.com/Neckr0ik/youtube-revenue-simulator) | YPP milestone tracker + 36-month niche CPM/revenue comparison | ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=flat&logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat&logo=numpy&logoColor=white) |
+| [**Phishing Psychology Analyzer**](https://github.com/Neckr0ik/phishing-psychology-analyzer) | Detects cognitive bias exploitation in social engineering text | ![VADER](https://img.shields.io/badge/VADER_NLP-DC143C?style=flat&logo=python&logoColor=white) ![MITRE](https://img.shields.io/badge/MITRE_ATT%26CK-FF4444?style=flat&logo=security&logoColor=white) |
+| [**Content Psychology Analyzer**](https://github.com/Neckr0ik/content-psychology-analyzer) | Scores OTT/media content across 7 psychological engagement dimensions | ![PERMA](https://img.shields.io/badge/PERMA_Model-9B59B6?style=flat&logo=python&logoColor=white) ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=flat&logo=python&logoColor=white) |
 
 </details>
 
@@ -175,22 +177,24 @@ timeline
 
 </details>
 
-<details>
+<details open>
 <summary><h3>🧠 Psychology & Human Factors</h3></summary>
 
-*Understanding the human element the target of 90% of cyber attacks. Applying psychological principles to defense.*
+*The human element is the target of 90% of cyberattacks and the engine behind every successful content strategy. A BS in Psychology (Capella University, 2026) grounds these projects in peer-reviewed science — not intuition.*
 
 <div align="center">
 
-[![Social Engineering](https://img.shields.io/badge/🧠_Social_Engineering-FFD700?style=flat-square&logo=psychology&logoColor=black)](4-Psychology/phishing-analysis.md)
-[![Security Culture](https://img.shields.io/badge/👥_Security_Culture-4CAF50?style=flat-square&logo=human&logoColor=white)](4-Psychology/awareness-training.md)
+[![Phishing Psych](https://img.shields.io/badge/🛡_Phishing_Psychology-DC143C?style=flat-square&logo=python&logoColor=white)](https://github.com/Neckr0ik/phishing-psychology-analyzer)
+[![Content Psych](https://img.shields.io/badge/📺_Content_Psychology-9B59B6?style=flat-square&logo=python&logoColor=white)](https://github.com/Neckr0ik/content-psychology-analyzer)
 
 </div>
 
-| Project Area | Description | Key Technologies |
+| Project | Description | Frameworks Applied |
 |:---|:---|:---|
-| **Phishing Analysis** | Psychological trigger identification | ![Analysis](https://img.shields.io/badge/Analysis-FFD700?style=flat) |
-| **Culture Change** | Behavioral security training models | ![Behavioral](https://img.shields.io/badge/Behavioral-4CAF50?style=flat) |
+| [**Phishing Psychology Analyzer**](https://github.com/Neckr0ik/phishing-psychology-analyzer) | Detects 8 manipulation vectors in text; maps social engineering to the cognitive biases exploited | Kahneman (2011), Cialdini (1984), MITRE ATT&CK |
+| [**Content Psychology Analyzer**](https://github.com/Neckr0ik/content-psychology-analyzer) | Scores media content across 7 psychological engagement dimensions for OTT and content strategy | Seligman PERMA (2011), Loewenstein (1994), Russell (1980), Green & Brock (2000) |
+
+**Applied psychology courses (Capella BS, conferred 2026):** I-O Psychology · Social Psychology · Cognitive Psychology · Positive Psychology · Research Methods · Psychology of Social Media · Criminal Psychology · Capstone
 
 </details>
 
