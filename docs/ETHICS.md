@@ -151,7 +151,7 @@ Para preguntas sobre nuestra política de ética o para reportar inquietudes:
 Para perguntas sobre nossa política de ética ou para reportar preocupações:
 
 - **Email**: digital.forge@unife.us
-- **LinkedIn**: [Giovanni Oliveira](https://www.linkedin.com/in/giovannide)
+- **LinkedIn**: [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 
 ---
 

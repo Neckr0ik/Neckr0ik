@@ -33,25 +33,25 @@ flowchart LR
     subgraph Client["Your SaaS product"]
         A[App backend]
     end
-    A -- "Bearer key (per org)\nPOST /v1/complete" --> H[HTTP server\nor library call]
-    H --> V[Validate request\nresolve feature → model, max_tokens]
-    V --> RL{Rate limiter\norg + user buckets}
+    A -- "Bearer key (per org)<br/>POST /v1/complete" --> H[HTTP server<br/>or library call]
+    H --> V[Validate request<br/>resolve feature → model, max_tokens]
+    V --> RL{Rate limiter<br/>org + user buckets}
     RL -- "empty" --> R429[429 + Retry-After]
-    RL --> Q{Quota reserve\nBEGIN IMMEDIATE\nused + reserved + estimate ≤ cap?}
-    Q -- "no" --> R402[402 quota_exceeded\nprovider NOT called]
-    Q -- "yes: hold reservation" --> RT[Retry loop\nbackoff + jitter, per-attempt timeout]
+    RL --> Q{Quota reserve<br/>BEGIN IMMEDIATE<br/>used + reserved + estimate ≤ cap?}
+    Q -- "no" --> R402[402 quota_exceeded<br/>provider NOT called]
+    Q -- "yes: hold reservation" --> RT[Retry loop<br/>backoff + jitter, per-attempt timeout]
     RT --> P[[Provider interface]]
     P --> P1[Anthropic API]
     P --> P2[Amazon Bedrock]
     P --> P3[Vertex AI]
     P --> P4[Mock]
-    RT -- "usage fields" --> S[Settle: drop reservation,\ninsert actual usage]
-    RT -- "failure" --> F[Release reservation,\nrecord zero-cost failure]
+    RT -- "usage fields" --> S[Settle: drop reservation,<br/>insert actual usage]
+    RT -- "failure" --> F[Release reservation,<br/>record zero-cost failure]
     S --> W{used ≥ warn_ratio × cap?}
     W -- "first time this month" --> WL[quota_warning log + callback]
-    S --> DB[(Metering store\nSQLite / PostgreSQL)]
+    S --> DB[(Metering store<br/>SQLite / PostgreSQL)]
     F --> DB
-    S --> LOG[[JSON logs\nno prompts, hashed users]]
+    S --> LOG[[JSON logs<br/>no prompts, hashed users]]
 ```
 
 ### Why reservations?

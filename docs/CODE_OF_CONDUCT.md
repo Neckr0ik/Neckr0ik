@@ -193,9 +193,11 @@ Para preguntas sobre este Código de Conducta:
 Para perguntas sobre este Código de Conduta:
 
 - **Email**: digital.forge@unife.us
-- **LinkedIn**: [Giovanni Oliveira](https://www.linkedin.com/in/giovannide)
+- **LinkedIn**: [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 
 ---
 
-**Last Updated | Última Actualización | Última Atualização**: December 2024  
+*Adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.1, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*
+
+**Last Updated | Última Actualización | Última Atualização**: October 2026  
 **Version | Versión | Versão**: 1.0
