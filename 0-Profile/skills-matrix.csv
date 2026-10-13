@@ -1,32 +1,31 @@
-Domain,Skill,Project,Source Document
-Cybersecurity,Linux Permissions,System-Hardening/linux-basics-lab,File permissions in Linux.docx
-Cybersecurity,Network Traffic Analysis,Network-Defense/tcpdump-analysis,Cybersecurity Incident Report Network Traffic Analysis.docx
-Cybersecurity,Security Auditing,System-Hardening/Botium-Toys-Audit,Botium Toys Security Audit documents
-Cybersecurity,Incident Response,Incident-Response/ir-playbooks,Phishing Playbook.docx
-Cybersecurity,Incident Handling,Incident-Response/Incident-Journal,Incident handler's journal.docx
-Cybersecurity,Risk Assessment,Incident-Response/Case-Studies,Data leak worksheet.docx
-Cybersecurity,Physical Security,Incident-Response/Case-Studies,Parking lot USB exercise.docx
-Cybersecurity,Packet Analysis,Network-Defense/packet-sniffer-scapy,Custom development
-Data Analytics,SQL Filtering,Data-Protection/sql-defence-playground,Apply filters to SQL queries.docx
-Data Analytics,SQL Reference,Data-Protection/sql-defence-playground,Reference guide SQL.docx
-Data Analytics,Log Analysis,Log-Analysis/auth-log-parser,Custom Python development
-Data Analytics,Bulk Scanning,Log-Analysis/nmap-bulk-scanner-reporter,Custom Python development
-Cloud Engineering,Infrastructure as Code,Infrastructure-as-Code/azure-secure-blueprint,Custom Terraform development
-Cloud Engineering,Azure Security,Infrastructure-as-Code/azure-secure-blueprint,Custom Terraform development
+Domain,Skill,Project,Basis
+Cybersecurity,Linux Permissions,1-Cybersecurity/1.2-System-Hardening/linux-basics-lab,Google Cybersecurity Certificate coursework
+Cybersecurity,Network Traffic Analysis,1-Cybersecurity/1.1-Network-Defense/tcpdump-analysis,Google Cybersecurity Certificate coursework
+Cybersecurity,Security Auditing,1-Cybersecurity/1.2-System-Hardening/Botium-Toys-Audit,Google Cybersecurity Certificate coursework
+Cybersecurity,Incident Response,1-Cybersecurity/1.3-Incident-Response/ir-playbooks,Google Cybersecurity Certificate coursework
+Cybersecurity,Incident Handling,1-Cybersecurity/1.3-Incident-Response/Incident-Journal,Google Cybersecurity Certificate coursework
+Cybersecurity,Risk Assessment,1-Cybersecurity/1.3-Incident-Response/Case-Studies,Google Cybersecurity Certificate coursework
+Cybersecurity,Physical Security,1-Cybersecurity/1.3-Incident-Response/Case-Studies,Google Cybersecurity Certificate coursework
+Cybersecurity,Packet Analysis,1-Cybersecurity/1.1-Network-Defense/packet-sniffer-scapy,Custom development
+Data Analytics,SQL Filtering,3-Data-Analytics/3.1-Data-Protection/sql-defence-playground,Google Cybersecurity Certificate coursework
+Data Analytics,SQL Reference,3-Data-Analytics/3.1-Data-Protection/sql-defence-playground,Google Cybersecurity Certificate coursework
+Data Analytics,Log Analysis,3-Data-Analytics/3.2-Log-Analysis/auth-log-parser,Custom Python development
+Data Analytics,Bulk Scanning,3-Data-Analytics/3.2-Log-Analysis/nmap-bulk-scanner-reporter,Custom Python development
+Cloud Engineering,Infrastructure as Code,2-Cloud-Engineering/2.1-Infrastructure-as-Code/azure-secure-blueprint,Custom Terraform development
+Cloud Engineering,Azure Security,2-Cloud-Engineering/2.1-Infrastructure-as-Code/azure-secure-blueprint,Custom Terraform development
 GRC,Policy Development,5-Business-Admin/policy-framework,Based on ISC2 & NIST frameworks
 GRC,Risk Management,5-Business-Admin/risk-assessment,Six Sigma FMEA application
-Process Improvement,Root Cause Analysis,Six-Sigma/process-optimization,DMAIC Case Studies
-Human Factors,Social Engineering Defense,Psychology/phishing-analysis,Psychological triggers in phishing
-Human Factors,Security Culture,Psychology/awareness-training,Behavioral change strategies
+Human Factors,Social Engineering Defense,4-Psychology/phishing-analysis.md,Psychological triggers in phishing
+Human Factors,Security Culture,4-Psychology/awareness-training.md,Behavioral change strategies
 AI Product,LLM Application Architecture,Impulse Labs · Hybrid Intelligence Core (private),Multi-provider gateway: Anthropic API / Amazon Bedrock / Vertex AI
 AI Product,Usage Metering & Quotas,Impulse Labs · Hybrid Intelligence Core (private),Per-organization monthly quota with alerts and per-user usage
 AI Product,Audience Simulation,Impulse Labs · Hybrid Intelligence Core (private),Silicon samples: Census 2020 (ITER) sampling + INRA interview donors (k-anonymity)
-AI Product,Newsroom AI Assistant,Impulse Labs · SKED (private),Rundown building weighted by audience data
-AI Product,Psychometric Product Design,Impulse Labs · Ethea (private),Forced-choice personality tests; multilingual
+AI Product,Newsroom AI Assistant,Impulse Labs · SKED (private),Private product
+AI Product,Psychometric Product Design,Impulse Labs · Ethea (private),Private product
 AI Product,AI-Assisted Engineering,All Impulse Labs products,Claude Code and Lovable with automated tests and reproducible builds
 NLP,Sentiment & Psychological Scoring,content-psychology-analyzer / news-sentiment-analyzer,Public repositories
 Entrepreneurship,Founder Programs,Impulse Labs,Empretec · FounderX
-Research,LLM Simulation Validation,Hybrid Intelligence validation study (in preparation),Pre-registered forecasts vs INEGI official surveys
+Research,LLM Simulation Validation,open-lab/silicon-sample-validation,Planned validation study vs INEGI official surveys
 Survey Methodology,PPS Sampling & Design Weights,open-lab/mx-census-sampler,INEGI Censo 2020 (ITER)
 Audience Analytics,Weighted Media-Use Profiles,open-lab/endutih-media-profiles,INEGI ENDUTIH 2025 microdata
 AI Evaluation,LLM Response Bias Diagnostics,open-lab/llm-survey-bias-kit,Position bias · paired A/B · A/A · homogeneity

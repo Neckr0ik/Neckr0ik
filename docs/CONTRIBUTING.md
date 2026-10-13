@@ -53,7 +53,7 @@ All contributors must adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). We ar
 - **Issues**: Use GitHub issues for bug reports and feature requests
 - **Discussions**: Join GitHub discussions for questions and ideas
 - **Email**: Contact the maintainer for sensitive matters at impulselabs@mail.com
-- **LinkedIn**: Connect with [Giovanni Oliveira](https://www.linkedin.com/in/giovannide)
+- **LinkedIn**: Connect with [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 
 ---
 
@@ -110,7 +110,7 @@ Todos los contribuyentes deben adherirse a nuestro [Código de Conducta](CODE_OF
 - **Issues**: Usa los issues de GitHub para reportes de errores y solicitudes de características
 - **Discusiones**: Únete a las discusiones de GitHub para preguntas e ideas
 - **Email**: Contacta al mantenedor para asuntos sensibles en impulselabs@mail.com
-- **LinkedIn**: Conéctate con [Giovanni Oliveira](https://www.linkedin.com/in/giovannide)
+- **LinkedIn**: Conéctate con [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 
 ---
 
@@ -167,7 +167,7 @@ Todos os contribuidores devem aderir ao nosso [Código de Conduta](CODE_OF_CONDU
 - **Issues**: Use issues do GitHub para relatórios de bugs e solicitações de funcionalidades
 - **Discussões**: Participe das discussões do GitHub para perguntas e ideias
 - **Email**: Contate o mantenedor para assuntos sensíveis em impulselabs@mail.com
-- **LinkedIn**: Conecte-se com [Giovanni Oliveira](https://www.linkedin.com/in/giovannide)
+- **LinkedIn**: Conecte-se com [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 
 ---
 
@@ -201,14 +201,10 @@ python3 -m venv venv
 source venv/bin/activate  # Linux/Mac
 # venv\Scripts\activate  # Windows
 
-# Install dependencies | Instalar dependencias | Instalar dependências
-pip install -r requirements.txt
-
-# Run tests | Ejecutar pruebas | Executar testes
-python -m pytest
-
-# Start development server | Iniciar servidor de desarrollo | Iniciar servidor de desenvolvimento
-python app.py
+# Each Open Lab package installs and tests on its own | Cada paquete se instala y prueba por separado | Cada pacote é instalado e testado separadamente
+cd open-lab/mx-census-sampler
+pip install -e . pytest
+pytest -q
 ```
 
 ### Project Structure | Estructura del Proyecto | Estrutura do Projeto
@@ -219,6 +215,10 @@ Neckr0ik/
 ├── 1-Cybersecurity/        # Security projects and tools
 ├── 2-Cloud-Engineering/    # Infrastructure and cloud solutions
 ├── 3-Data-Analytics/       # Data analysis and protection
+├── 4-Psychology/           # Human factors
+├── 5-Business-Admin/       # GRC: policies and risk assessment
+├── hybrid-intelligence/    # Method summary and build log
+├── open-lab/               # Five standalone Python packages
 ├── docs/                   # Documentation
 ├── .github/                # GitHub workflows and templates
 ├── README.md               # Project overview
@@ -228,18 +228,11 @@ Neckr0ik/
 ### Testing Guidelines | Pautas de Pruebas | Diretrizes de Teste
 
 ```bash
-# Unit tests | Pruebas unitarias | Testes unitários
-python -m pytest tests/unit/
-
-# Integration tests | Pruebas de integración | Testes de integração
-python -m pytest tests/integration/
-
-# Security tests | Pruebas de seguridad | Testes de segurança
-python -m pytest tests/security/
-
-# Coverage report | Reporte de cobertura | Relatório de cobertura
-python -m pytest --cov=src tests/
+# Run one package's tests offline | Pruebas de un paquete | Testes de um pacote
+cd open-lab/<package> && pytest -q
 ```
+
+CI runs every Open Lab package on Python 3.11 and 3.12 (`.github/workflows/open-lab.yml`).
 
 ---
 
@@ -253,5 +246,5 @@ Contribuidores serão reconhecidos em nosso [README.md](../README.md) e document
 
 ---
 
-**Last Updated | Última Actualización | Última Atualização**: December 2024  
+**Last Updated | Última Actualización | Última Atualização**: October 2026  
 **Version | Versión | Versão**: 1.0
