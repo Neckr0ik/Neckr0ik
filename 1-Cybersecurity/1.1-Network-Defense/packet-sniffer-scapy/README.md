@@ -18,8 +18,8 @@ This tool captures and analyzes network packets in real-time, providing insights
 
 ```bash
 # Clone the repository
-git clone https://github.com/giovannide/Digital-Forge.git
-cd Digital-Forge/1-Cybersecurity/1.1-Network-Defense/packet-sniffer-scapy
+git clone https://github.com/Neckr0ik/Neckr0ik.git
+cd Neckr0ik/1-Cybersecurity/1.1-Network-Defense/packet-sniffer-scapy
 
 # Install dependencies
 pip install -r requirements.txt

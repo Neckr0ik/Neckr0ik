@@ -2,38 +2,39 @@
 
 ## Overview
 
-This directory contains Giovanni's professional profile information, including skills matrix and career transition documentation.
+Founder of **Impulse Labs**, building AI products for newsrooms, brands, public-communication teams and individuals. This directory holds the skills matrix that maps each skill to the project where it is applied.
 
 ## Files
 
 ### skills-matrix.csv
-Comprehensive mapping of technical and soft skills to projects and learning resources, including:
-- Programming languages and proficiency levels
-- Security tools and frameworks
-- Platform expertise
-- Google Cybersecurity Certificate course alignments
-- Practical applications in real projects
+Mapping of skills to projects and sources:
+- AI product work at Impulse Labs (LLM architecture, metering, audience simulation, psychometrics)
+- NLP and analytics in the public portfolio repositories
+- Security, GRC and data-protection foundations in this repository
+- Founder programs (Empretec, FounderX)
 
-## Skills Development Journey
+## Journey
 
-### From Media to Tech
-- **20+ years** in media production and broadcast IT
+### From Media to AI
+- **20+ years** in media production, broadcast IT and OTT across LATAM
 - **Trilingual** communication (Portuguese, Spanish, English)
 - **Cross-cultural** leadership and stakeholder management
-- **Technical troubleshooting** in live broadcast environments
+- **Founder training** through Empretec and FounderX
 
-### Current Focus Areas
-1. **Cybersecurity**: Network defense, system hardening, incident response
-2. **Cloud Engineering**: Infrastructure as Code, Azure deployments
-3. **Data Analytics**: Secure data handling, log analysis, risk assessment
+### Current Focus
+1. **AI products**: Hybrid Intelligence Core, SKED, Ethea (Impulse Labs)
+2. **Data strategy**: audience analytics and simulation grounded in official data
+3. **Human factors**: applied psychology in product design and security
+4. **Responsible AI**: data protection, security and scientific transparency
 
-### Certifications & Learning
-- Google Cybersecurity Certificate (In Progress)
-- Self-directed learning in cloud technologies
-- Hands-on project development
+### Credentials
+- Global MBA — AI & Data Science (ENEB)
+- BS Psychology (Capella University) · BS Business Administration (UoPeople)
+- ISC2 Certified in Cybersecurity (CC) · Google Cybersecurity Professional Certificate
+- IBM Data Science Professional Certificate (in progress)
 
 ## Contact Information
 
-- **LinkedIn**: [giovannide](https://www.linkedin.com/in/giovannide)
-- **GitHub**: [giovannide](https://github.com/Neckr0ik)
+- **LinkedIn**: [gzoliveira](https://www.linkedin.com/in/gzoliveira)
+- **GitHub**: [Neckr0ik](https://github.com/Neckr0ik)
 - **Languages**: Portuguese (Native), Spanish (Fluent), English (Fluent)

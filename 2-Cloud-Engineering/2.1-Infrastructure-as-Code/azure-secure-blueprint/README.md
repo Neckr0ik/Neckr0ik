@@ -86,8 +86,8 @@ az account show
 ### 1. Clone and Setup
 ```bash
 # Clone the repository
-git clone https://github.com/giovannide/Digital-Forge.git
-cd Digital-Forge/2-Cloud-Engineering/2.1-Infrastructure-as-Code/azure-secure-blueprint
+git clone https://github.com/Neckr0ik/Neckr0ik.git
+cd Neckr0ik/2-Cloud-Engineering/2.1-Infrastructure-as-Code/azure-secure-blueprint
 
 # Copy example configuration
 cp terraform.tfvars.example terraform.tfvars
