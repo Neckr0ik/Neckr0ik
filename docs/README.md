@@ -1,6 +1,6 @@
 # Documentation
 
-This directory contains comprehensive documentation for the Digital-Forge project, including ethics statements, contribution guidelines, security policies, and code of conduct.
+This directory contains comprehensive documentation for the Neckr0ik project, including ethics statements, contribution guidelines, security policies, and code of conduct.
 
 ## Documents
 
@@ -18,7 +18,7 @@ Community standards and inclusion policies for all contributors.
 
 ## Purpose
 
-These documents establish the foundation for ethical, collaborative, and secure development practices within the Digital-Forge project. They reflect Giovanni's commitment to:
+These documents establish the foundation for ethical, collaborative, and secure development practices within the Neckr0ik project. They reflect Giovanni's commitment to:
 
 - **Integrity**: Honest and transparent development practices
 - **Responsibility**: Accountable security research and education

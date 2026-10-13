@@ -1,0 +1,48 @@
+name: open-lab tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - mx-census-sampler
+          - endutih-media-profiles
+          - llm-survey-bias-kit
+          - silicon-sample-validation
+          - llm-gateway-metering
+        python: ["3.11", "3.12"]
+    defaults:
+      run:
+        working-directory: open-lab/${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . pytest
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+      - name: Test
+        run: pytest -q
+
+  packet-sniffer:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 1-Cybersecurity/1.1-Network-Defense/packet-sniffer-scapy
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install scapy pytest
+      - run: pytest -q test_sniffer.py

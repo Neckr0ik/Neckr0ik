@@ -47,8 +47,8 @@ By completing this lab, you will:
 
 ```bash
 # Clone the repository
-git clone https://github.com/giovannide/Digital-Forge.git
-cd Digital-Forge/1-Cybersecurity/System-Hardening/linux-basics-lab
+git clone https://github.com/Neckr0ik/Neckr0ik.git
+cd Neckr0ik/1-Cybersecurity/1.2-System-Hardening/linux-basics-lab
 
 # Start the lab environment
 vagrant up

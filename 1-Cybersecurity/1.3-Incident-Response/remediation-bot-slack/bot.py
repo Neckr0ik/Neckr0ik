@@ -799,7 +799,7 @@ def handle_assign(ack, body, client):
             "status": "in_progress"
         }
         
-        if bot.update_incident(incident_i, updates, user_id):
+        if bot.update_incident(incident_id, updates, user_id):
             # Update the message
             incident = bot.get_incident(incident_id)
             updated_blocks = create_incident_blocks(incident)
