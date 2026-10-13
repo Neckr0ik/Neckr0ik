@@ -1,13 +1,13 @@
-# Giovanni Oliveira · AI Builder & Founder
+# Giovanni Oliveira · Hybrid Intelligence
 
 <div align="center">
 
-![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12&height=180&section=header&text=Giovanni%20Oliveira&desc=AI%20Products%20%C2%B7%20Data%20Strategy%20%C2%B7%20Human%20Factors&descAlignY=62&fontSize=44&fontColor=ffffff&animation=fadeIn)
+![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12&height=180&section=header&text=Giovanni%20Oliveira&desc=Hybrid%20Intelligence%20%C2%B7%20Impulse%20Labs&descAlignY=62&fontSize=44&fontColor=ffffff&animation=fadeIn)
 
-**Founder of Impulse Labs** · Global MBA in AI & Data Science · 20+ years in media/OTT across LATAM · Mexico City
+**Founder of Impulse Labs** · Global MBA in AI & Data Science · BS Psychology · 20+ years in media/OTT across LATAM · Mexico City
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-gzoliveira-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gzoliveira)
-[![Impulse Labs](https://img.shields.io/badge/Impulse_Labs-Founder-111111?style=for-the-badge)](#-what-im-building--impulse-labs)
+[![Hybrid Intelligence](https://img.shields.io/badge/Hybrid_Intelligence-Method_%26_Log-111111?style=for-the-badge)](hybrid-intelligence/README.md)
 ![Languages](https://img.shields.io/badge/ES_·_PT_·_EN-Trilingual-2E8B57?style=for-the-badge)
 
 </div>
@@ -16,23 +16,38 @@
 
 ## 👋 About
 
-I build **AI products that help organizations make decisions about people and messages** — newsrooms, brands, public-communication teams and individuals.
+I build **Hybrid Intelligence**: AI that lets an organization hear how real people would react to a message *before* it goes public.
 
-My edge is the combination nobody else on the team has to bring: two decades running broadcast and OTT operations, formal training in **AI & data science** and **psychology**, and a founder's discipline sharpened in **Empretec** and **FounderX**. I design the product, define the science behind it, and ship it with AI as my engineering partner.
+Language models alone mostly speak with the voice of the US and of highly educated users. My work anchors them in Mexico: every simulated person is drawn from the **2020 Census** and grounded in a **real face-to-face interview by INRA**, our field-research partner. Each reading reports its own limits and every product cites the science it rests on.
 
-> *Construyo productos de IA para decidir mejor sobre personas y mensajes. · Construo produtos de IA para decidir melhor sobre pessoas e mensagens.*
+What I bring is the mix: two decades running broadcast and OTT operations, formal training in **AI & data science** and **psychology**, and a founder's discipline sharpened in **Empretec** and **FounderX**. I design the product, define the science behind it, and ship it with AI as my engineering partner.
+
+> *Inteligencia Híbrida: escuchar cómo reaccionaría la gente real antes de hablar. · Inteligência Híbrida: ouvir como pessoas reais reagiriam antes de falar.*
 
 ---
 
 ## 🚀 What I'm Building · Impulse Labs
 
-**Hybrid Intelligence Core** — one shared engine (simulation, scientific grounding, multi-provider LLM layer) powering several vertical products. Most of this work is private because it carries client and proprietary research data; below is what can be shared.
+<div align="center">
 
-| Product | What it does | Status |
-|:---|:---|:---|
-| **Hybrid Intelligence Core** | Shared engine behind vertical products for public-affairs communication and brand message testing: audience simulation grounded in census and official data, a "scientific basis" layer, and an LLM gateway (Anthropic API / Amazon Bedrock / Vertex AI) with usage metering and per-org quotas | Working prototypes · private |
-| **SKED** | Assistant for a newsroom's head of information: reads incoming sources, builds the rundown (*sked*) and weights it against the outlet's audience data | Prototype · private |
-| **Ethea** | Personality-insight platform with forced-choice tests (lower bias than agreement scales), multilingual (ES · PT · EN · FR), science notes on every test and a B2B track for coaches and HR | In development · private |
+| | | | | |
+|:---:|:---:|:---:|:---:|:---:|
+| **ZÓKALO** | **MOSAIK** | **KALEIDO** | **SKED** | **Ethea** |
+| Hybrid Intelligence Core | Hybrid Intelligence Core | Hybrid Intelligence Core | Impulse Labs | Impulse Labs |
+
+</div>
+
+**The Hybrid Intelligence Core** is one engine shared by several products:
+
+- **Silicon samples anchored in Mexico**: census-based probability sampling with design weights, plus donor imputation from INRA interviews under k-anonymity.
+- **Rigor by design**: paired A/B tests with confidence intervals and minimum detectable effect, A/A controls, answer-order reversal against LLM position bias, fixed seeds and a method card per run.
+- **Honest about limits**: a *Scientific Basis* module in every product, with 20+ academic references and the literature's known failure modes.
+- **Validation in the open**: a study in preparation for a peer-reviewed journal tests the method against official INEGI surveys, with pre-registered forecasts and a memorization probe.
+- **Production-minded**: reproducible byte-identical builds, golden-hash regression tests, multi-provider LLM gateway (Anthropic API / Amazon Bedrock / Vertex AI) with per-organization quotas and metering.
+
+➡️ **[Read the method and the build log](hybrid-intelligence/README.md)**
+
+All products are private and in active development with partners. Data, clients and product internals are not published here.
 
 **How I build:** product spec and science first → AI-assisted engineering (Claude, Lovable) → automated tests and reproducible builds → human review before every deploy.
 
@@ -72,15 +87,16 @@ timeline
                           : Google Cybersecurity Professional
     Founder programs      : Empretec
                           : FounderX
-    Impulse Labs          : Hybrid Intelligence Core
-                          : SKED · Ethea
+    Impulse Labs          : Hybrid Intelligence Core with INRA
+                          : ZÓKALO · MOSAIK · KALEIDO · SKED · Ethea
+                          : Validation study vs INEGI (in preparation)
 ```
 
 ---
 
 ## 📂 Public Portfolio
 
-Open-source projects that show the building blocks behind the products: NLP, audience analytics and applied psychology.
+Open-source projects that show the building blocks behind Hybrid Intelligence: NLP, audience analytics and applied psychology.
 
 | Project | What it shows | Stack |
 |:---|:---|:---|
