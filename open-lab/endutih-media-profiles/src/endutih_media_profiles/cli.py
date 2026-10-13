@@ -8,10 +8,27 @@ import math
 import sys
 from pathlib import Path
 
+import os
+
 from .indicators import HOUSEHOLD_INDICATORS, PERSON_INDICATORS
-from .query import DEFAULT_EDITION, profile
+from .query import DEFAULT_EDITION, ENV_VAR, profile
 
 PKG_ROOT = Path(__file__).resolve().parents[2]
+
+
+def source_checkout() -> Path | None:
+    """The repository folder when running from a source checkout (or editable install), else None.
+
+    From an installed wheel, ``PKG_ROOT`` is somewhere inside the environment
+    (e.g. ``lib/python3.X``), which is no place to write data to.
+    """
+    pp = PKG_ROOT / "pyproject.toml"
+    try:
+        if pp.is_file() and 'name = "endutih-media-profiles"' in pp.read_text(encoding="utf-8"):
+            return PKG_ROOT
+    except OSError:  # pragma: no cover
+        pass
+    return None
 
 
 def _pct(x) -> str:
@@ -37,14 +54,21 @@ def format_table(df) -> str:
     hdr = f"{'indicator':<24} {'share':>6} {'95% CI':>15} {'n':>6}" + (f" {'national':>8}" if has_nat else "")
     lines += [hdr, "-" * len(hdr)]
     for r in df.itertuples():
-        ci = "" if r.suppressed else f"{100 * r.ci95_low:5.1f}–{100 * r.ci95_high:5.1f}%"
+        if r.suppressed:
+            ci = ""
+        elif math.isnan(r.ci95_low):
+            ci = "not estimable"
+        else:
+            ci = f"{100 * r.ci95_low:5.1f}–{100 * r.ci95_high:5.1f}%"
         line = f"{r.indicator:<24} {_pct(r.share):>6} {ci:>15} {r.n:>6}"
         if has_nat:
             line += f" {_pct(r.national_share):>8}"
         lines.append(line)
     lines += [
         "",
-        "Weighted with ENDUTIH expansion factors; cells with n < 30 suppressed (—).",
+        "Weighted with ENDUTIH expansion factors; cells with n < 30, and cells that would",
+        "let a blank be recovered from the margins, are suppressed (—). 95% CI: Wilson on",
+        "the design-effect-adjusted n.",
         "Shares are of all persons 6+ (or households) in the cell. Estimates computed",
         "from INEGI public microdata — not official INEGI tabulations.",
         f"Fuente: INEGI, ENDUTIH {a['edition']}.",
@@ -108,15 +132,25 @@ def main_prepare(argv: list[str] | None = None) -> int:
     p.add_argument("--edition", type=int, default=ED)
     p.add_argument("--zip", help="use an already-downloaded ENDUTIH CSV zip")
     p.add_argument("--url", help="override the download URL")
-    p.add_argument("--raw-dir", default=str(PKG_ROOT / "raw"), help="cache for raw microdata (gitignored)")
-    p.add_argument("--out-dir", default=str(PKG_ROOT / "data"))
+    p.add_argument("--raw-dir", help="cache for raw microdata (default: raw/ in a source checkout, "
+                                      "else ~/.cache/endutih-media-profiles/raw)")
+    p.add_argument("--out-dir", help=f"where to write the tables (default: ${ENV_VAR}, else data/ in a "
+                                      "source checkout; required otherwise)")
     p.add_argument("--min-n", type=int, default=30, help="suppress cells with fewer respondents (default 30)")
     p.add_argument("--force", action="store_true")
     a = p.parse_args(argv)
-    paths = run(Path(a.out_dir), Path(a.raw_dir), edition=a.edition, url=a.url,
+    checkout = source_checkout()
+    out_dir = a.out_dir or os.environ.get(ENV_VAR) or (str(checkout / "data") if checkout else None)
+    if out_dir is None:
+        p.error(f"--out-dir is required outside a source checkout (or set {ENV_VAR}); "
+                "the installed package's own data folder is not written to")
+    raw_dir = a.raw_dir or str(checkout / "raw" if checkout else Path.home() / ".cache" / "endutih-media-profiles" / "raw")
+    paths = run(Path(out_dir), Path(raw_dir), edition=a.edition, url=a.url,
                 zip_path=Path(a.zip) if a.zip else None, min_n=a.min_n, force_download=a.force)
     for k, v in paths.items():
         print(f"wrote {k}: {v}", file=sys.stderr)
+    if checkout is None or Path(out_dir).resolve() != (checkout / "data").resolve():
+        print(f"query these tables with --data-dir {out_dir} or {ENV_VAR}={out_dir}", file=sys.stderr)
     return 0
 
 

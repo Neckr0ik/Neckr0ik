@@ -11,7 +11,15 @@ from .config import GatewayConfig, hash_key
 from .errors import GatewayError
 from .gateway import Gateway
 from .logging_utils import configure_logging, log_event
+from .periods import validate_period
 from .types import CompletionRequest
+
+
+def _period(value: str) -> str:
+    try:
+        return validate_period(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(str(exc)) from None
 
 
 def _gateway(args) -> Gateway:
@@ -34,6 +42,10 @@ def main(argv: list[str] | None = None) -> int:
         if name == "serve":
             sp.add_argument("--host", default="127.0.0.1")
             sp.add_argument("--port", type=int, default=8080)
+            sp.add_argument("--max-concurrency", type=int, default=64,
+                            help="requests handled at once; extra connections get 503 (default 64)")
+            sp.add_argument("--request-timeout", type=float, default=30.0,
+                            help="socket timeout in seconds for reading a request (default 30)")
         if name in ("complete", "usage"):
             sp.add_argument("--org", required=True)
         if name == "complete":
@@ -43,7 +55,7 @@ def main(argv: list[str] | None = None) -> int:
             sp.add_argument("--system")
             sp.add_argument("--max-tokens", type=int)
         if name == "usage":
-            sp.add_argument("--period", help="YYYY-MM (default: current UTC month)")
+            sp.add_argument("--period", type=_period, help="YYYY-MM (default: current UTC month)")
     sub.add_parser("hash-key", help="read a key from stdin/prompt and print its sha256 for LLMGW_API_KEY_SHA256")
     args = p.parse_args(argv)
 
@@ -52,7 +64,11 @@ def main(argv: list[str] | None = None) -> int:
         print(hash_key(key))
         return 0
 
-    gw = _gateway(args)
+    try:
+        gw = _gateway(args)
+    except ValueError as exc:  # bad configuration: say so without a traceback
+        print(f"configuration error: {exc}", file=sys.stderr)
+        return 2
     try:
         if args.cmd == "serve":
             from .server import serve
@@ -61,7 +77,8 @@ def main(argv: list[str] | None = None) -> int:
                 print("refusing to serve: no API keys configured (LLMGW_API_KEYS or LLMGW_API_KEY_SHA256)",
                       file=sys.stderr)
                 return 2
-            httpd = serve(gw, args.host, args.port)
+            httpd = serve(gw, args.host, args.port, max_concurrency=args.max_concurrency,
+                          request_timeout_s=args.request_timeout)
             log_event("server_started", host=args.host, port=httpd.server_address[1], provider=gw.provider.name,
                       orgs=len(gw.config.api_key_hashes))
             try:

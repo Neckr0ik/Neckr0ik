@@ -6,11 +6,11 @@
 
 | Package | What it does | Data | Tests |
 |:---|:---|:---|:---:|
-| [**mx-census-sampler**](mx-census-sampler) | Reproducible PPS sampling of Mexico's 2,469 municipalities by adult population, census-anchored respondent profiles, design weights, Kish effective n | INEGI Censo 2020 (ITER) | 26 |
-| [**endutih-media-profiles**](endutih-media-profiles) | Weighted media & technology use (internet, social networks, streaming, radio, open TV…) by state, sex, age and urban/rural, with design-based SE and small-cell suppression | INEGI ENDUTIH 2025 | 11 |
-| [**llm-survey-bias-kit**](llm-survey-bias-kit) | Diagnostics for LLM-simulated responses: answer-order bias, paired A/B with CI and minimum detectable effect, A/A noise floor, homogeneity vs human reference | Your CSVs | 75 |
-| [**silicon-sample-validation**](silicon-sample-validation) | Pre-registration-friendly validation harness: hash-chained forecast registry, training-cutoff guard, no-LLM baselines, memorization probe, failure breakdown | Your estimates vs official figures | 65 |
-| [**llm-gateway-metering**](llm-gateway-metering) | Multi-provider LLM gateway (Anthropic API · Amazon Bedrock · Vertex AI) with shared monthly quotas per organization, 80% warnings, per-user/feature metering, rate limits | — | 50 |
+| [**mx-census-sampler**](mx-census-sampler) | Reproducible PPS sampling of Mexico's 2,469 municipalities by adult population, census-anchored respondent profiles, design weights, Kish effective n | INEGI Censo 2020 (ITER) | 33 |
+| [**endutih-media-profiles**](endutih-media-profiles) | Weighted media & technology use (internet, social networks, streaming, radio, open TV…) by state, sex, age and urban/rural, with design-based SE, Wilson CIs and small-cell plus complementary suppression | INEGI ENDUTIH 2025 | 19 |
+| [**llm-survey-bias-kit**](llm-survey-bias-kit) | Diagnostics for LLM-simulated responses: answer-order bias, paired A/B with CI and minimum detectable effect, A/A noise floor, homogeneity vs human reference | Your CSVs | 87 |
+| [**silicon-sample-validation**](silicon-sample-validation) | Pre-registration-friendly validation harness: hash-chained forecast registry, training-cutoff guard, no-LLM baselines, memorization probe, failure breakdown | Your estimates vs official figures | 86 |
+| [**llm-gateway-metering**](llm-gateway-metering) | Multi-provider LLM gateway (Anthropic API · Amazon Bedrock · Vertex AI) with shared monthly quotas per organization, 80% warnings, per-user/feature metering, rate limits | — | 67 |
 
 ```mermaid
 flowchart LR

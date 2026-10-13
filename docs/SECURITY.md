@@ -8,12 +8,7 @@ The security of Digital-Forge is a top priority. We appreciate the security comm
 
 #### Supported Versions
 
-We provide security updates for the following versions:
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.x.x   | :white_check_mark: |
-| < 1.0   | :x:                |
+The `main` branch is the only supported version.
 
 #### How to Report a Vulnerability
 
@@ -21,8 +16,8 @@ We provide security updates for the following versions:
 
 Instead, please report them responsibly through one of these channels:
 
-1. **Email**: Send details to digital.forge@unife.us
-2. **LinkedIn**: Direct message [Giovanni Oliveira](https://www.linkedin.com/in/giovannide)
+1. **Email**: Send details to impulselabs@mail.com
+2. **LinkedIn**: Direct message [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 3. **GitHub Security Advisory**: Use GitHub's private vulnerability reporting feature
 
 #### What to Include in Your Report
@@ -75,12 +70,7 @@ La seguridad de Digital-Forge es una prioridad máxima. Apreciamos los esfuerzos
 
 #### Versiones Soportadas
 
-Proporcionamos actualizaciones de seguridad para las siguientes versiones:
-
-| Versión | Soportada          |
-| ------- | ------------------ |
-| 1.x.x   | :white_check_mark: |
-| < 1.0   | :x:                |
+La rama `main` es la única versión soportada.
 
 #### Cómo Reportar una Vulnerabilidad
 
@@ -88,8 +78,8 @@ Proporcionamos actualizaciones de seguridad para las siguientes versiones:
 
 En su lugar, por favor repórtalas responsablemente a través de uno de estos canales:
 
-1. **Email**: Envía detalles a digital.forge@unife.us
-2. **LinkedIn**: Mensaje directo a [Giovanni Oliveira](https://www.linkedin.com/in/giovannide)
+1. **Email**: Envía detalles a impulselabs@mail.com
+2. **LinkedIn**: Mensaje directo a [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 3. **GitHub Security Advisory**: Usa la función de reporte privado de vulnerabilidades de GitHub
 
 #### Qué Incluir en tu Reporte
@@ -142,12 +132,7 @@ A segurança do Digital-Forge é uma prioridade máxima. Apreciamos os esforços
 
 #### Versões Suportadas
 
-Fornecemos atualizações de segurança para as seguintes versões:
-
-| Versão  | Suportada          |
-| ------- | ------------------ |
-| 1.x.x   | :white_check_mark: |
-| < 1.0   | :x:                |
+A branch `main` é a única versão suportada.
 
 #### Como Relatar uma Vulnerabilidade
 
@@ -155,8 +140,8 @@ Fornecemos atualizações de segurança para as seguintes versões:
 
 Em vez disso, por favor relate-as responsavelmente através de um destes canais:
 
-1. **Email**: Envie detalhes para digital.forge@unife.us
-2. **LinkedIn**: Mensagem direta para [Giovanni Oliveira](https://www.linkedin.com/in/giovannide)
+1. **Email**: Envie detalhes para impulselabs@mail.com
+2. **LinkedIn**: Mensagem direta para [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 3. **GitHub Security Advisory**: Use o recurso de relatório privado de vulnerabilidades do GitHub
 
 #### O que Incluir no seu Relatório
@@ -203,8 +188,8 @@ Este repositório contém conteúdo educacional de segurança, incluindo:
 
 ## Security Contacts | Contactos de Seguridad | Contatos de Segurança
 
-- **Primary Contact | Contacto Principal | Contato Principal**: digital.forge@unife.us
-- **Maintainer | Mantenedor | Mantenedor**: [Giovanni Oliveira](https://www.linkedin.com/in/giovannide)
+- **Primary Contact | Contacto Principal | Contato Principal**: impulselabs@mail.com
+- **Maintainer | Mantenedor | Mantenedor**: [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 - **Response Time | Tiempo de Respuesta | Tempo de Resposta**: 48 hours | 48 horas | 48 horas
 
 ## Hall of Fame | Salón de la Fama | Hall da Fama
@@ -219,5 +204,5 @@ Reconhecemos pesquisadores de segurança que ajudam a melhorar nossa segurança:
 
 ---
 
-**Last Updated | Última Actualización | Última Atualização**: December 2024  
+**Last Updated | Última Actualización | Última Atualização**: October 2026  
 **Version | Versión | Versão**: 1.0

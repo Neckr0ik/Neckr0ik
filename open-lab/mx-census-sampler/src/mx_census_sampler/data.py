@@ -6,6 +6,7 @@ import os
 from importlib import resources
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 DATA_FILENAME = "municipios_cpv2020.csv"
@@ -78,6 +79,16 @@ def load_frame(path: str | os.PathLike | None = None) -> pd.DataFrame:
     missing = [c for c in REQUIRED_COLUMNS if c not in df.columns]
     if missing:
         raise ValueError(f"{p} is missing columns: {missing}")
+    for c in (c for c in REQUIRED_COLUMNS if c not in STRING_COLUMNS):
+        vals = pd.to_numeric(df[c], errors="coerce")
+        bad = ~np.isfinite(vals.to_numpy(dtype=float)) | (vals.to_numpy(dtype=float) < 0)
+        if bad.any():
+            first = df.loc[bad, "cvegeo"].iloc[0] if "cvegeo" in df else "?"
+            raise ValueError(
+                f"{p}: column {c!r} must hold finite counts >= 0; {int(bad.sum())} row(s) do not "
+                f"(first: cvegeo {first}, value {df.loc[bad, c].iloc[0]!r})"
+            )
+        df[c] = vals
     df["size_band"] = size_band(df["pobtot"])
     return df.sort_values("cvegeo", kind="mergesort").reset_index(drop=True)
 

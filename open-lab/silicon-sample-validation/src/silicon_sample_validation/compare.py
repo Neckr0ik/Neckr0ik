@@ -3,6 +3,10 @@
 The method "counts" only if it beats every baseline: its MAE must be lower and
 the paired bootstrap 95% CI of ``MAE_method - MAE_baseline`` (resampling units)
 must lie entirely below zero.
+
+With fewer than ``MIN_UNITS`` (10) units, or when a bootstrap has zero spread (every
+unit's error difference is identical, so the CI is a single point), the verdict is
+``"not evaluable"`` instead: such a comparison cannot support either claim.
 """
 
 from __future__ import annotations
@@ -13,6 +17,10 @@ from typing import Mapping, Sequence
 import numpy as np
 
 from . import metrics
+
+MIN_UNITS = 10
+NOT_EVALUABLE_FEW = "not evaluable (too few units)"
+NOT_EVALUABLE_DEGENERATE = "not evaluable (bootstrap has zero spread)"
 
 
 @dataclass
@@ -25,6 +33,7 @@ class PairwiseComparison:
     ci: tuple[float, float]
     skill: float  # 1 - mae_a / mae_b
     a_better: bool
+    boot_sd: float = float("nan")  # SD of the bootstrap MAE differences
 
     def to_dict(self) -> dict:
         d = self.__dict__.copy()
@@ -63,6 +72,7 @@ def compare_two(
         ci=(float(lo), float(hi)),
         skill=float(skill),
         a_better=bool(hi < 0),
+        boot_sd=float(boots.std()),
     )
 
 
@@ -122,8 +132,13 @@ def compare_to_baselines(
     beats = all(c.a_better for c in vs.values())
     lost = [k for k, c in vs.items() if not c.a_better]
     notes: list[str] = []
-    if y.size < 20:
+    degenerate = [k for k, c in vs.items() if not c.boot_sd > 0]
+    if y.size < MIN_UNITS:
+        notes.append(f"only {y.size} units (minimum {MIN_UNITS}): no verdict")
+    elif y.size < 20:
         notes.append(f"only {y.size} units: CIs are wide and the bootstrap is approximate")
+    if degenerate:
+        notes.append("bootstrap of the MAE difference has zero spread vs: " + ", ".join(degenerate))
     if "coverage" in ms:
         gap = ms["coverage"] - nominal
         if abs(gap) > 0.10:
@@ -131,9 +146,12 @@ def compare_to_baselines(
                 f"interval coverage {ms['coverage']:.2f} vs nominal {nominal:.2f}: intervals are "
                 + ("too narrow (overconfident)" if gap < 0 else "too wide (underconfident)")
             )
-    verdict = (
-        "beats all baselines"
-        if beats
-        else "does not beat: " + ", ".join(lost) + " (report as a negative result)"
-    )
+    if y.size < MIN_UNITS:
+        verdict, beats = NOT_EVALUABLE_FEW, False
+    elif degenerate:
+        verdict, beats = NOT_EVALUABLE_DEGENERATE, False
+    elif beats:
+        verdict = "beats all baselines"
+    else:
+        verdict = "does not beat: " + ", ".join(lost) + " (report as a negative result)"
     return ComparisonReport(method, int(y.size), ms, bs, vs, beats, verdict, notes)

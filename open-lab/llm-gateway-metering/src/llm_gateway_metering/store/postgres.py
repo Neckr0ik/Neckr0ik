@@ -70,7 +70,8 @@ class PostgresStore:
             self._lock(cur, org_id, period)
             cur.execute("DELETE FROM llmgw_reservations WHERE org_id=%s AND expires_at<=%s", (org_id, now))
             used, reserved = self._totals(cur, org_id, period, now)
-            if used + reserved + units > limit:
+            # Once a pool is used up (usage can overshoot an estimate), nothing new starts.
+            if used >= limit or used + reserved + units > limit:
                 raise QuotaExceeded(org_id, period, used, reserved, units, limit)
             rid = uuid.uuid4().hex
             cur.execute("INSERT INTO llmgw_reservations VALUES (%s,%s,%s,%s,%s,%s)",

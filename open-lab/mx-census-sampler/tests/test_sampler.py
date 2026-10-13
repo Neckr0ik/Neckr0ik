@@ -91,3 +91,28 @@ def test_bad_design(frame):
         sample(frame, n=0)
     with pytest.raises(ValueError):
         sample(frame, n=5, method="srs")
+
+
+def test_stratified_allocation_with_empty_strata_is_refused(frame):
+    # The fixture has 3 states: n=2 leaves one of them without draws under any allocation.
+    for allocation in ("proportional", "sqrt", "equal"):
+        with pytest.raises(ValueError, match="no draws") as ei:
+            sample(frame, n=2, seed=1, stratify="state", allocation=allocation)
+    assert "Use n >= 3" in str(ei.value)  # the smallest n that covers every stratum (equal allocation)
+    assert len(sample(frame, n=3, seed=1, stratify="state", allocation="equal").draws) == 3
+    assert len(sample(frame, n=2, seed=1).draws) == 2  # unstratified: one stratum, always covered
+
+
+class _EdgeRng:
+    """Returns the largest values a uniform draw could round to, to hit the cumulative total exactly."""
+
+    def random(self, size=None):
+        return 1.0 if size is None else np.ones(size)
+
+
+def test_selection_never_indexes_past_the_last_unit():
+    from mx_census_sampler.sampler import _systematic, _with_replacement
+
+    cum = np.cumsum([0.1, 0.2, 0.3])
+    assert _systematic(cum, 3, _EdgeRng()).max() == 2
+    assert _with_replacement(cum, 4, _EdgeRng()).tolist() == [2, 2, 2, 2]

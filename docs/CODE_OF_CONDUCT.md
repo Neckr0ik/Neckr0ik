@@ -38,7 +38,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 ### Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at digital.forge@unife.us.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at impulselabs@mail.com.
 
 All complaints will be reviewed and investigated promptly and fairly.
 
@@ -100,7 +100,7 @@ Este Código de Conducta se aplica dentro de todos los espacios de la comunidad,
 
 ### Aplicación
 
-Los casos de comportamiento abusivo, acosador o inaceptable pueden reportarse a los líderes de la comunidad responsables de la aplicación en digital.forge@unife.us.
+Los casos de comportamiento abusivo, acosador o inaceptable pueden reportarse a los líderes de la comunidad responsables de la aplicación en impulselabs@mail.com.
 
 Todas las quejas serán revisadas e investigadas de manera rápida y justa.
 
@@ -162,7 +162,7 @@ Este Código de Conduta se aplica dentro de todos os espaços da comunidade, e t
 
 ### Aplicação
 
-Instâncias de comportamento abusivo, assediador ou inaceitável podem ser reportadas aos líderes da comunidade responsáveis pela aplicação em digital.forge@unife.us.
+Instâncias de comportamento abusivo, assediador ou inaceitável podem ser reportadas aos líderes da comunidade responsáveis pela aplicação em impulselabs@mail.com.
 
 Todas as reclamações serão revisadas e investigadas prontamente e de forma justa.
 
@@ -192,10 +192,12 @@ For questions about this Code of Conduct:
 Para preguntas sobre este Código de Conducta:
 Para perguntas sobre este Código de Conduta:
 
-- **Email**: digital.forge@unife.us
-- **LinkedIn**: [Giovanni Oliveira](https://www.linkedin.com/in/giovannide)
+- **Email**: impulselabs@mail.com
+- **LinkedIn**: [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 
 ---
 
-**Last Updated | Última Actualización | Última Atualização**: December 2024  
+*Adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.1, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*
+
+**Last Updated | Última Actualización | Última Atualização**: October 2026  
 **Version | Versión | Versão**: 1.0
