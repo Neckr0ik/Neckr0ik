@@ -10,18 +10,21 @@ def read_csv(path: str | Path, delimiter: str | None = None) -> list[dict]:
     """Read a CSV into a list of dicts (values stay strings).
 
     The delimiter is sniffed among ``,;\\t|`` unless given. A UTF-8 BOM is
-    accepted.
+    accepted. The file is opened with ``newline=""`` as the ``csv`` module
+    requires, so quoted fields may contain line breaks.
     """
-    text = Path(path).read_text(encoding="utf-8-sig")
-    if delimiter is None:
-        try:
-            delimiter = csv.Sniffer().sniff(text[:4096], delimiters=",;\t|").delimiter
-        except csv.Error:
-            delimiter = ","
-    reader = csv.DictReader(text.splitlines(), delimiter=delimiter)
-    rows = [dict(r) for r in reader]
-    if reader.fieldnames is None:
-        raise ValueError(f"{path}: empty CSV")
+    with open(path, newline="", encoding="utf-8-sig") as fh:
+        if delimiter is None:
+            sample = fh.read(4096)
+            fh.seek(0)
+            try:
+                delimiter = csv.Sniffer().sniff(sample, delimiters=",;\t|").delimiter
+            except csv.Error:
+                delimiter = ","
+        reader = csv.DictReader(fh, delimiter=delimiter)
+        rows = [dict(r) for r in reader]
+        if reader.fieldnames is None:
+            raise ValueError(f"{path}: empty CSV")
     return rows
 
 

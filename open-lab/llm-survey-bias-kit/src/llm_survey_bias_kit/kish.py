@@ -31,8 +31,8 @@ def kish_effective_n(weights: Sequence[float]) -> KishResult:
     w = np.asarray(weights, dtype=float)
     if w.size == 0:
         raise ValueError("no weights")
-    if np.isnan(w).any():
-        raise ValueError("weights contain NaN")
+    if not np.isfinite(w).all():
+        raise ValueError("weights must be finite (found NaN or inf)")
     if (w < 0).any():
         raise ValueError("weights must be non-negative")
     s1, s2 = float(w.sum()), float((w**2).sum())

@@ -40,6 +40,15 @@ AGE_BANDS = {
 }
 SEXES = {"male": "1", "female": "2"}
 AREAS = {"urban": "U", "rural": "R"}
+ADULT_BANDS = ["18-29", "30-44", "45-59", "60+"]
+# Additive relations used for complementary suppression (``18+`` overlaps the adult bands).
+PERSON_RELATIONS = {
+    "state": [(ALL, sorted(STATE_NAMES))],
+    "sex": [(ALL, list(SEXES))],
+    "age": [(ALL, ["6-11", "12-17", *ADULT_BANDS]), ("18+", ADULT_BANDS), (ALL, ["6-11", "12-17", "18+"])],
+    "area": [(ALL, list(AREAS))],
+}
+HOUSEHOLD_RELATIONS = {"state": PERSON_RELATIONS["state"], "area": PERSON_RELATIONS["area"]}
 
 
 def member(edition: int, table: str) -> str:
@@ -144,15 +153,28 @@ def build_person_table(p: pd.DataFrame, edition: int, min_n: int = MIN_N_DEFAULT
         "area": _levels(p["DOMINIO"].str.strip(), AREAS),
     }
     inds = {i.key: code_indicator(p, i) for i in PERSON_INDICATORS}
-    out = estimate_cells(p, design, dims, inds, min_n=min_n)
+    out = estimate_cells(p, design, dims, inds, min_n=min_n, relations=_present(PERSON_RELATIONS, dims))
     return _finish(out, edition)
+
+
+def _present(relations, dims):
+    """Keep only levels that exist (e.g. a synthetic file with two states)."""
+    out = {}
+    for d, rels in relations.items():
+        kept = []
+        for total, parts in rels:
+            ps = [q for q in parts if dims[d][q].any()]
+            if dims[d][total].any() and ps:
+                kept.append((total, ps))
+        out[d] = kept
+    return out
 
 
 def build_household_table(h: pd.DataFrame, edition: int, min_n: int = MIN_N_DEFAULT) -> pd.DataFrame:
     design = Design(h["EST_DIS"], h["UPM_DIS"], pd.to_numeric(h["FAC_HOG"]))
     dims = {"state": state_levels(h["CVE_ENT"]), "area": _levels(h["DOMINIO"].str.strip(), AREAS)}
     inds = {i.key: code_indicator(h, i) for i in HOUSEHOLD_INDICATORS}
-    out = estimate_cells(h, design, dims, inds, min_n=min_n)
+    out = estimate_cells(h, design, dims, inds, min_n=min_n, relations=_present(HOUSEHOLD_RELATIONS, dims))
     return _finish(out, edition)
 
 
@@ -192,7 +214,7 @@ PROVENANCE = """# Provenance — ENDUTIH {edition} aggregated tables
 | Design | strata `EST_DIS`, PSUs `UPM_DIS` (for standard errors) |
 | License | INEGI *Términos de libre uso de la información* — {license_url} |
 | Records | {n_p:,} selected persons aged 6+ (Σ FAC_PER = {pop_p:,}); {n_h:,} households (Σ FAC_HOG = {pop_h:,}) |
-| Suppression | cells with unweighted n < {min_n} have shares, SEs and weighted totals blanked |
+| Suppression | cells with unweighted n < {min_n} have shares, SEs and weighted totals blanked (`suppression=primary`); further cells are blanked (`suppression=complementary`) so that no blank can be recovered by subtracting published cells from a published total along any dimension; the same is done per indicator for indicator-level blanks |
 
 Required attribution (per INEGI's terms): *Fuente: INEGI. Encuesta Nacional
 sobre Disponibilidad y Uso de Tecnologías de la Información en los Hogares
@@ -211,7 +233,8 @@ tabulations. INEGI does not endorse them.
 * `indicators.csv` — every indicator key, the ENDUTIH variable(s), universe
   gates and labels (EN/ES).
 
-Columns: `n` = unweighted respondents in the cell; `pop` = weighted
+Columns: `n` = unweighted respondents in the cell (always shown);
+`suppressed` / `suppression` (`none`, `primary`, `complementary`); `pop` = weighted
 persons/households; `<indicator>` = weighted share (0–1); `<indicator>_se` =
 linearised standard error; `<indicator>_n` (only where answers can be missing)
 = respondents with a valid answer. `area` follows ENDUTIH `DOMINIO`

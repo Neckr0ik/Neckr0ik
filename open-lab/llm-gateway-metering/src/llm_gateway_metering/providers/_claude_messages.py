@@ -10,7 +10,7 @@ from __future__ import annotations
 from typing import Any
 
 from ..errors import ProviderError, ProviderTimeout
-from ..types import ProviderRequest, ProviderResponse
+from ..types import ProviderRequest, ProviderResponse, UsageIteration
 
 RETRYABLE_STATUS = {408, 409, 429, 500, 502, 503, 504, 529}
 
@@ -43,16 +43,24 @@ def parse_response(resp: Any) -> ProviderResponse:
     out_tok = int(_get(usage, "output_tokens", 0) or 0)
     cache_w = int(_get(usage, "cache_creation_input_tokens", 0) or 0)
     cache_r = int(_get(usage, "cache_read_input_tokens", 0) or 0)
-    iterations = _get(usage, "iterations") or []
+    raw_iterations = _get(usage, "iterations") or []
+    iterations = tuple(
+        UsageIteration(type=str(_get(i, "type", "message")), model=_get(i, "model") or None,
+                       input_tokens=int(_get(i, "input_tokens", 0) or 0),
+                       output_tokens=int(_get(i, "output_tokens", 0) or 0),
+                       cache_creation_input_tokens=int(_get(i, "cache_creation_input_tokens", 0) or 0),
+                       cache_read_input_tokens=int(_get(i, "cache_read_input_tokens", 0) or 0))
+        for i in raw_iterations)
     fallback = False
     if iterations:
         # With server-side fallbacks, top-level usage covers only the attempt that produced
-        # the message; usage.iterations is the per-attempt source of truth. Meter all attempts.
-        in_tok = sum(int(_get(i, "input_tokens", 0) or 0) for i in iterations)
-        out_tok = sum(int(_get(i, "output_tokens", 0) or 0) for i in iterations)
-        cache_w = sum(int(_get(i, "cache_creation_input_tokens", 0) or 0) for i in iterations)
-        cache_r = sum(int(_get(i, "cache_read_input_tokens", 0) or 0) for i in iterations)
-        fallback = any(_get(i, "type") == "fallback_message" for i in iterations)
+        # the message; usage.iterations is the per-attempt source of truth. Meter all attempts
+        # (the gateway charges each one at its own model's rate).
+        in_tok = sum(i.input_tokens for i in iterations)
+        out_tok = sum(i.output_tokens for i in iterations)
+        cache_w = sum(i.cache_creation_input_tokens for i in iterations)
+        cache_r = sum(i.cache_read_input_tokens for i in iterations)
+        fallback = any(i.type == "fallback_message" for i in iterations)
     return ProviderResponse(
         text="".join(texts),
         model=str(_get(resp, "model", "")),
@@ -63,6 +71,7 @@ def parse_response(resp: Any) -> ProviderResponse:
         cache_read_input_tokens=cache_r,
         request_id=_get(resp, "_request_id") or _get(resp, "id"),
         served_by_fallback=fallback,
+        iterations=iterations,
     )
 
 

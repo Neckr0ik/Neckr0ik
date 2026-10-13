@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import os
 from importlib import resources
 from pathlib import Path
@@ -70,6 +71,30 @@ def normalize(state=None, sex=None, age=None, area=None) -> dict[str, str]:
     return out
 
 
+CI_NOT_ESTIMABLE = "CI not estimable (se = 0)"
+
+
+def wilson_ci(share: float, se: float, z: float = 1.959964) -> tuple[float, float]:
+    """95% Wilson interval on the design-effect-adjusted sample size.
+
+    ``n_eff = p(1-p)/se²`` carries the survey design (weights, clustering,
+    strata) into the Wilson score interval, which stays inside [0, 1] and is not
+    symmetric near 0 or 1, unlike the Wald ``p ± 1.96·se``. With ``se = 0``
+    (typically ``p`` = 0 or 1 in a small cell) the design effect is unknown and
+    the interval is not estimable: ``(nan, nan)``.
+    """
+    if share is None or se is None or not (math.isfinite(share) and math.isfinite(se)):
+        return float("nan"), float("nan")
+    if se <= 0 or share <= 0 or share >= 1:
+        return float("nan"), float("nan")
+    n_eff = share * (1 - share) / (se * se)
+    z2 = z * z
+    denom = 1 + z2 / n_eff
+    center = (share + z2 / (2 * n_eff)) / denom
+    half = z * math.sqrt(se * se + z2 / (4 * n_eff * n_eff)) / denom
+    return max(0.0, center - half), min(1.0, center + half)
+
+
 def _indicator_keys(table: str) -> list[str]:
     return [i.key for i in (PERSON_INDICATORS if table == "persons" else HOUSEHOLD_INDICATORS)]
 
@@ -87,8 +112,9 @@ def profile(
 ) -> pd.DataFrame:
     """Return one row per indicator for the requested cell.
 
-    Columns: indicator, label_en, label_es, share, se, ci95_low, ci95_high,
-    n (cell respondents), suppressed, and — if ``compare_national`` — the
+    Columns: indicator, label_en, label_es, share, se, ci95_low, ci95_high
+    (Wilson interval on the design-effect-adjusted n; see :func:`wilson_ci`),
+    ci_note, n (cell respondents), suppressed, and — if ``compare_national`` — the
     national value for the same sex/age/area (``national_share``).
     """
     df = load_table(table, edition, directory)
@@ -121,16 +147,19 @@ def profile(
     recs = []
     for k in keys:
         share, se = row[k], row[f"{k}_se"]
+        published = pd.notna(share)
+        lo, hi = wilson_ci(float(share), float(se)) if published and pd.notna(se) else (float("nan"),) * 2
         rec = {
             "indicator": k,
             "label_en": BY_KEY[k].label_en,
             "label_es": BY_KEY[k].label_es,
             "share": share,
             "se": se,
-            "ci95_low": max(0.0, share - 1.96 * se) if pd.notna(share) else float("nan"),
-            "ci95_high": min(1.0, share + 1.96 * se) if pd.notna(share) else float("nan"),
+            "ci95_low": lo,
+            "ci95_high": hi,
+            "ci_note": CI_NOT_ESTIMABLE if published and math.isnan(lo) else "",
             "n": int(row.get(f"{k}_n", row["n"])),
-            "suppressed": bool(pd.isna(share)),
+            "suppressed": not published,
         }
         if nat is not None:
             rec["national_share"] = nat[k]

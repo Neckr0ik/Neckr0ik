@@ -150,3 +150,29 @@ def test_split_with_three_replicates_is_not_evaluable():
     res = aa_split_replicates(m)
     assert res.comparison.verdict == NOT_EVALUABLE
     assert any(">= 4 replicates" in x for x in res.comparison.reasons)
+
+
+def test_not_evaluable_aa_has_no_noise_floor():
+    one_rep = np.random.default_rng(4).normal(size=(20, 1))
+    res = aa_test(one_rep, one_rep + 0.01)
+    assert res.comparison.verdict == NOT_EVALUABLE and math.isinf(res.noise_floor)
+    split = aa_split_replicates(np.random.default_rng(3).normal(size=(20, 3)))
+    assert math.isinf(split.noise_floor)
+    # an infinite floor can never make an A/B "distinguishable"
+    a, b = known_case()
+    assert paired_ab(a, b, noise_floor=split.noise_floor).verdict == INDISTINGUISHABLE
+
+
+def test_zero_variance_floating_point_residue_is_not_a_difference():
+    a = np.full((10, 2), 0.1 + 0.2)
+    b = np.full((10, 2), 0.3)  # differs from a only by floating-point rounding
+    r = paired_ab(a, b)
+    assert r.verdict == INDISTINGUISHABLE
+    assert any("zero variance" in x for x in r.reasons)
+
+
+def test_zero_variance_real_shift_is_still_detected():
+    b = np.random.default_rng(6).normal(5, 1, size=(10, 1)).repeat(2, axis=1)
+    r = paired_ab(b + 0.5, b)  # every unit moves by exactly 0.5
+    assert r.diff == pytest.approx(0.5) and r.verdict == DISTINGUISHABLE
+    assert any("zero variance" in x for x in r.reasons)

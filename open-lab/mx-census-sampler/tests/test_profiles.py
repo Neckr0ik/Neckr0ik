@@ -35,3 +35,19 @@ def test_profile_values_are_valid(frame):
     assert set(resp["sex"]) <= set(SEXES)
     assert set(resp["age_band"]) <= set(AGE_BANDS)
     assert set(resp["schooling"]) <= set(SCHOOLING)
+
+
+@pytest.mark.parametrize("bad", ["-5", "inf", "nan", "*", ""])
+def test_load_frame_rejects_invalid_counts(tmp_path, bad):
+    from mx_census_sampler import load_frame
+
+    from .conftest import FIXTURE
+
+    lines = FIXTURE.read_text(encoding="utf-8").splitlines()
+    header = lines[0].split(",")
+    row = lines[1].split(",")
+    row[header.index("p_18ymas_f")] = bad
+    p = tmp_path / "bad.csv"
+    p.write_text("\n".join([lines[0], ",".join(row), *lines[2:]]) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="p_18ymas_f"):
+        load_frame(p)

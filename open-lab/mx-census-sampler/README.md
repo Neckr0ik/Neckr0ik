@@ -57,6 +57,10 @@ ITER columns used:
 
 **Stratification (optional).** `--stratify state` with `--allocation`
 `proportional` (default), `equal` or `sqrt`; integers by largest remainder.
+Every stratum must get at least one draw. Otherwise its population would be
+silently missing from the sample and from the weights, so the sampler refuses
+and names the smallest `n` that works. For example, `-n 40 --stratify state`
+(proportional) leaves six small states without draws and asks for `n >= 88`.
 
 **Weights.** Every draw yields `--per-unit m` respondents, each with design
 weight `X_h / (n_h · m)`. Weights sum exactly to the adult population of the
