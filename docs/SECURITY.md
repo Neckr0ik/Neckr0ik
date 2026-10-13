@@ -4,7 +4,7 @@
 
 ### Reporting Security Vulnerabilities
 
-The security of Neckr0ik is a top priority. We appreciate the security community's efforts to responsibly disclose vulnerabilities and help us maintain the highest security standards.
+The security of Digital-Forge is a top priority. We appreciate the security community's efforts to responsibly disclose vulnerabilities and help us maintain the highest security standards.
 
 #### Supported Versions
 
@@ -71,7 +71,7 @@ This repository contains educational security content, including:
 
 ### Reportar Vulnerabilidades de Seguridad
 
-La seguridad de Neckr0ik es una prioridad máxima. Apreciamos los esfuerzos de la comunidad de seguridad para divulgar responsablemente las vulnerabilidades y ayudarnos a mantener los más altos estándares de seguridad.
+La seguridad de Digital-Forge es una prioridad máxima. Apreciamos los esfuerzos de la comunidad de seguridad para divulgar responsablemente las vulnerabilidades y ayudarnos a mantener los más altos estándares de seguridad.
 
 #### Versiones Soportadas
 
@@ -138,7 +138,7 @@ Este repositorio contiene contenido educativo de seguridad, incluyendo:
 
 ### Relatando Vulnerabilidades de Segurança
 
-A segurança do Neckr0ik é uma prioridade máxima. Apreciamos os esforços da comunidade de segurança para divulgar responsavelmente vulnerabilidades e nos ajudar a manter os mais altos padrões de segurança.
+A segurança do Digital-Forge é uma prioridade máxima. Apreciamos os esforços da comunidade de segurança para divulgar responsavelmente vulnerabilidades e nos ajudar a manter os mais altos padrões de segurança.
 
 #### Versões Suportadas
 
