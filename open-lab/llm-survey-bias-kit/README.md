@@ -6,7 +6,7 @@ Diagnostics for answers produced by LLM "silicon samples" in survey-style questi
 
 | Problem | Function | What it tells you |
 |---|---|---|
-| LLMs prefer options by **position** | `build_option_orders`, `assign_directions`, `estimate_order_effect` | Forward vs. reversed shares, TVD with permutation p-value, primacy index, order-balanced distribution |
+| LLMs prefer options by **position** | `build_option_orders`, `assign_directions`, `estimate_order_effect` | Forward vs. reversed shares, TVD with a unit-level permutation p-value, primacy index, order-balanced distribution |
 | Is message A really different from B? | `paired_ab`, `paired_ab_from_records` | Paired difference, 95% CI (t and bootstrap), MDE, verdict |
 | How big is the pipeline's own noise? | `aa_test`, `aa_split_replicates` | A/A difference and a **noise floor** you can pass to `paired_ab` |
 | Simulated answers are **too homogeneous** | `categorical_dispersion`, `numeric_dispersion` | Entropy / SD ratio vs. a human reference, with bootstrap CI |
@@ -36,7 +36,8 @@ res = paired_ab(scores_a, scores_b, noise_floor=aa.noise_floor)
 print(res.diff, res.ci_t, res.ci_boot, res.mde, res.verdict)
 
 plans = build_option_orders(["agree", "neutral", "disagree"], n_batches=10)  # forward/reversed
-effect = estimate_order_effect(responses, ["agree", "neutral", "disagree"])  # [{"direction", "choice"}, ...]
+effect = estimate_order_effect(responses, ["agree", "neutral", "disagree"],  # [{"unit_id", "direction", "choice"}, ...]
+                               unit_key="unit_id")             # resample units, not responses
 print(effect.tvd, effect.p_value, effect.primacy_index, effect.balanced_share)
 ```
 
@@ -57,7 +58,7 @@ llm-bias-kit subgroups   /tmp/demo/paired.csv --by region [--min-units 12] [--st
 llm-bias-kit kish        /tmp/demo/weights.csv --by region
 ```
 
-Expected columns, with defaults that you can change through flags: long format `unit_id, message, score` (one row per replicate) for `paired`/`aa`, `direction, choice` for `order`, `category, share` for the reference table, and `weight` for `kish`.
+Expected columns, with defaults that you can change through flags: long format `unit_id, message, score` (one row per replicate) for `paired`/`aa`, `unit_id, direction, choice` for `order` (without a `unit_id` column every row is treated as an independent unit, and the output says so), `category, share` for the reference table, and `weight` for `kish`.
 
 Excerpt from the synthetic example (random data, not a finding):
 
@@ -74,6 +75,7 @@ msg_A vs msg_B: units=120 replicates=3
 
 * per-option shift `share_forward − share_reversed`, with a bootstrap CI;
 * total-variation distance (TVD) between the two distributions, with a permutation p-value (direction labels shuffled);
+* with `unit_key`, the direction labels are shuffled across **units** and the bootstrap resamples units (a cluster bootstrap), so several answers from one simulated person count as one draw. Each unit must have one direction (`assign_directions` does this). Without `unit_key`, every response is treated as independent, which is only right with one answer per unit, and a `UserWarning` says so. This matters a lot. In seeded simulations with no order effect, 40 units with a strong personal preference and 10 answers each, the response-level test rejected at 5% in 66% of runs. The unit-level test rejected in 3.5%;
 * primacy index `½[(f_first − r_first) + (r_last − f_last)]`. It is +1 for a model that always picks the first displayed option, −1 for pure recency, and 0 when order has no effect;
 * the order-balanced distribution `½(forward + reversed)`, which is what you should report.
 
@@ -81,9 +83,9 @@ msg_A vs msg_B: units=120 replicates=3
 
 * CI from the t distribution (`df = n − 1`) and a unit-level percentile bootstrap;
 * `MDE = (t₁₋α/₂ + t_power) · SD_diff / √n`, the smallest true effect detectable with 80% power. `required_units()` inverts it;
-* verdict: **not evaluable** with fewer than 2 replicates per unit (or fewer than 2 units), because one LLM call per unit can't separate the model's sampling noise from a message effect. **Distinguishable** when both CIs exclude 0 and |diff| exceeds the A/A noise floor, if one was given. **Indistinguishable** otherwise. "Indistinguishable" doesn't mean the messages are equal. Read it against the MDE.
+* verdict: **not evaluable** with fewer than 2 replicates per unit (or fewer than 2 units), because one LLM call per unit can't separate the model's sampling noise from a message effect. **Distinguishable** when both CIs exclude 0 and |diff| exceeds the A/A noise floor, if one was given. If every unit's difference is identical (zero variance), the CIs shrink to a point, so |diff| must also exceed a small numerical tolerance. **Indistinguishable** otherwise. "Indistinguishable" doesn't mean the messages are equal. Read it against the MDE.
 
-**A/A.** The same message is simulated twice, either as two runs or by splitting each unit's replicates in half. The noise floor is the largest absolute bound of the A/A 95% CI. An A/A test that comes out "distinguishable" is a red flag: replicates may not be independent, or the pipeline may be caching or drifting.
+**A/A.** The same message is simulated twice, either as two runs or by splitting each unit's replicates in half. The noise floor is the largest absolute bound of the A/A 95% CI. When the A/A itself is not evaluable (for example, a split of 3 replicates leaves one replicate in a half), there is no floor. It is reported as `inf` (`null` in JSON), and passing it to `paired_ab` can't produce "distinguishable". A split floor is measured on means of R/2 replicates, while the A/B uses all R. Its replicate-noise part is therefore about √2 too large, which makes the floor conservative. An A/A test that comes out "distinguishable" is a red flag: replicates may not be independent, or the pipeline may be caching or drifting.
 
 **Homogeneity.** Bisbee et al. (2024) found that LLM-simulated answers have much less variance than human answers. For categorical items the kit compares normalised Shannon entropy (`H/log k`), the Gini–Simpson index, modal share and TVD against a human reference (raw answers or published proportions). It flags the items as too homogeneous when `H_sim/H_ref < 0.8`. For numeric scales it compares SDs. The 0.8 threshold is a convention and you can change it.
 

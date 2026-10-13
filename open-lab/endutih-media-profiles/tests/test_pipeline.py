@@ -21,7 +21,11 @@ def test_tables_shape(synthetic_tables):
     for i in HOUSEHOLD_INDICATORS:
         assert i.key in h.columns
     assert (p.loc[p["n"] < 30, ["internet_user", "pop"]].isna()).all().all()
-    assert p.loc[p["n"] >= 30, "internet_user"].notna().all()
+    assert ((p["suppression"] == "primary") == (p["n"] < 30)).all()
+    assert (p["suppressed"] == (p["suppression"] != "none")).all()
+    comp = p["suppression"] == "complementary"
+    assert comp.any() and p.loc[comp, ["internet_user", "pop"]].isna().all().all() and (p.loc[comp, "n"] >= 30).all()
+    assert p.loc[p["suppression"] == "none", "internet_user"].notna().all()
     assert (synthetic_tables / "PROVENANCE.md").is_file()
 
 
@@ -64,3 +68,32 @@ def test_cli(synthetic_tables, capsys):
     assert '"tiktok"' in capsys.readouterr().out
     assert main(["--state", "77", "--data-dir", str(synthetic_tables)]) == 2
     assert main(["--list"]) == 0
+
+
+def test_prepare_refuses_to_write_into_an_installed_package(monkeypatch, synthetic_zip, tmp_path, capsys):
+    from endutih_media_profiles import cli
+
+    monkeypatch.setattr(cli, "source_checkout", lambda: None)  # as when installed from a wheel
+    monkeypatch.delenv("ENDUTIH_PROFILES_DATA", raising=False)
+    with pytest.raises(SystemExit) as ei:
+        cli.main_prepare(["--zip", str(synthetic_zip)])
+    assert ei.value.code == 2 and "--out-dir is required" in capsys.readouterr().err
+    out = tmp_path / "tables"
+    monkeypatch.setenv("ENDUTIH_PROFILES_DATA", str(out))
+    assert cli.main_prepare(["--zip", str(synthetic_zip)]) == 0
+    assert (out / "endutih2025_persons.csv").is_file()
+    assert "ENDUTIH_PROFILES_DATA" in capsys.readouterr().err
+    assert profile().attrs["n"] > 0  # the loader follows the same variable
+
+
+def test_cli_ci_not_estimable(synthetic_tables, tmp_path, capsys):
+    p = pd.read_csv(synthetic_tables / "endutih2025_persons.csv", dtype=str, keep_default_na=False)
+    i = p.index[(p["state"] == "all") & (p["sex"] == "all") & (p["age"] == "all") & (p["area"] == "all")][0]
+    p.loc[i, "tiktok"], p.loc[i, "tiktok_se"] = "0.0", "0.0"
+    d = tmp_path / "edited"
+    d.mkdir()
+    p.to_csv(d / "endutih2025_persons.csv", index=False)
+    row = profile(directory=d, indicators=["tiktok"]).iloc[0]
+    assert row["share"] == 0 and np.isnan(row["ci95_low"]) and row["ci_note"].startswith("CI not estimable")
+    assert main(["--data-dir", str(d), "--indicators", "tiktok,internet_user"]) == 0
+    assert "not estimable" in capsys.readouterr().out

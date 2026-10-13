@@ -46,7 +46,7 @@ COLUMNS = tuple(UsageRecord.__dataclass_fields__)
 
 class MeteringStore(Protocol):
     def reserve(self, org_id: str, period: str, units: float, limit: float, *, now: float, ttl_s: float) -> Reservation:
-        """Atomically check ``used + reserved + units <= limit`` and hold ``units``.
+        """Atomically check ``used < limit`` and ``used + reserved + units <= limit``, then hold ``units``.
 
         Raises ``QuotaExceeded`` without holding anything when the check fails.
         """

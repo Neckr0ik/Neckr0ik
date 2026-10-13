@@ -3,14 +3,20 @@
 Every forecast is written *before* the official figure is released. Each line
 holds a sequence number, a UTC timestamp, the hash of the previous line and the
 forecast record; its own SHA-256 hash covers all of those fields. Editing,
-deleting or reordering any earlier line breaks every later hash.
+deleting or reordering any line *before the last one* breaks every later hash.
+Every line must also be exactly the canonical JSON of its entry (no duplicate
+keys, no extra fields, no reformatting), so a reader can't be shown anything the
+hash does not cover.
 
 What this does and does not prove: the chain shows the file is internally
-consistent and has not been edited after the fact *relative to a published
-head hash*. It cannot by itself prove wall-clock time - the machine's clock is
-trusted. To make the timing auditable, publish the head hash somewhere you do
-not control (a pre-registration on OSF, a public git commit, an e-mail to the
-journal editor, or an RFC 3161 timestamp) before the release date.
+consistent. Removing entries from the *end* (truncation), or replacing the whole
+file with a different valid chain, leaves a valid chain behind; both are only
+detectable against a head hash and entry count published earlier
+(``verify(expected_head=..., expected_n=...)`` / ``ssv verify --head --count``).
+The chain cannot by itself prove wall-clock time - the machine's clock is
+trusted. To make the timing auditable, publish the head hash and count somewhere
+you do not control (a pre-registration on OSF, a public git commit, an e-mail to
+the journal editor, or an RFC 3161 timestamp) before the release date.
 """
 
 from __future__ import annotations
@@ -24,8 +30,36 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Mapping
 
+try:  # POSIX advisory locks serialize concurrent appends; Windows falls back to no locking
+    import fcntl as _fcntl
+except ImportError:  # pragma: no cover - Windows
+    _fcntl = None
+
 GENESIS_HASH = "0" * 64
 SCHEMA = "ssv-forecast/1"
+ENTRY_KEYS = frozenset({"schema", "seq", "timestamp", "prev_hash", "record", "hash"})
+
+
+class DuplicateKeyError(ValueError):
+    pass
+
+
+def _no_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict:
+    out: dict = {}
+    for k, v in pairs:
+        if k in out:
+            raise DuplicateKeyError(f"duplicate key {k!r}")
+        out[k] = v
+    return out
+
+
+def _reject_constant(name: str):
+    raise ValueError(f"non-finite number {name}")
+
+
+def strict_loads(line: str) -> Any:
+    """``json.loads`` that rejects duplicate keys (at any depth) and NaN/Infinity."""
+    return json.loads(line, object_pairs_hook=_no_duplicate_keys, parse_constant=_reject_constant)
 
 
 def canonical_json(obj: Any) -> str:
@@ -96,31 +130,64 @@ class ForecastRegistry:
     def _raw_lines(self) -> list[str]:
         if not self.path.exists():
             return []
-        return [ln for ln in self.path.read_text(encoding="utf-8").splitlines() if ln.strip()]
+        # Split on "\n" only: str.splitlines() would also split on U+2028/U+0085, which
+        # canonical JSON (ensure_ascii=False) may contain inside strings. A trailing
+        # "\r" (CRLF checkout) is tolerated; blank lines are ignored.
+        text = self.path.read_text(encoding="utf-8")
+        return [ln.rstrip("\r") for ln in text.split("\n") if ln.strip()]
 
     def entries(self) -> list[dict]:
-        return [json.loads(ln) for ln in self._raw_lines()]
+        return [strict_loads(ln) for ln in self._raw_lines()]
 
-    def verify(self) -> VerificationReport:
-        """Re-compute every hash and check the chain, sequence and clock order."""
+    def verify(self, expected_head: str | None = None, expected_n: int | None = None) -> VerificationReport:
+        """Re-compute every hash and check the chain, sequence and clock order.
+
+        ``expected_head`` / ``expected_n`` are a head hash and entry count that were
+        published earlier. With both, entry ``expected_n`` (1-based) must carry that
+        hash; entries appended later are fine. With only ``expected_head``, some
+        entry must carry it; with only ``expected_n``, the file must still hold at
+        least that many entries. This is the only way to detect entries removed
+        from the end of the file.
+        """
         errors: list[str] = []
         prev = GENESIS_HASH
         last_ts: datetime | None = None
         lines = self._raw_lines()
+        hashes: list[str] = []
         for i, ln in enumerate(lines):
             try:
-                e = json.loads(ln)
-            except json.JSONDecodeError as exc:
-                errors.append(f"line {i + 1}: invalid JSON ({exc.msg})")
+                e = strict_loads(ln)
+            except DuplicateKeyError as exc:
+                errors.append(f"line {i + 1}: {exc} (a reader could see a value the hash does not cover)")
                 prev = "invalid"
+                hashes.append("invalid")
                 continue
-            missing = {"schema", "seq", "timestamp", "prev_hash", "record", "hash"} - set(e)
+            except ValueError as exc:  # JSONDecodeError is a ValueError
+                errors.append(f"line {i + 1}: invalid JSON ({getattr(exc, 'msg', exc)})")
+                prev = "invalid"
+                hashes.append("invalid")
+                continue
+            if not isinstance(e, dict):
+                errors.append(f"line {i + 1}: not a JSON object")
+                prev = "invalid"
+                hashes.append("invalid")
+                continue
+            missing = ENTRY_KEYS - set(e)
             if missing:
                 errors.append(f"line {i + 1}: missing field(s) {sorted(missing)}")
                 prev = "invalid"
+                hashes.append("invalid")
                 continue
-            if e["seq"] != i:
-                errors.append(f"line {i + 1}: seq {e['seq']} != expected {i}")
+            extra = set(e) - ENTRY_KEYS
+            if extra:
+                errors.append(f"line {i + 1}: unexpected field(s) {sorted(extra)} not covered by the hash")
+            try:
+                if canonical_json(e) != ln:
+                    errors.append(f"line {i + 1}: line is not in canonical form (re-serialized or edited)")
+            except (TypeError, ValueError):
+                errors.append(f"line {i + 1}: line is not in canonical form")
+            if type(e["seq"]) is not int or e["seq"] != i:
+                errors.append(f"line {i + 1}: seq {e['seq']!r} != expected {i}")
             if e["prev_hash"] != prev:
                 errors.append(f"line {i + 1}: prev_hash does not match previous entry")
             try:
@@ -138,12 +205,26 @@ class ForecastRegistry:
             except ValueError:
                 errors.append(f"line {i + 1}: bad timestamp")
             prev = e["hash"]
+            hashes.append(e["hash"])
         head = prev if lines else GENESIS_HASH
-        return VerificationReport(ok=not errors, n_entries=len(lines), head_hash=head, errors=errors)
+        n = len(lines)
+        if expected_n is not None:
+            if expected_n < 0:
+                raise ValueError("expected_n must be >= 0")
+            if n < expected_n:
+                errors.append(f"registry has {n} entries but {expected_n} were published: entries were removed")
+            elif expected_head is not None:
+                at = GENESIS_HASH if expected_n == 0 else hashes[expected_n - 1]
+                if at != expected_head:
+                    errors.append(f"entry {expected_n} does not carry the published head hash: "
+                                  "the registry was rewritten")
+        elif expected_head is not None and expected_head != GENESIS_HASH and expected_head not in hashes:
+            errors.append("published head hash not found in the registry: entries were removed or rewritten")
+        return VerificationReport(ok=not errors, n_entries=n, head_hash=head, errors=errors)
 
     def head(self) -> str:
         lines = self._raw_lines()
-        return json.loads(lines[-1])["hash"] if lines else GENESIS_HASH
+        return strict_loads(lines[-1])["hash"] if lines else GENESIS_HASH
 
     # -- writing ---------------------------------------------------------
     def append(
@@ -158,7 +239,12 @@ class ForecastRegistry:
         seed: int | None = None,
         metadata: Mapping[str, Any] | None = None,
     ) -> dict:
-        """Register a forecast. Refuses to write onto a broken chain."""
+        """Register a forecast. Refuses to write onto a broken chain.
+
+        The file is locked (``fcntl.flock``, POSIX only) from verification to the
+        write, so two processes appending at once cannot both chain onto the same
+        head. On Windows there is no lock: append from one process at a time.
+        """
         if not target_id:
             raise ValueError("target_id is required")
         for name, v in (("estimate", estimate), ("lower", lower), ("upper", upper)):
@@ -170,6 +256,18 @@ class ForecastRegistry:
             upper is not None and float(estimate) > float(upper)
         ):
             raise ValueError("estimate outside its interval")
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        with open(self.path, "a", encoding="utf-8") as fh:
+            if _fcntl is not None:
+                _fcntl.flock(fh.fileno(), _fcntl.LOCK_EX)
+            try:
+                return self._append_locked(fh, target_id, estimate, lower, upper, model=model, method=method,
+                                           seed=seed, metadata=metadata)
+            finally:
+                if _fcntl is not None:
+                    _fcntl.flock(fh.fileno(), _fcntl.LOCK_UN)
+
+    def _append_locked(self, fh, target_id, estimate, lower, upper, *, model, method, seed, metadata) -> dict:
         rep = self.verify()
         if not rep.ok:
             raise RegistryError("registry failed verification; refusing to append: " + "; ".join(rep.errors))
@@ -199,11 +297,9 @@ class ForecastRegistry:
             "record": record,
         }
         entry["hash"] = entry_hash(entry)
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        with open(self.path, "a", encoding="utf-8") as fh:
-            fh.write(canonical_json(entry) + "\n")
-            fh.flush()
-            os.fsync(fh.fileno())
+        fh.write(canonical_json(entry) + "\n")
+        fh.flush()
+        os.fsync(fh.fileno())
         return entry
 
     # -- querying --------------------------------------------------------

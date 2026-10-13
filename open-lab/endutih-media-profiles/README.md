@@ -1,6 +1,6 @@
 # endutih-media-profiles
 
-> **Resumen.** Perfiles de uso de medios y tecnología en México (internet, celular, computadora, redes sociales, streaming, radio y TV abierta) por entidad, sexo, edad y ámbito urbano/rural. Se calculan con los microdatos públicos de la ENDUTIH 2025 del INEGI y sus factores de expansión. Cada celda trae su *n* sin ponderar y error estándar de diseño; las celdas con n < 30 se suprimen.
+> **Resumen.** Perfiles de uso de medios y tecnología en México (internet, celular, computadora, redes sociales, streaming, radio y TV abierta) por entidad, sexo, edad y ámbito urbano/rural. Se calculan con los microdatos públicos de la ENDUTIH 2025 del INEGI y sus factores de expansión. Cada celda trae su *n* sin ponderar y error estándar de diseño. Las celdas con n < 30 se suprimen, y también las celdas necesarias para que ninguna celda suprimida pueda recuperarse restando a un total las celdas publicadas (supresión complementaria).
 
 `endutih-media-profiles` turns INEGI's public **ENDUTIH 2025** microdata into
 small, queryable tables of weighted media and technology use shares, with
@@ -24,7 +24,7 @@ and no partner data.
   weight `FAC_PER`, Σ = 121.9 M) and `tr_endutih_hogares_anual_2025`
   (57,810 households, weight `FAC_HOG`, Σ = 39.7 M). Design variables:
   `EST_DIS` (strata, 425) and `UPM_DIS` (PSUs, 8,607).
-* **What is committed** (`data/`, ~780 KB total):
+* **What is committed** (`data/`, ~700 KB total):
   * `endutih2025_persons.csv`: 2,371 non-empty cells of state (32 + all) ×
     sex × age (`6-11`, `12-17`, `18-29`, `30-44`, `45-59`, `60+`, `18+`, all) ×
     area (urban, rural, all). 22 indicators, each with share and SE.
@@ -79,12 +79,26 @@ and online-activity items cover the last 3 months, online shopping the last
   replacement. This is the same approach as R
   `survey::svydesign(ids=~UPM_DIS, strata=~EST_DIS, weights=~FAC_PER)`. The
   tests check the vectorised estimator against a loop-based reference. 95%
-  CIs are Wald intervals clipped to [0, 1].
+  CIs are Wilson score intervals on the design-effect-adjusted sample size
+  `n_eff = p(1−p)/SE²`, so they stay inside [0, 1] and are asymmetric near 0
+  and 1. When `SE = 0` (typically a share of exactly 0% or 100% in a cell), the
+  design effect is unknown. The CI is then reported as *not estimable*
+  (`ci_note`), not as a zero-width interval.
 * **Suppression.** If a cell has **fewer than 30 unweighted respondents**,
-  its shares, SEs and weighted total are blanked and `suppressed=True`. Its
-  `n` is still shown. The same rule applies per indicator to the valid-answer
-  count. This removes 280 of 2,371 person cells. n ≥ 30 is a floor, not a
-  quality guarantee: check the SE.
+  its shares, SEs and weighted total are blanked and `suppressed=True`
+  (`suppression=primary`). Its `n` is still shown. The same rule applies per
+  indicator to the valid-answer count. This removes 280 of 2,371 person cells
+  and 1 of 99 household cells.
+* **Complementary suppression.** The tables include `all` margins, so a lone
+  blank could be recovered by subtraction. For example, `female` follows from
+  `all` minus `male`, because `share × pop` adds up. Wherever a total and its
+  parts along one dimension (state, sex, age, area, and also `18+` = the four
+  adult bands) would contain exactly one blank, the published part with the
+  fewest respondents is blanked too (`suppression=complementary`). This
+  repeats until no such relation has a single blank, and runs again per
+  indicator. It blanks another 387 person cells and 3 household cells, so
+  1,704 of 2,371 person cells and 95 of 99 household cells are published. n ≥
+  30 is a floor, not a quality guarantee: check the SE.
 
 ## Usage
 
@@ -94,7 +108,9 @@ pip install -e ".[test]"         # Python 3.11+, numpy + pandas
 endutih-profiles --state 09 --age 18-29
 endutih-profiles --sex female --age 60+ --area rural --indicators internet_user,radio_last_week,open_tv_last_week
 endutih-profiles --households --state 20 --format json
-endutih-profiles-prepare          # re-download ENDUTIH 2025 and rebuild data/ (optional)
+endutih-profiles-prepare          # re-download ENDUTIH 2025 and rebuild data/ (optional, from a source checkout)
+endutih-profiles-prepare --out-dir ~/endutih-tables   # installed from a wheel: --out-dir is required,
+export ENDUTIH_PROFILES_DATA=~/endutih-tables         # then point the queries at it
 ```
 
 Real output (`endutih-profiles --state 09 --age 18-29`, excerpt):
@@ -105,19 +121,20 @@ unweighted n = 259 · weighted = 1,498,056
 
 indicator                 share          95% CI      n national
 ---------------------------------------------------------------
-computer_user             72.4%     66.2– 78.5%    259    56.6%
-instagram                 72.2%     65.6– 78.8%    259    61.5%
-tiktok                    62.6%     55.7– 69.5%    259    49.1%
-paid_video_streaming      79.9%     74.8– 85.1%    259    61.5%
-radio_last_week           19.7%     13.8– 25.5%    259    23.2%
-open_tv_last_week         53.0%     46.1– 60.0%    259    39.5%
+internet_user            100.0%   not estimable    259    97.6%
+computer_user             72.4%     65.8– 78.1%    259    56.6%
+instagram                 72.2%     65.2– 78.3%    259    61.5%
+tiktok                    62.6%     55.6– 69.2%    259    49.1%
+paid_video_streaming      79.9%     74.4– 84.6%    259    61.5%
+radio_last_week           19.7%     14.5– 26.1%    259    23.2%
+open_tv_last_week         53.0%     46.1– 59.9%    259    39.5%
 ```
 
 Python:
 
 ```python
 from endutih_media_profiles import profile, load_table
-profile(state="09", age="18-29")          # DataFrame: indicator, share, se, ci95_*, n, national_share
+profile(state="09", age="18-29")          # DataFrame: indicator, share, se, ci95_*, ci_note, n, national_share
 cube = load_table("persons")              # the full aggregated table
 ```
 
@@ -137,6 +154,12 @@ mimics the file layout and skip patterns.
 * **Social networks** are those the respondent named under question 7.16.
   WhatsApp and YouTube count only when mentioned *as social networks*, so the
   shares are lower than "uses the app" would be.
+* **Disclosure control is a heuristic.** Complementary suppression ensures
+  that no blank follows from *one* total minus its published parts. It is not
+  a full linear-programming audit like τ-ARGUS. Combining several relations
+  can still bound a blanked share within an interval narrower than [0, 1].
+  The unweighted `n` of every cell, and `<indicator>_n`, stay public by
+  design.
 * **Edition.** Only the 2025 layout was verified. `--edition 2024` should
   download the 2024 file, but it fails loudly if column names differ. Never
   compare editions without checking question wording.

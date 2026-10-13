@@ -22,13 +22,15 @@
 
 ## 👋 About
 
-I build **Hybrid Intelligence**: AI that lets an organization hear how real people would react to a message *before* it goes public.
+I build **Hybrid Intelligence**: AI that simulates how a census-anchored audience might react to a message *before* it goes public, to anticipate objections and compare wordings.
 
-Language models alone mostly speak with the voice of the US and of highly educated users. My work anchors them in Mexico: every simulated person is drawn from the **2020 Census** and grounded in a **real face-to-face interview by INRA**, our field-research partner. Each reading reports its own limits and every product cites the science it rests on.
+Language models alone mostly speak with the voice of the US and of highly educated users. My work anchors them in Mexico: every simulated person is drawn from the **2020 Census** and grounded in a **real face-to-face interview by INRA**. Each reading reports its own limits and cites the science it rests on.
+
+> It is a simulation, not a survey: no output is a measure of public opinion or voting intention.
 
 What I bring is the mix: two decades running broadcast and OTT operations, formal training in **AI & data science** and **psychology**, and a founder's discipline sharpened in **Empretec** and **FounderX**. I design the product, define the science behind it, and ship it with AI as my engineering partner.
 
-> *Inteligencia Híbrida: escuchar cómo reaccionaría la gente real antes de hablar. · Inteligência Híbrida: ouvir como pessoas reais reagiriam antes de falar.*
+> *Inteligencia Híbrida: simular cómo podría reaccionar una audiencia anclada en el Censo antes de hablar. · Inteligência Híbrida: simular como uma audiência ancorada no Censo poderia reagir antes de falar.*
 
 ---
 
@@ -47,13 +49,13 @@ What I bring is the mix: two decades running broadcast and OTT operations, forma
 
 - **Silicon samples anchored in Mexico**: census-based probability sampling with design weights, plus donor imputation from INRA interviews under k-anonymity.
 - **Rigor by design**: paired A/B tests with confidence intervals and minimum detectable effect, A/A controls, answer-order reversal against LLM position bias, fixed seeds and a method card per run.
-- **Honest about limits**: a *Scientific Basis* module in every product, with 20+ academic references and the literature's known failure modes.
-- **Validation in the open**: a study in preparation for a peer-reviewed journal tests the method against official INEGI surveys, with pre-registered forecasts and a memorization probe.
-- **Production-minded**: reproducible byte-identical builds, golden-hash regression tests, multi-provider LLM gateway (Anthropic API / Amazon Bedrock / Vertex AI) with per-organization quotas and metering.
+- **Honest about limits**: a *Scientific Basis* module in each of the three core products, citing the literature and its known failure modes ([summary and references](hybrid-intelligence/README.md#references)).
+- **Validation, planned in the open**: a study in preparation will test the method against official INEGI surveys, with forecasts registered before each official release and a memorization probe. The harness is public: [silicon-sample-validation](open-lab/silicon-sample-validation).
+- **Production-minded**: reproducible builds checked by golden-hash regression tests, and a multi-provider LLM gateway (Anthropic API / Amazon Bedrock) with per-organization quotas and metering; the [open gateway](open-lab/llm-gateway-metering) adds Vertex AI.
 
 ➡️ **[Read the method and the build log](hybrid-intelligence/README.md)**
 
-All products are private and in active development with partners. Data, clients and product internals are not published here.
+All products are private and in active development. Data, clients and product internals are not published here.
 
 **How I build:** product spec and science first → AI-assisted engineering (Claude, Lovable) → automated tests and reproducible builds → human review before every deploy.
 
@@ -71,7 +73,7 @@ Five open-source packages that rebuild the **public foundations** of the method 
 | [**silicon-sample-validation**](open-lab/silicon-sample-validation) | *Does it match reality?* Hash-chained pre-registered forecasts, training-cutoff guard, no-LLM baselines, memorization probe | Official surveys |
 | [**llm-gateway-metering**](open-lab/llm-gateway-metering) | *Can it run as a SaaS?* Anthropic API · Bedrock · Vertex behind one gateway with org quotas and metering | — |
 
-<sub>224 offline tests · CI on Python 3.11 and 3.12 · MIT</sub>
+<sub>292 tests (289 run offline in CI; 3 need the optional Anthropic SDK or a live key) · CI on Python 3.11 and 3.12 · MIT</sub>
 
 <details>
 <summary><b>AI & product stack</b></summary>
@@ -109,7 +111,7 @@ timeline
                           : Google Cybersecurity Professional
     Founder programs      : Empretec
                           : FounderX
-    Impulse Labs          : Hybrid Intelligence Core with INRA
+    Impulse Labs          : Hybrid Intelligence Core
                           : ZÓKALO · MOSAIK · KALEIDO · SKED · Ethea
                           : Validation study vs INEGI (in preparation)
                           : Open Lab (5 open-source packages)
@@ -173,7 +175,7 @@ Open to **AI product partnerships, pilots with media and communication teams, an
 
 [![LinkedIn](https://img.shields.io/badge/Connect_on_LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gzoliveira)
 
-<sub>Code in this repository is MIT-licensed · [Ethics statement](docs/ETHICS.md) · [Security policy](docs/SECURITY.md)</sub>
+<sub>Code in this repository is MIT-licensed; INEGI-derived data under INEGI's free-use terms · [Ethics statement](docs/ETHICS.md) · [Security policy](docs/SECURITY.md)</sub>
 
 <div align="center">
 

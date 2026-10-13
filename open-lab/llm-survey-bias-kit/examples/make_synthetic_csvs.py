@@ -38,9 +38,11 @@ def main(outdir: str) -> None:
 
     opts = ["agree", "neutral", "disagree"]
     p_fwd, p_rev = [0.50, 0.30, 0.20], [0.38, 0.30, 0.32]  # built-in primacy effect
+    # One answer per synthetic unit (ORD-000 ... ORD-599), so units and responses coincide.
     order_rows = [("forward", rng.choice(opts, p=p_fwd)) for _ in range(300)]
     order_rows += [("reversed", rng.choice(opts, p=p_rev)) for _ in range(300)]
-    write(out / "order.csv", ["direction", "choice"], order_rows)
+    order_rows = [(f"ORD-{i:03d}", d, c) for i, (d, c) in enumerate(order_rows)]
+    write(out / "order.csv", ["unit_id", "direction", "choice"], order_rows)
 
     sim = rng.choice(opts, p=[0.70, 0.25, 0.05], size=400)
     write(out / "sim_choices.csv", ["choice"], [(c,) for c in sim])

@@ -6,6 +6,7 @@ import argparse
 import json
 import math
 import sys
+import warnings
 from typing import Sequence
 
 from . import __version__
@@ -32,9 +33,20 @@ def _json_default(o):
     return str(o)
 
 
+def _finite(o):
+    """Replace NaN/inf with None so the output is standard JSON (json.dumps would write NaN/Infinity)."""
+    if isinstance(o, float) and (math.isnan(o) or math.isinf(o)):
+        return None
+    if isinstance(o, dict):
+        return {k: _finite(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [_finite(v) for v in o]
+    return o
+
+
 def _emit(obj: dict, as_json: bool, lines: list[str]) -> None:
     if as_json:
-        print(json.dumps(obj, indent=2, ensure_ascii=False, default=_json_default))
+        print(json.dumps(_finite(obj), indent=2, ensure_ascii=False, default=_json_default, allow_nan=False))
     else:
         print("\n".join(lines))
 
@@ -56,8 +68,16 @@ def cmd_order(a) -> int:
     rows = read_csv(a.file)
     require_columns(rows, [a.direction_col, a.choice_col], a.file)
     opts = [o.strip() for o in a.options.split(",")]
-    r = estimate_order_effect(rows, opts, a.direction_col, a.choice_col, seed=a.seed)
-    lines = [f"Answer-order effect: forward n={r.n_forward}, reversed n={r.n_reversed}"]
+    unit_key = a.unit_col if a.unit_col in rows[0] else None
+    with warnings.catch_warnings():  # the same caveat is printed as a note below
+        warnings.simplefilter("ignore", UserWarning)
+        r = estimate_order_effect(rows, opts, a.direction_col, a.choice_col, seed=a.seed, unit_key=unit_key)
+    head = f"Answer-order effect: forward n={r.n_forward}, reversed n={r.n_reversed}"
+    if r.resampling == "unit":
+        head += f" (units: {r.n_units_forward} forward, {r.n_units_reversed} reversed; resampled by unit)"
+    else:
+        head += f" (no '{a.unit_col}' column: responses treated as independent)"
+    lines = [head]
     for o in r.options:
         lo, hi = r.shift_ci[o]
         lines.append(
@@ -198,6 +218,8 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--options", required=True, help="comma-separated options in canonical order")
     sp.add_argument("--direction-col", default="direction")
     sp.add_argument("--choice-col", default="choice")
+    sp.add_argument("--unit-col", default="unit_id",
+                    help="unit id column; used (permutation and bootstrap by unit) when present")
     sp.set_defaults(func=cmd_order)
 
     sp = sub.add_parser("paired", help="paired A/B comparison of two messages")

@@ -27,7 +27,7 @@ def test_scale_invariance():
     assert kish_effective_n([1, 2, 3]).effective_n == pytest.approx(kish_effective_n([10, 20, 30]).effective_n)
 
 
-@pytest.mark.parametrize("bad", [[], [1, -1], [0, 0], [1, float("nan")]])
+@pytest.mark.parametrize("bad", [[], [1, -1], [0, 0], [1, float("nan")], [1, float("inf")], [float("-inf"), 1]])
 def test_invalid(bad):
     with pytest.raises(ValueError):
         kish_effective_n(bad)

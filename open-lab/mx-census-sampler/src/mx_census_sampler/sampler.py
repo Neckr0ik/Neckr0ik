@@ -72,17 +72,26 @@ def allocate(mos_by_stratum: pd.Series, n: int, allocation: str = "proportional"
     return pd.Series(largest_remainder(shares, n), index=mos_by_stratum.index, name="n_h")
 
 
+def _min_n_without_empty(mos_h: pd.Series, allocation: str) -> int:
+    """Smallest n whose allocation gives every stratum at least one draw."""
+    n = len(mos_h)
+    while (allocate(mos_h, n, allocation).to_numpy() == 0).any():
+        n += 1
+    return n
+
+
 def _systematic(cum: np.ndarray, n_h: int, rng: np.random.Generator) -> np.ndarray:
     total = cum[-1]
     interval = total / n_h
     start = rng.random() * interval
     points = start + interval * np.arange(n_h)
-    return np.searchsorted(cum, points, side="right")
+    # Floating-point rounding can put the last point at (or past) the total; clamp to the last unit.
+    return np.minimum(np.searchsorted(cum, points, side="right"), len(cum) - 1)
 
 
 def _with_replacement(cum: np.ndarray, n_h: int, rng: np.random.Generator) -> np.ndarray:
     u = rng.random(n_h) * cum[-1]
-    return np.searchsorted(cum, u, side="right")
+    return np.minimum(np.searchsorted(cum, u, side="right"), len(cum) - 1)
 
 
 @dataclass(frozen=True)
@@ -111,6 +120,16 @@ def draw_units(frame: pd.DataFrame, design: Design, rng: np.random.Generator) ->
 
     mos_h = f.groupby("stratum", sort=True)[MOS_COLUMN].sum()
     n_h = allocate(mos_h, design.n, design.allocation)
+    empty = [str(s) for s in n_h.index[n_h.to_numpy() == 0]]
+    if design.stratify is not None and empty:
+        # A stratum with no draws is not represented at all and no weight covers its
+        # population: estimates would silently exclude it.
+        raise ValueError(
+            f"allocation '{design.allocation}' of n={design.n} over {len(n_h)} strata leaves "
+            f"{len(empty)} stratum/strata with no draws ({', '.join(empty[:10])}"
+            f"{', …' if len(empty) > 10 else ''}). Use n >= {_min_n_without_empty(mos_h, design.allocation)}, "
+            "restrict the frame to fewer states, or sample without stratification."
+        )
 
     pieces = []
     for stratum in mos_h.index:  # sorted, deterministic
