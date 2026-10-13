@@ -42,7 +42,7 @@ The method's fidelity with the **Mexican population has not been measured yet**.
 3. Does anchoring each person in a real interview beat describing them with demographics alone?
 4. Where does it fail: region, urbanization, indigenous-language presence, opinion dispersion?
 
-Safeguards: compare only against figures published after the model's training cutoff, register forecasts before the official release, run a memorization probe, and report negative results with open code and seeds.
+Safeguards: compare only against figures published after the model's training cutoff, register forecasts before the official release, run a memorization probe, and report negative results with open code and seeds. The harness is already open: [silicon-sample-validation](../open-lab/silicon-sample-validation).
 
 ---
 
@@ -59,6 +59,7 @@ All are private and in active development with partners.
 
 | Date | Milestone |
 |:---|:---|
+| 2026-10-13 | **Open Lab** published: census sampler, ENDUTIH 2025 media profiles, LLM survey bias kit, validation harness and LLM gateway with metering — public data only, 224 offline tests ([open-lab](../open-lab/README.md)) |
 | 2026-10-12 | **Ethea**: redesign, new tests, French language, science notes per test and B2B track |
 | 2026-10-11 | Shared **Scientific Basis** module shipped in all three core products: method, evidence, limits and 20+ academic and official references, written once and rendered per brand |
 | 2026-10-10 | **Core under version control**: one engine, three products, byte-identical reproducible builds and golden-hash regression tests for the sampler (fixed seed) |
