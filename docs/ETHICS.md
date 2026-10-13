@@ -4,7 +4,7 @@
 
 ### Our Commitment to Ethical Technology
 
-At Neckr0ik, we believe that technology should serve humanity's best interests. Our work in AI, data analytics, cybersecurity and cloud engineering is guided by unwavering ethical principles that prioritize human welfare, privacy, and security.
+At Digital-Forge, we believe that technology should serve humanity's best interests. Our work in AI, data analytics, cybersecurity and cloud engineering is guided by unwavering ethical principles that prioritize human welfare, privacy, and security.
 
 #### Core Principles
 
@@ -52,7 +52,7 @@ We regularly review and update our ethical guidelines to ensure they remain rele
 
 ### Nuestro Compromiso con la Tecnología Ética
 
-En Neckr0ik, creemos que la tecnología debe servir a los mejores intereses de la humanidad. Nuestro trabajo en IA, análisis de datos, ciberseguridad e ingeniería en la nube está guiado por principios éticos inquebrantables que priorizan el bienestar humano, la privacidad y la seguridad.
+En Digital-Forge, creemos que la tecnología debe servir a los mejores intereses de la humanidad. Nuestro trabajo en IA, análisis de datos, ciberseguridad e ingeniería en la nube está guiado por principios éticos inquebrantables que priorizan el bienestar humano, la privacidad y la seguridad.
 
 #### Principios Fundamentales
 
@@ -100,7 +100,7 @@ Revisamos y actualizamos regularmente nuestras pautas éticas para asegurar que 
 
 ### Nosso Compromisso com a Tecnologia Ética
 
-Na Neckr0ik, acreditamos que a tecnologia deve servir aos melhores interesses da humanidade. Nosso trabalho em IA, análise de dados, cibersegurança e engenharia em nuvem é guiado por princípios éticos inabaláveis que priorizam o bem-estar humano, privacidade e segurança.
+Na Digital-Forge, acreditamos que a tecnologia deve servir aos melhores interesses da humanidade. Nosso trabalho em IA, análise de dados, cibersegurança e engenharia em nuvem é guiado por princípios éticos inabaláveis que priorizam o bem-estar humano, privacidade e segurança.
 
 #### Princípios Fundamentais
 

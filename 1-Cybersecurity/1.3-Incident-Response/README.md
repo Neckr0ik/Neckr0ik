@@ -70,9 +70,9 @@ These projects demonstrate:
 
 ---
 
-## Alignment with Neckr0ik Portfolio
+## Alignment with Digital-Forge Portfolio
 
-These incident response projects are integral to the Cybersecurity domain of the Neckr0ik portfolio. They reflect practical skills developed through real-world scenarios and align with industry standards such as NIST SP 800-61.
+These incident response projects are integral to the Cybersecurity domain of the Digital-Forge portfolio. They reflect practical skills developed through real-world scenarios and align with industry standards such as NIST SP 800-61.
 
 ## Professional Relevance
 

@@ -1,14 +1,20 @@
-# Giovanni Oliveira · Hybrid Intelligence
+# Digital Forge 锻
 
 <div align="center">
 
-![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12&height=180&section=header&text=Giovanni%20Oliveira&desc=Hybrid%20Intelligence%20%C2%B7%20Impulse%20Labs&descAlignY=62&fontSize=44&fontColor=ffffff&animation=fadeIn)
+![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12&height=200&section=header&text=Digital%20Forge&fontSize=50&fontColor=ffffff&animation=fadeIn)
 
-**Founder of Impulse Labs** · Global MBA in AI & Data Science · BS Psychology · 20+ years in media/OTT across LATAM · Mexico City
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=2E8B57&center=true&vCenter=true&width=800&lines=Hybrid+Intelligence+%7C+Audience+Simulation+%7C+Data+Strategy;20%2B+Years+in+Media+%26+OTT;Forging+AI+with+Integrity)](https://git.io/typing-svg)
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-gzoliveira-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gzoliveira)
+### 👋 Welcome to the Digital Forge
+
+*Forging Hybrid Intelligence at the intersection of AI, audiences and human psychology.*
+
 [![Hybrid Intelligence](https://img.shields.io/badge/Hybrid_Intelligence-Method_%26_Log-111111?style=for-the-badge)](hybrid-intelligence/README.md)
-![Languages](https://img.shields.io/badge/ES_·_PT_·_EN-Trilingual-2E8B57?style=for-the-badge)
+[![Open Lab](https://img.shields.io/badge/Open_Lab-5_packages-2E8B57?style=for-the-badge)](open-lab/README.md)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gzoliveira)
+
+<sub>Giovanni Oliveira · Impulse Labs · Mexico City · ES · PT · EN</sub>
 
 </div>
 
@@ -171,6 +177,8 @@ Open to **AI product partnerships, pilots with media and communication teams, an
 
 <div align="center">
 
-![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12&height=90&section=footer)
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12&height=100&section=footer&animation=fadeIn)
+
+*"In the forge of digital transformation, we shape tools that serve humanity."*
 
 </div>
