@@ -27,3 +27,8 @@ AI Product,AI-Assisted Engineering,All Impulse Labs products,Claude Code and Lov
 NLP,Sentiment & Psychological Scoring,content-psychology-analyzer / news-sentiment-analyzer,Public repositories
 Entrepreneurship,Founder Programs,Impulse Labs,Empretec · FounderX
 Research,LLM Simulation Validation,Hybrid Intelligence validation study (in preparation),Pre-registered forecasts vs INEGI official surveys
+Survey Methodology,PPS Sampling & Design Weights,open-lab/mx-census-sampler,INEGI Censo 2020 (ITER)
+Audience Analytics,Weighted Media-Use Profiles,open-lab/endutih-media-profiles,INEGI ENDUTIH 2025 microdata
+AI Evaluation,LLM Response Bias Diagnostics,open-lab/llm-survey-bias-kit,Position bias · paired A/B · A/A · homogeneity
+Research,Pre-registered Validation Harness,open-lab/silicon-sample-validation,Hash-chained forecasts · memorization probe
+AI Platform,LLM Gateway & Metering,open-lab/llm-gateway-metering,Anthropic API · Bedrock · Vertex AI

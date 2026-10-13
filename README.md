@@ -51,6 +51,22 @@ All products are private and in active development with partners. Data, clients 
 
 **How I build:** product spec and science first → AI-assisted engineering (Claude, Lovable) → automated tests and reproducible builds → human review before every deploy.
 
+---
+
+## 🧪 Open Lab · Hybrid Intelligence in the open
+
+Five open-source packages that rebuild the **public foundations** of the method with public INEGI data only. They show how the core thinks without exposing products, clients or interviews. **[Explore the Open Lab →](open-lab/README.md)**
+
+| Package | What it answers | Data |
+|:---|:---|:---|
+| [**mx-census-sampler**](open-lab/mx-census-sampler) | *Who is in the sample?* PPS sampling of Mexico's 2,469 municipalities with census-anchored profiles, design weights and Kish effective n | Censo 2020 (ITER) |
+| [**endutih-media-profiles**](open-lab/endutih-media-profiles) | *How do they consume media?* Weighted internet, social-network, streaming, radio and open-TV use by state, sex, age and urban/rural | ENDUTIH 2025 |
+| [**llm-survey-bias-kit**](open-lab/llm-survey-bias-kit) | *Is the simulated reading trustworthy?* Answer-order bias, paired A/B with MDE, A/A noise floor, homogeneity checks | Your runs |
+| [**silicon-sample-validation**](open-lab/silicon-sample-validation) | *Does it match reality?* Hash-chained pre-registered forecasts, training-cutoff guard, no-LLM baselines, memorization probe | Official surveys |
+| [**llm-gateway-metering**](open-lab/llm-gateway-metering) | *Can it run as a SaaS?* Anthropic API · Bedrock · Vertex behind one gateway with org quotas and metering | — |
+
+<sub>224 offline tests · CI on Python 3.11 and 3.12 · MIT</sub>
+
 <details>
 <summary><b>AI & product stack</b></summary>
 
@@ -90,6 +106,7 @@ timeline
     Impulse Labs          : Hybrid Intelligence Core with INRA
                           : ZÓKALO · MOSAIK · KALEIDO · SKED · Ethea
                           : Validation study vs INEGI (in preparation)
+                          : Open Lab (5 open-source packages)
 ```
 
 ---
