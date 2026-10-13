@@ -150,7 +150,7 @@ For questions about our ethics policy or to report concerns:
 Para preguntas sobre nuestra política de ética o para reportar inquietudes:
 Para perguntas sobre nossa política de ética ou para reportar preocupações:
 
-- **Email**: digital.forge@unife.us
+- **Email**: impulselabs@mail.com
 - **LinkedIn**: [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 
 ---

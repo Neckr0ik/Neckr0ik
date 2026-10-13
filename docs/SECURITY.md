@@ -16,7 +16,7 @@ The `main` branch is the only supported version.
 
 Instead, please report them responsibly through one of these channels:
 
-1. **Email**: Send details to digital.forge@unife.us
+1. **Email**: Send details to impulselabs@mail.com
 2. **LinkedIn**: Direct message [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 3. **GitHub Security Advisory**: Use GitHub's private vulnerability reporting feature
 
@@ -78,7 +78,7 @@ La rama `main` es la única versión soportada.
 
 En su lugar, por favor repórtalas responsablemente a través de uno de estos canales:
 
-1. **Email**: Envía detalles a digital.forge@unife.us
+1. **Email**: Envía detalles a impulselabs@mail.com
 2. **LinkedIn**: Mensaje directo a [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 3. **GitHub Security Advisory**: Usa la función de reporte privado de vulnerabilidades de GitHub
 
@@ -140,7 +140,7 @@ A branch `main` é a única versão suportada.
 
 Em vez disso, por favor relate-as responsavelmente através de um destes canais:
 
-1. **Email**: Envie detalhes para digital.forge@unife.us
+1. **Email**: Envie detalhes para impulselabs@mail.com
 2. **LinkedIn**: Mensagem direta para [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 3. **GitHub Security Advisory**: Use o recurso de relatório privado de vulnerabilidades do GitHub
 
@@ -188,7 +188,7 @@ Este repositório contém conteúdo educacional de segurança, incluindo:
 
 ## Security Contacts | Contactos de Seguridad | Contatos de Segurança
 
-- **Primary Contact | Contacto Principal | Contato Principal**: digital.forge@unife.us
+- **Primary Contact | Contacto Principal | Contato Principal**: impulselabs@mail.com
 - **Maintainer | Mantenedor | Mantenedor**: [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 - **Response Time | Tiempo de Respuesta | Tempo de Resposta**: 48 hours | 48 horas | 48 horas
 

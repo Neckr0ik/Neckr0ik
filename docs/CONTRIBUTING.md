@@ -52,7 +52,7 @@ All contributors must adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). We ar
 
 - **Issues**: Use GitHub issues for bug reports and feature requests
 - **Discussions**: Join GitHub discussions for questions and ideas
-- **Email**: Contact the maintainer for sensitive matters at digital.forge@unife.us
+- **Email**: Contact the maintainer for sensitive matters at impulselabs@mail.com
 - **LinkedIn**: Connect with [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 
 ---
@@ -109,7 +109,7 @@ Todos los contribuyentes deben adherirse a nuestro [Código de Conducta](CODE_OF
 
 - **Issues**: Usa los issues de GitHub para reportes de errores y solicitudes de características
 - **Discusiones**: Únete a las discusiones de GitHub para preguntas e ideas
-- **Email**: Contacta al mantenedor para asuntos sensibles en digital.forge@unife.us
+- **Email**: Contacta al mantenedor para asuntos sensibles en impulselabs@mail.com
 - **LinkedIn**: Conéctate con [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 
 ---
@@ -166,7 +166,7 @@ Todos os contribuidores devem aderir ao nosso [Código de Conduta](CODE_OF_CONDU
 
 - **Issues**: Use issues do GitHub para relatórios de bugs e solicitações de funcionalidades
 - **Discussões**: Participe das discussões do GitHub para perguntas e ideias
-- **Email**: Contate o mantenedor para assuntos sensíveis em digital.forge@unife.us
+- **Email**: Contate o mantenedor para assuntos sensíveis em impulselabs@mail.com
 - **LinkedIn**: Conecte-se com [Giovanni Oliveira](https://www.linkedin.com/in/gzoliveira)
 
 ---
