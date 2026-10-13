@@ -759,4 +759,4 @@ echo "=== Validation Complete ==="
 **Lab Manual Version**: 1.0  
 **Last Updated**: December 2024  
 **Author**: Giovanni Oliveira  
-**Project**: Digital-Forge
+**Project**: Neckr0ik

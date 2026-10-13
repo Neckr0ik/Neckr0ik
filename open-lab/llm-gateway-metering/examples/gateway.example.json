@@ -1,0 +1,23 @@
+{
+  "default_model": "claude-sonnet-5-5",
+  "default_org": { "monthly_limit": 1000000, "warn_ratio": 0.8 },
+  "orgs": {
+    "acme": { "monthly_limit": 5000000, "warn_ratio": 0.8 },
+    "globex": { "monthly_limit": 250000, "warn_ratio": 0.9 }
+  },
+  "features": {
+    "default": { "max_tokens": 2048 },
+    "chat": { "max_tokens": 4096 },
+    "summarize": { "model": "claude-haiku-5-5", "max_tokens": 512, "effort": "low" }
+  },
+  "model_rates": {
+    "default": { "input": 1.0, "output": 1.0 }
+  },
+  "rate_limits": {
+    "org": { "capacity": 60, "refill_per_s": 10 },
+    "user": { "capacity": 20, "refill_per_s": 2 }
+  },
+  "strict_features": true,
+  "timeout_s": 60,
+  "max_attempts": 3
+}

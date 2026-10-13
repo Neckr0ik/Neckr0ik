@@ -29,8 +29,8 @@ pip install flask sqlite3 hashlib bcrypt
 ### Quick Setup
 ```bash
 # Clone the repository
-git clone https://github.com/giovannide/Digital-Forge.git
-cd Digital-Forge/3-Data-Analytics/3.1-Data-Protection/sql-defence-playground
+git clone https://github.com/Neckr0ik/Neckr0ik.git
+cd Neckr0ik/3-Data-Analytics/3.1-Data-Protection/sql-defence-playground
 
 # Install dependencies
 pip install -r requirements.txt

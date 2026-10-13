@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mx-census-sampler"
+version = "0.1.0"
+description = "Reproducible PPS sampling of Mexican municipalities by adult population (INEGI Censo 2020, ITER), with census-anchored respondent profiles."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Giovanni Oliveira" }]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+]
+keywords = ["sampling", "pps", "census", "mexico", "inegi", "survey", "synthetic-respondents"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://github.com/Neckr0ik"
+
+[project.scripts]
+mx-census-sampler = "mx_census_sampler.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mx_census_sampler"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"data/municipios_cpv2020.csv" = "mx_census_sampler/data/municipios_cpv2020.csv"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

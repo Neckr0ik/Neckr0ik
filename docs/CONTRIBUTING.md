@@ -4,7 +4,7 @@
 
 ### Welcome Contributors!
 
-Thank you for your interest in contributing to Digital-Forge! This project aims to build secure, ethical technology solutions through collaborative development. We welcome contributions from developers, security professionals, and learners worldwide.
+Thank you for your interest in contributing to Neckr0ik! This project aims to build secure, ethical technology solutions through collaborative development. We welcome contributions from developers, security professionals, and learners worldwide.
 
 #### How to Contribute
 
@@ -61,7 +61,7 @@ All contributors must adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). We ar
 
 ### ¡Bienvenidos Contribuyentes!
 
-¡Gracias por tu interés en contribuir a Digital-Forge! Este proyecto tiene como objetivo construir soluciones tecnológicas seguras y éticas a través del desarrollo colaborativo. Damos la bienvenida a contribuciones de desarrolladores, profesionales de seguridad y estudiantes de todo el mundo.
+¡Gracias por tu interés en contribuir a Neckr0ik! Este proyecto tiene como objetivo construir soluciones tecnológicas seguras y éticas a través del desarrollo colaborativo. Damos la bienvenida a contribuciones de desarrolladores, profesionales de seguridad y estudiantes de todo el mundo.
 
 #### Cómo Contribuir
 
@@ -118,7 +118,7 @@ Todos los contribuyentes deben adherirse a nuestro [Código de Conducta](CODE_OF
 
 ### Bem-vindos Contribuidores!
 
-Obrigado pelo seu interesse em contribuir para o Digital-Forge! Este projeto visa construir soluções tecnológicas seguras e éticas através do desenvolvimento colaborativo. Damos as boas-vindas a contribuições de desenvolvedores, profissionais de segurança e estudantes de todo o mundo.
+Obrigado pelo seu interesse em contribuir para o Neckr0ik! Este projeto visa construir soluções tecnológicas seguras e éticas através do desenvolvimento colaborativo. Damos as boas-vindas a contribuições de desenvolvedores, profissionais de segurança e estudantes de todo o mundo.
 
 #### Como Contribuir
 
@@ -193,8 +193,8 @@ docker --version
 
 ```bash
 # Clone repository | Clonar repositorio | Clonar repositório
-git clone https://github.com/giovannide/Digital-Forge.git
-cd Digital-Forge
+git clone https://github.com/Neckr0ik/Neckr0ik.git
+cd Neckr0ik
 
 # Create virtual environment | Crear entorno virtual | Criar ambiente virtual
 python3 -m venv venv
@@ -214,7 +214,7 @@ python app.py
 ### Project Structure | Estructura del Proyecto | Estrutura do Projeto
 
 ```
-Digital-Forge/
+Neckr0ik/
 ├── 0-Profile/              # Professional profile and skills
 ├── 1-Cybersecurity/        # Security projects and tools
 ├── 2-Cloud-Engineering/    # Infrastructure and cloud solutions

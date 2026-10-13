@@ -95,8 +95,8 @@ WAZUH_PASS=your-password
 ### Quick Start
 ```bash
 # Clone repository
-git clone https://github.com/giovannide/Digital-Forge.git
-cd Digital-Forge/1-Cybersecurity/Incident-Response/remediation-bot-slack
+git clone https://github.com/Neckr0ik/Neckr0ik.git
+cd Neckr0ik/1-Cybersecurity/1.3-Incident-Response/remediation-bot-slack
 
 # Install dependencies
 pip install -r requirements.txt

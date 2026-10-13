@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-gateway-metering"
+version = "0.1.0"
+description = "Small multi-provider LLM gateway with per-org metering, shared monthly quotas, rate limits and retries."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Giovanni Oliveira" }]
+keywords = ["llm", "gateway", "metering", "quota", "claude", "bedrock", "vertex"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Operating System :: OS Independent",
+]
+dependencies = []  # core is stdlib-only
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=1.0"]
+bedrock = ["anthropic[bedrock]>=1.0"]
+vertex = ["anthropic[vertex]>=1.0"]
+postgres = ["psycopg[binary]>=3.1"]
+test = ["pytest>=7"]
+
+[project.scripts]
+llm-gateway = "llm_gateway_metering.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

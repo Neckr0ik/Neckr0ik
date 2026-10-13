@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "endutih-media-profiles"
+version = "0.1.0"
+description = "Weighted media & technology use profiles for Mexico (state, sex, age, urban/rural) from INEGI ENDUTIH public microdata."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Giovanni Oliveira" }]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+]
+keywords = ["endutih", "inegi", "mexico", "media", "internet", "survey", "weights"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://github.com/Neckr0ik"
+
+[project.scripts]
+endutih-profiles = "endutih_media_profiles.cli:main"
+endutih-profiles-prepare = "endutih_media_profiles.cli:main_prepare"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/endutih_media_profiles"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"data" = "endutih_media_profiles/data"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
