@@ -22,7 +22,7 @@ Mapping of skills to projects and sources:
 - **Founder training** through Empretec and FounderX
 
 ### Current Focus
-1. **AI products**: Hybrid Intelligence Core, SKED, Ethea (Impulse Labs)
+1. **Hybrid Intelligence**: silicon samples anchored in Census 2020 and INRA interviews; products ZÓKALO, MOSAIK, KALEIDO, SKED and Ethea (Impulse Labs)
 2. **Data strategy**: audience analytics and simulation grounded in official data
 3. **Human factors**: applied psychology in product design and security
 4. **Responsible AI**: data protection, security and scientific transparency
