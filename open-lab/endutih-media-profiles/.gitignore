@@ -1,0 +1,8 @@
+# Raw INEGI downloads are never committed
+raw/
+*.zip
+__pycache__/
+*.egg-info/
+.pytest_cache/
+build/
+dist/
