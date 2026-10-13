@@ -31,6 +31,21 @@ class ProviderRequest:
 
 
 @dataclass(frozen=True)
+class UsageIteration:
+    """One provider-side attempt inside a single call (``usage.iterations``).
+
+    ``model`` is ``None`` when the provider doesn't say; it is then the requested model.
+    """
+
+    type: str
+    model: str | None
+    input_tokens: int
+    output_tokens: int
+    cache_creation_input_tokens: int = 0
+    cache_read_input_tokens: int = 0
+
+
+@dataclass(frozen=True)
 class ProviderResponse:
     text: str
     model: str
@@ -41,3 +56,4 @@ class ProviderResponse:
     cache_read_input_tokens: int = 0
     request_id: str | None = None
     served_by_fallback: bool = False
+    iterations: tuple[UsageIteration, ...] = ()  # per-attempt usage when the provider reports it

@@ -91,7 +91,8 @@ class SQLiteStore:
         with self._tx() as c:
             c.execute("DELETE FROM reservations WHERE expires_at<=?", (now,))
             used, reserved = self._totals(c, org_id, period, now)
-            if used + reserved + units > limit:
+            # Once a pool is used up (usage can overshoot an estimate), nothing new starts.
+            if used >= limit or used + reserved + units > limit:
                 raise QuotaExceeded(org_id, period, used, reserved, units, limit)
             rid = uuid.uuid4().hex
             c.execute("INSERT INTO reservations(id,org_id,period,units,created_at,expires_at) VALUES (?,?,?,?,?,?)",

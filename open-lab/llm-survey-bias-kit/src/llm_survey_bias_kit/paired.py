@@ -11,7 +11,10 @@ Verdicts:
   message cannot separate the model's own sampling noise from a message
   effect), or fewer than two units.
 * ``"distinguishable"`` - both the t and bootstrap 95% CIs exclude zero and,
-  if an A/A noise floor is supplied, ``|diff|`` exceeds it.
+  if an A/A noise floor is supplied, ``|diff|`` exceeds it. When the
+  difference has zero variance across units (every unit moved by exactly the
+  same amount) the CIs collapse to a point, so ``|diff|`` must also exceed a
+  small numerical tolerance; a floating-point residue is never a difference.
 * ``"indistinguishable"`` - otherwise. This is *not* evidence of equality;
   compare the observed difference with the minimum detectable effect.
 """
@@ -27,6 +30,8 @@ from typing import Iterable, Mapping
 import numpy as np
 
 from ._stats import percentile_ci, t_ppf
+
+_ZERO_TOL = 1e-9  # relative tolerance for "numerically zero" differences and SEs
 
 DISTINGUISHABLE = "distinguishable"
 INDISTINGUISHABLE = "indistinguishable"
@@ -179,6 +184,11 @@ def paired_ab(
         )
     else:
         excludes_zero = (ci_t[0] > 0 or ci_t[1] < 0) and (ci_boot[0] > 0 or ci_boot[1] < 0)
+        tol = _ZERO_TOL * max(1.0, abs(float(ua.mean())), abs(float(ub.mean())))
+        if not se > tol:  # zero (or numerically zero) variance: CIs are a single point
+            if abs(diff) <= tol:
+                excludes_zero = False
+            reasons.append("the paired difference has zero variance across units: the CIs are a point")
         above_floor = noise_floor is None or abs(diff) > noise_floor
         if excludes_zero and above_floor:
             verdict = DISTINGUISHABLE
@@ -224,16 +234,33 @@ def aa_test(run_1, run_2, label: str = "A", **kwargs) -> AAResult:
     A/A difference: an A/B difference smaller than this is within what the
     pipeline produces when nothing changes. A ``"distinguishable"`` A/A verdict
     is a red flag (non-independent replicates, caching, drift between runs).
+
+    When the A/A comparison is ``"not evaluable"`` (fewer than two units or
+    two replicates) there is no usable floor: ``noise_floor`` is ``inf``
+    (``null`` in JSON), so passing it to ``paired_ab`` can never yield
+    ``"distinguishable"``.
     """
     res = paired_ab(run_1, run_2, label_a=f"{label} (run 1)", label_b=f"{label} (run 2)", **kwargs)
-    floor = max(abs(res.ci_t[0]), abs(res.ci_t[1])) if res.n_units >= 2 else math.inf
+    if res.verdict == NOT_EVALUABLE:
+        floor = math.inf
+        res.reasons.append("A/A comparison not evaluable: no noise floor (inf)")
+    else:
+        floor = max(abs(res.ci_t[0]), abs(res.ci_t[1]))
     if res.verdict == DISTINGUISHABLE:
         res.reasons.append("A/A runs differ: check replicate independence and run-to-run drift")
     return AAResult(res, float(floor))
 
 
 def aa_split_replicates(scores, label: str = "A", seed: int | None = 0, **kwargs) -> AAResult:
-    """A/A from a single run: randomly split each unit's replicates in two halves."""
+    """A/A from a single run: randomly split each unit's replicates in two halves.
+
+    Scale: each half averages only ``R/2`` replicates, while the A/B analysis
+    averages all ``R``. The replicate-noise part of this floor is therefore
+    about ``√2`` times larger than it would be at the A/B's ``R``, so the floor
+    is conservative (it makes ``"distinguishable"`` harder to reach). With
+    fewer than 4 replicates each half has a single replicate and the A/A is
+    not evaluable (floor ``inf``).
+    """
     m = _as_matrix(scores)
     r = m.shape[1]
     if r < 2:

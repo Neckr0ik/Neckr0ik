@@ -41,7 +41,10 @@ PROMPTS = {
 }
 
 _DECLINE = re.compile(r"\b(unknown|desconocido|no s[eé]|don't know|do not know|n/?a)\b", re.I)
-_NUM = re.compile(r"[-+]?\d[\d.,\s]*")
+# A number: digit groups joined by thousands separators (, . or a space) with an optional
+# decimal part, or a plain number with an optional decimal part.
+_NUM = re.compile(r"[-+]?\d{1,3}(?:[,. \u00a0\u202f]\d{3})+(?:[.,]\d+)?(?!\d)|[-+]?\d+(?:[.,]\d+)?")
+_PERCENT_WORDS = ("%", "percent", "per cent", "por ciento", "porciento")
 
 
 @dataclass(frozen=True)
@@ -73,7 +76,7 @@ def build_probe_prompt(target: ProbeTarget, language: str = "en") -> str:
 
 
 def _to_float(tok: str) -> float | None:
-    t = tok.strip().replace(" ", "")
+    t = tok.strip().replace(" ", "").replace("\u00a0", "").replace("\u202f", "")
     t = t.rstrip(".,")
     if not t or not re.search(r"\d", t):
         return None
@@ -85,10 +88,12 @@ def _to_float(tok: str) -> float | None:
             t = t.replace(",", "")
     elif "," in t:
         parts = t.split(",")
-        if len(parts) == 2 and len(parts[1]) != 3:
-            t = t.replace(",", ".")  # decimal comma: 45,3
+        if len(parts) == 2 and (len(parts[1]) != 3 or parts[0].lstrip("+-") == "0"):
+            t = t.replace(",", ".")  # decimal comma: 45,3 and 0,125 (a thousands group never starts with 0)
         else:
             t = t.replace(",", "")  # thousands: 1,234
+    elif t.count(".") > 1:
+        t = t.replace(".", "")  # thousands with dots: 1.234.567
     try:
         v = float(t)
     except ValueError:
@@ -96,19 +101,43 @@ def _to_float(tok: str) -> float | None:
     return v if math.isfinite(v) else None
 
 
-def parse_numeric_answer(text: str | None) -> float | None:
-    """First number in the answer, or None if the model declined / gave none.
+def _adjacent_to_unit(s: str, start: int, end: int, unit_words: tuple[str, ...]) -> bool:
+    after = s[end:].lstrip().lower()
+    before = s[:start].rstrip().lower()
+    return any(w and (after.startswith(w) or before.endswith(w)) for w in unit_words)
 
-    Handles ``45.3``, ``45,3`` (decimal comma), ``1,234.5``, ``1.234,5`` and a
-    trailing ``%``.
+
+def _is_year(tok: str, value: float) -> bool:
+    return re.fullmatch(r"\d{4}", tok) is not None and 1900 <= value <= 2100
+
+
+def parse_numeric_answer(text: str | None, unit: str = "") -> float | None:
+    """The number the answer gives, or None if the model declined / gave none.
+
+    Handles ``45.3``, ``45,3`` and ``0,125`` (decimal comma), ``1,234.5``,
+    ``1.234,5`` and a trailing ``%``. When the answer holds several numbers
+    (``"In 2020 it was 45.3%"``), the one next to ``%`` / "percent" / ``unit``
+    wins; otherwise four-digit years 1900-2100 are skipped when another number
+    is present; otherwise the first number is used.
     """
     if text is None:
         return None
     s = str(text).strip()
     if not s or _DECLINE.search(s) and not re.search(r"\d", s):
         return None
-    m = _NUM.search(s)
-    return _to_float(m.group(0)) if m else None
+    cands = []
+    for m in _NUM.finditer(s):
+        v = _to_float(m.group(0))
+        if v is not None:
+            cands.append((m, v))
+    if not cands:
+        return None
+    units = _PERCENT_WORDS + ((unit.strip().lower(),) if unit and unit.strip() else ())
+    for m, v in cands:
+        if _adjacent_to_unit(s, m.start(), m.end(), units):
+            return v
+    non_years = [(m, v) for m, v in cands if not _is_year(m.group(0).lstrip("+"), v)]
+    return (non_years or cands)[0][1]
 
 
 @dataclass
@@ -163,7 +192,7 @@ def run_memorization_probe(
     for t in targets:
         prompt = build_probe_prompt(t, language)
         answers = [str(llm(prompt)) for _ in range(n_samples)]
-        vals = [v for v in (parse_numeric_answer(a) for a in answers) if v is not None]
+        vals = [v for v in (parse_numeric_answer(a, t.unit) for a in answers) if v is not None]
         tol = max(abs_tol, rel_tol * abs(t.official_value))
         if not vals:
             results.append(ProbeResult(t.target_id, prompt, answers, [], None, t.official_value,

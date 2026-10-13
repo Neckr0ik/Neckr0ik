@@ -17,6 +17,9 @@ from .errors import InvalidRequest
 
 DEFAULT_MODEL = "claude-sonnet-5-5"
 PROVIDERS = ("mock", "anthropic", "bedrock", "vertex")
+# Models for which the Anthropic API's server-side refusal fallback is requested. Other
+# models are sent without it, so a model that doesn't support it never gets a 400.
+DEFAULT_FALLBACK_MODELS = ("claude-sonnet-5-5", "claude-opus-5-5")
 
 
 @dataclass(frozen=True)
@@ -29,9 +32,13 @@ class ModelRate:
 
     input: float = 1.0
     output: float = 1.0
+    cache_write: float = 1.0  # per cache_creation_input_token
+    cache_read: float = 1.0  # per cache_read_input_token
 
-    def cost(self, input_tokens: int, output_tokens: int) -> float:
-        return input_tokens * self.input + output_tokens * self.output
+    def cost(self, input_tokens: int, output_tokens: int, cache_write_tokens: int = 0,
+             cache_read_tokens: int = 0) -> float:
+        return (input_tokens * self.input + output_tokens * self.output
+                + cache_write_tokens * self.cache_write + cache_read_tokens * self.cache_read)
 
 
 @dataclass(frozen=True)
@@ -81,9 +88,12 @@ class GatewayConfig:
     vertex_project_id: str | None = None
     vertex_region: str = "global"
     anthropic_server_fallbacks: bool = True
+    anthropic_fallback_models: tuple[str, ...] = DEFAULT_FALLBACK_MODELS
+    anthropic_fallback_hops: int = 1  # extra attempts reserved for when a fallback is requested
     # Logging / privacy
     log_level: str = "INFO"
     log_hash_user_ids: bool = True
+    log_salt: str = field(default="", repr=False)  # LLMGW_LOG_SALT; environment only
     # API keys: org_id -> set of sha256 hex digests. Populated from env only.
     api_key_hashes: dict[str, set[str]] = field(default_factory=dict, repr=False)
 
@@ -92,6 +102,15 @@ class GatewayConfig:
             raise ValueError(f"provider must be one of {PROVIDERS}, got {self.provider!r}")
         if self.max_attempts < 1:
             raise ValueError("max_attempts must be >= 1")
+        if self.anthropic_fallback_hops < 0:
+            raise ValueError("anthropic_fallback_hops must be >= 0")
+        self.anthropic_fallback_models = tuple(self.anthropic_fallback_models)
+        # A reservation must outlive the slowest possible call, or it could expire while the
+        # provider is still working and let other requests spend the same budget.
+        worst = self.max_attempts * self.timeout_s + (self.max_attempts - 1) * self.backoff_max_s
+        if self.reservation_ttl_s < worst:
+            raise ValueError(f"reservation_ttl_s ({self.reservation_ttl_s:g}) must be >= max_attempts * timeout_s"
+                             f" + (max_attempts - 1) * backoff_max_s = {worst:g}")
 
     # -- lookups -----------------------------------------------------------
     def org(self, org_id: str) -> OrgConfig:
@@ -110,13 +129,22 @@ class GatewayConfig:
     def rate_for(self, model: str) -> ModelRate:
         return self.model_rates.get(model, self.model_rates.get("default", ModelRate()))
 
+    def max_rate(self) -> ModelRate:
+        """Component-wise maximum over every configured rate (and the default).
+
+        Used to reserve for server-side fallback hops, whose model the API chooses.
+        """
+        rates = [*self.model_rates.values(), self.rate_for("default")]
+        return ModelRate(*(max(getattr(r, f) for r in rates) for f in ("input", "output", "cache_write", "cache_read")))
+
     # -- loaders -----------------------------------------------------------
     @classmethod
     def from_mapping(cls, data: Mapping[str, Any], **overrides: Any) -> "GatewayConfig":
         kw: dict[str, Any] = {}
         simple = ("provider", "default_model", "db_path", "timeout_s", "max_attempts", "backoff_base_s",
                   "backoff_max_s", "reservation_ttl_s", "strict_features", "aws_region", "vertex_project_id",
-                  "vertex_region", "anthropic_server_fallbacks", "log_level", "log_hash_user_ids")
+                  "vertex_region", "anthropic_server_fallbacks", "anthropic_fallback_models",
+                  "anthropic_fallback_hops", "log_level", "log_hash_user_ids")
         for key in simple:
             if key in data:
                 kw[key] = data[key]
@@ -134,6 +162,8 @@ class GatewayConfig:
                 kw[f"{scope}_rate"] = BucketConfig(**rl[scope]) if rl[scope] else None
         if "api_keys" in data or "api_key_sha256" in data:
             raise ValueError("API keys are not accepted in the config file; use LLMGW_API_KEYS / LLMGW_API_KEY_SHA256")
+        if "log_salt" in data:
+            raise ValueError("log_salt is not accepted in the config file; use LLMGW_LOG_SALT")
         kw.update(overrides)
         return cls(**kw)
 
@@ -151,6 +181,7 @@ class GatewayConfig:
             "LLMGW_DB_PATH": ("db_path", str),
             "LLMGW_TIMEOUT_S": ("timeout_s", float),
             "LLMGW_MAX_ATTEMPTS": ("max_attempts", int),
+            "LLMGW_RESERVATION_TTL_S": ("reservation_ttl_s", float),
             "LLMGW_LOG_LEVEL": ("log_level", str),
             "LLMGW_VERTEX_REGION": ("vertex_region", str),
         }
@@ -159,6 +190,11 @@ class GatewayConfig:
                 ov[key] = conv(env[var])
         if env.get("LLMGW_ANTHROPIC_FALLBACKS"):
             ov["anthropic_server_fallbacks"] = env["LLMGW_ANTHROPIC_FALLBACKS"].lower() not in ("0", "false", "no", "off")
+        if env.get("LLMGW_ANTHROPIC_FALLBACK_MODELS") is not None:
+            ov["anthropic_fallback_models"] = tuple(
+                m.strip() for m in env["LLMGW_ANTHROPIC_FALLBACK_MODELS"].split(",") if m.strip())
+        if env.get("LLMGW_LOG_SALT"):
+            ov["log_salt"] = env["LLMGW_LOG_SALT"]
         region = env.get("LLMGW_AWS_REGION") or env.get("AWS_REGION") or env.get("AWS_DEFAULT_REGION")
         if region:
             ov["aws_region"] = region

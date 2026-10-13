@@ -11,7 +11,7 @@
 | Design | strata `EST_DIS`, PSUs `UPM_DIS` (for standard errors) |
 | License | INEGI *Términos de libre uso de la información* — https://www.inegi.org.mx/inegi/terminos.html |
 | Records | 57,810 selected persons aged 6+ (Σ FAC_PER = 121,906,757); 57,810 households (Σ FAC_HOG = 39,677,498) |
-| Suppression | cells with unweighted n < 30 have shares, SEs and weighted totals blanked |
+| Suppression | cells with unweighted n < 30 have shares, SEs and weighted totals blanked (`suppression=primary`); further cells are blanked (`suppression=complementary`) so that no blank can be recovered by subtracting published cells from a published total along any dimension; the same is done per indicator for indicator-level blanks |
 
 Required attribution (per INEGI's terms): *Fuente: INEGI. Encuesta Nacional
 sobre Disponibilidad y Uso de Tecnologías de la Información en los Hogares
@@ -30,7 +30,8 @@ tabulations. INEGI does not endorse them.
 * `indicators.csv` — every indicator key, the ENDUTIH variable(s), universe
   gates and labels (EN/ES).
 
-Columns: `n` = unweighted respondents in the cell; `pop` = weighted
+Columns: `n` = unweighted respondents in the cell (always shown);
+`suppressed` / `suppression` (`none`, `primary`, `complementary`); `pop` = weighted
 persons/households; `<indicator>` = weighted share (0–1); `<indicator>_se` =
 linearised standard error; `<indicator>_n` (only where answers can be missing)
 = respondents with a valid answer. `area` follows ENDUTIH `DOMINIO`

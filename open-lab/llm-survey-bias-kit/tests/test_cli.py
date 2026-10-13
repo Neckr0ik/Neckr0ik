@@ -35,8 +35,11 @@ def test_cli_paired_json(paired_csv, capsys):
 
 def test_cli_aa_split(paired_csv, capsys):
     assert main(["aa", paired_csv, "--split", "B", "--json"]) == 0
-    d = json.loads(capsys.readouterr().out)
-    assert d["noise_floor"] == pytest.approx(0.0)
+    out = capsys.readouterr().out
+    d = json.loads(out)
+    # 3 replicates split 1 + 2: the A/A is not evaluable, so there is no noise floor
+    assert d["comparison"]["verdict"] == "not evaluable"
+    assert d["noise_floor"] is None and "Infinity" not in out and "NaN" not in out
 
 
 def test_cli_aa_requires_labels(paired_csv):
@@ -84,3 +87,31 @@ def test_cli_missing_column_is_error(tmp_path, capsys):
     p = write(tmp_path / "x.csv", ["foo"], [(1,)])
     assert main(["kish", p]) == 1
     assert "missing column" in capsys.readouterr().err
+
+
+def test_cli_order_uses_unit_column_when_present(tmp_path, capsys):
+    rows = []
+    for u in range(40):
+        d = "forward" if u % 2 == 0 else "reversed"
+        for _ in range(5):
+            rows.append((f"U{u}", d, "si" if u % 4 < 2 else "no"))  # per-unit preference, no order effect
+    p = write(tmp_path / "order.csv", ["unit_id", "direction", "choice"], rows)
+    assert main(["order", p, "--options", "si,no", "--json"]) == 0
+    d = json.loads(capsys.readouterr().out)
+    assert d["resampling"] == "unit" and d["n_units_forward"] == 20 and d["n_forward"] == 100
+    assert main(["order", p, "--options", "si,no", "--unit-col", "missing"]) == 0
+    assert "responses treated as independent" in capsys.readouterr().out
+
+
+def test_read_csv_handles_quoted_newlines_and_bom(tmp_path):
+    from llm_survey_bias_kit.csvio import read_csv
+
+    p = tmp_path / "q.csv"
+    p.write_bytes("\ufeffunit_id,comment,score\r\n1,\"line one\r\nline two\",3\r\n2,plain,4\r\n".encode("utf-8"))
+    rows = read_csv(p)
+    assert [r["unit_id"] for r in rows] == ["1", "2"]
+    assert rows[0]["comment"] == "line one\r\nline two" and rows[1]["score"] == "4"
+    empty = tmp_path / "e.csv"
+    empty.write_text("", encoding="utf-8")
+    with pytest.raises(ValueError, match="empty CSV"):
+        read_csv(empty)

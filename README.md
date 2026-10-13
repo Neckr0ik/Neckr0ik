@@ -73,7 +73,7 @@ Five open-source packages that rebuild the **public foundations** of the method 
 | [**silicon-sample-validation**](open-lab/silicon-sample-validation) | *Does it match reality?* Hash-chained pre-registered forecasts, training-cutoff guard, no-LLM baselines, memorization probe | Official surveys |
 | [**llm-gateway-metering**](open-lab/llm-gateway-metering) | *Can it run as a SaaS?* Anthropic API · Bedrock · Vertex behind one gateway with org quotas and metering | — |
 
-<sub>227 tests (224 run offline in CI; 3 need the optional Anthropic SDK or a live key) · CI on Python 3.11 and 3.12 · MIT</sub>
+<sub>292 tests (289 run offline in CI; 3 need the optional Anthropic SDK or a live key) · CI on Python 3.11 and 3.12 · MIT</sub>
 
 <details>
 <summary><b>AI & product stack</b></summary>
