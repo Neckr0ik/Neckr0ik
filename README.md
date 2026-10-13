@@ -117,11 +117,13 @@ Open-source projects that show the building blocks behind Hybrid Intelligence: N
 
 | Project | What it shows | Stack |
 |:---|:---|:---|
-| [**Content Psychology Analyzer**](https://github.com/Neckr0ik/content-psychology-analyzer) | Scores media content on 7 psychological engagement dimensions (Seligman PERMA, Loewenstein, Russell, Green & Brock) | Python · NLP |
-| [**Phishing Psychology Analyzer**](https://github.com/Neckr0ik/phishing-psychology-analyzer) | Maps social-engineering text to the cognitive biases it exploits (Kahneman, Cialdini, MITRE ATT&CK) | Python · VADER |
-| [**News Sentiment Analyzer**](https://github.com/Neckr0ik/news-sentiment-analyzer) | Topic-level sentiment over live RSS feeds for multi-source newsrooms | Python · NLP · RSS |
-| [**Content Analytics Dashboard**](https://github.com/Neckr0ik/content-analytics-dashboard) | Audience growth, slot/genre analysis and content ROI for broadcast & OTT | Pandas · Seaborn |
-| [**YouTube Revenue Simulator**](https://github.com/Neckr0ik/youtube-revenue-simulator) | Channel growth, CPM/RPM dynamics and monetization milestones across niches | NumPy · Matplotlib |
+| [**News Sentiment Analyzer**](https://github.com/Neckr0ik/news-sentiment-analyzer) | Headline sentiment by source and topic for **English, Spanish and Portuguese** feeds, including Mexican outlets; VADER, offline es/pt lexicon or optional Claude API | Python · NLP · Claude API |
+| [**Content Psychology Analyzer**](https://github.com/Neckr0ik/content-psychology-analyzer) | Scores media copy on 7 psychological engagement dimensions and **compares two framings of the same message** (Chong & Druckman, 2007) | Python · NLP |
+| [**Phishing Psychology Analyzer**](https://github.com/Neckr0ik/phishing-psychology-analyzer) | Maps social-engineering wording to the cognitive biases it exploits, with a persuasion-pressure score and ATT&CK context | Python · VADER |
+| [**Content Analytics Dashboard**](https://github.com/Neckr0ik/content-analytics-dashboard) | Broadcast & OTT analytics: growth by 12-month period, scheduling heatmap, genre and platform mix, content cost-efficiency | Pandas · Seaborn |
+| [**YouTube Revenue Simulator**](https://github.com/Neckr0ik/youtube-revenue-simulator) | Channel growth, YPP eligibility and ad/sponsorship/membership revenue with same-channel niche comparison | NumPy · Matplotlib |
+
+<sub>Every portfolio repo ships offline tests and CI on Python 3.11 and 3.12.</sub>
 
 ---
 
