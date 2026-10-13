@@ -59,6 +59,7 @@ All are private and in active development with partners.
 
 | Date | Milestone |
 |:---|:---|
+| 2026-10-13 | **Public portfolio upgraded**: Spanish & Portuguese sentiment, message-framing comparison, bug fixes, offline tests and CI across all five repos |
 | 2026-10-13 | **Open Lab** published: census sampler, ENDUTIH 2025 media profiles, LLM survey bias kit, validation harness and LLM gateway with metering — public data only, 224 offline tests ([open-lab](../open-lab/README.md)) |
 | 2026-10-12 | **Ethea**: redesign, new tests, French language, science notes per test and B2B track |
 | 2026-10-11 | Shared **Scientific Basis** module shipped in all three core products: method, evidence, limits and 20+ academic and official references, written once and rendered per brand |
