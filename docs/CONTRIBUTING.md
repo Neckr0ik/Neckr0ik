@@ -193,8 +193,8 @@ docker --version
 
 ```bash
 # Clone repository | Clonar repositorio | Clonar repositório
-git clone https://github.com/giovannide/Digital-Forge.git
-cd Digital-Forge
+git clone https://github.com/Neckr0ik/Neckr0ik.git
+cd Neckr0ik
 
 # Create virtual environment | Crear entorno virtual | Criar ambiente virtual
 python3 -m venv venv

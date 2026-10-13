@@ -32,8 +32,8 @@ pip install requests pandas matplotlib seaborn geoip2 maxminddb
 ### Quick Setup
 ```bash
 # Clone repository
-git clone https://github.com/giovannide/Digital-Forge.git
-cd Digital-Forge/3-Data-Analytics/3.2-Log-Analysis/auth-log-parser
+git clone https://github.com/Neckr0ik/Neckr0ik.git
+cd Neckr0ik/3-Data-Analytics/3.2-Log-Analysis/auth-log-parser
 
 # Install dependencies
 pip install -r requirements.txt

@@ -41,8 +41,8 @@ sudo yum install -y curl wget git
 ### Quick Installation
 ```bash
 # Clone the repository
-git clone https://github.com/giovannide/Digital-Forge.git
-cd Digital-Forge/1-Cybersecurity/System-Hardening/stig-cis-linux-hardener
+git clone https://github.com/Neckr0ik/Neckr0ik.git
+cd Neckr0ik/1-Cybersecurity/1.2-System-Hardening/stig-cis-linux-hardener
 
 # Make scripts executable
 chmod +x *.sh
