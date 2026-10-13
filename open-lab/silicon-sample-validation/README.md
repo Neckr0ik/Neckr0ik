@@ -10,7 +10,7 @@ The harness is built around four questions:
 
 1. **Closeness.** How close are the simulated estimates to official survey figures, by state and by city (MAE, RMSE, bias, correlation, interval coverage)?
 2. **Baselines.** Does the method beat simple baselines that need no LLM: the last published value, the national mean, and a demographics-only regression? A method that doesn't beat all of them doesn't count.
-3. **Anchoring.** Does anchoring simulated respondents in real interviews beat demographics-only prompting, in a paired comparison over the same units?
+3. **Anchoring.** Does anchoring simulated respondents in real field data beat demographics-only prompting, in a paired comparison over the same units?
 4. **Failure.** Where does it fail: by region, urbanization, presence of indigenous-language speakers, or dispersion of the simulated answers?
 
 ## Safeguards
@@ -128,11 +128,11 @@ The demo builds 32 **synthetic** units (`SYNTHETIC-UNIT-01…`) from a random-nu
 
 
 * Argyle, L. P., Busby, E. C., Fulda, N., Gubler, J. R., Rytting, C., & Wingate, D. (2023). Out of one, many: Using language models to simulate human samples. *Political Analysis*, 31(3), 337–351.
-* Ashokkumar, A., Hewitt, L., Ghezae, I., & Willer, R. (2026). Large language models can predict the results of social science experiments. *Nature*.
+* Ashokkumar, A., Hewitt, L., Ghezae, I., & Willer, R. (2026). Large language models can predict the results of social science experiments. *Nature*, 656. https://doi.org/10.1038/s41586-026-10742-x
 * Bisbee, J., Clinton, J. D., Dorff, C., Kenkel, B., & Larson, J. M. (2024). Synthetic replacements for human survey data? The perils of large language models. *Political Analysis*, 32(4), 401–416.
 * Gneiting, T., & Raftery, A. E. (2007). Strictly proper scoring rules, prediction, and estimation. *Journal of the American Statistical Association*, 102(477), 359–378.
-* Hullman, J., Broska, D., Sun, H., & Shaw, A. (2026). This human study did not involve human subjects: Validating LLM simulations as behavioral evidence. Preprint, arXiv.
-* Kozlowski, A. C., & Evans, J. (2025). Simulating subjects: The promise and peril of artificial intelligence stand-ins for social agents and interactions. *Sociological Methods & Research*, 54, 1017–1073.
+* Hullman, J., Broska, D., Sun, H., & Shaw, A. (2026). This human study did not involve human subjects: Validating LLM simulations as behavioral evidence. arXiv:2602.15785.
+* Kozlowski, A. C., & Evans, J. (2025). Simulating subjects: The promise and peril of artificial intelligence stand-ins for social agents and interactions. *Sociological Methods & Research*, 54(3), 1017–1073. https://doi.org/10.1177/00491241251337316
 
 ## License
 

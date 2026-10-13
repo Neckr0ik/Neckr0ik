@@ -22,13 +22,13 @@ Mapping of skills to projects and sources:
 - **Founder training** through Empretec and FounderX
 
 ### Current Focus
-1. **Hybrid Intelligence**: silicon samples anchored in Census 2020 and INRA interviews; products ZÓKALO, MOSAIK, KALEIDO, SKED and Ethea (Impulse Labs)
+1. **Hybrid Intelligence**: silicon samples anchored in Census 2020 and private field data developed with INRA; products ZÓKALO, MOSAIK, KALEIDO, SKED and Ethea (Impulse Labs)
 2. **Data strategy**: audience analytics and simulation grounded in official data
 3. **Human factors**: applied psychology in product design and security
 4. **Responsible AI**: data protection, security and scientific transparency
 
 ### Credentials
-- Global MBA — AI & Data Science (ENEB)
+- Global MBA — AI & Data Science (ENEB, 2026)
 - BS Psychology (Capella University) · BS Business Administration (UoPeople)
 - ISC2 Certified in Cybersecurity (CC) · Google Cybersecurity Professional Certificate
 - IBM Data Science Professional Certificate (in progress)

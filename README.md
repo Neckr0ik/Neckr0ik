@@ -24,7 +24,7 @@
 
 I build **Hybrid Intelligence**: AI that simulates how a census-anchored audience might react to a message *before* it goes public, to anticipate objections and compare wordings.
 
-Language models alone mostly speak with the voice of the US and of highly educated users. My work anchors them in Mexico: every simulated person is drawn from the **2020 Census** and grounded in a **real face-to-face interview by INRA**. Each reading reports its own limits and cites the science it rests on.
+Language models alone mostly speak with the voice of the US and of highly educated users. My work anchors them in Mexico: every simulated person is drawn from the **2020 Census** and enriched with private field data, developed with **INRA**. Each reading reports its own limits and cites the science it rests on.
 
 > It is a simulation, not a survey: no output is a measure of public opinion or voting intention.
 
@@ -47,7 +47,7 @@ What I bring is the mix: two decades running broadcast and OTT operations, forma
 
 **The Hybrid Intelligence Core** is one engine shared by several products:
 
-- **Silicon samples anchored in Mexico**: census-based probability sampling with design weights, plus donor imputation from INRA interviews under k-anonymity.
+- **Silicon samples anchored in Mexico**: census-based probability sampling with design weights, enriched with private field data under k-anonymity.
 - **Rigor by design**: paired A/B tests with confidence intervals and minimum detectable effect, A/A controls, answer-order reversal against LLM position bias, fixed seeds and a method card per run.
 - **Honest about limits**: a *Scientific Basis* module in each of the three core products, citing the literature and its known failure modes ([summary and references](hybrid-intelligence/README.md#references)).
 - **Validation, planned in the open**: a study in preparation will test the method against official INEGI surveys, with forecasts registered before each official release and a memorization probe. The harness is public: [silicon-sample-validation](open-lab/silicon-sample-validation).
@@ -106,7 +106,7 @@ timeline
                           : Content strategy and audience analytics
     Formal training       : BS Business Administration
                           : BS Psychology (Capella University)
-                          : Global MBA in AI & Data Science (ENEB)
+                          : Global MBA in AI & Data Science (ENEB, 2026)
     Security & data       : ISC2 Certified in Cybersecurity
                           : Google Cybersecurity Professional
     Founder programs      : Empretec
@@ -162,7 +162,7 @@ Responsible AI starts with secure systems and protected data. This repository ke
 
 | AI, Data & Business | Security | Psychology |
 |:---|:---|:---|
-| Global MBA — AI & Data Science (ENEB) | ISC2 Certified in Cybersecurity (CC) | BS Psychology (Capella University) |
+| Global MBA — AI & Data Science (ENEB, 2026) | ISC2 Certified in Cybersecurity (CC) | BS Psychology (Capella University) |
 | BS Business Administration (UoPeople) | Google Cybersecurity Professional Certificate | Applied: I-O, social, cognitive & positive psychology |
 | IBM Data Science Professional (in progress) | | |
 | Empretec · FounderX · Six Sigma White Belt | | |
