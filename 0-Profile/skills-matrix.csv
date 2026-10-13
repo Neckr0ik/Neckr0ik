@@ -19,7 +19,7 @@ Human Factors,Social Engineering Defense,4-Psychology/phishing-analysis.md,Psych
 Human Factors,Security Culture,4-Psychology/awareness-training.md,Behavioral change strategies
 AI Product,LLM Application Architecture,Impulse Labs · Hybrid Intelligence Core (private),Multi-provider gateway: Anthropic API / Amazon Bedrock / Vertex AI
 AI Product,Usage Metering & Quotas,Impulse Labs · Hybrid Intelligence Core (private),Per-organization monthly quota with alerts and per-user usage
-AI Product,Audience Simulation,Impulse Labs · Hybrid Intelligence Core (private),Silicon samples: Census 2020 (ITER) sampling + INRA interview donors (k-anonymity)
+AI Product,Audience Simulation,Impulse Labs · Hybrid Intelligence Core (private),Silicon samples: Census 2020 (ITER) sampling + private field data (k-anonymity)
 AI Product,Newsroom AI Assistant,Impulse Labs · SKED (private),Private product
 AI Product,Psychometric Product Design,Impulse Labs · Ethea (private),Private product
 AI Product,AI-Assisted Engineering,All Impulse Labs products,Claude Code and Lovable with automated tests and reproducible builds
