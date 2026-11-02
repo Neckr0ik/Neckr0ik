@@ -32,6 +32,24 @@ if (-not (Test-Path $envFile)) {
     Write-Host ".env creado." -ForegroundColor Green
 }
 
+# Asegura secretos del visor (tambien para .env creados con versiones anteriores)
+function New-Hex([int]$bytes) {
+    $b = New-Object byte[] $bytes
+    [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($b)
+    return -join ($b | ForEach-Object { $_.ToString('x2') })
+}
+$raw = Get-Content $envFile -Raw
+foreach ($pair in @(@('NEXTAUTH_SECRET', 32), @('ENCRYPTION_KEY', 32))) {
+    $name = $pair[0]
+    if ($raw -notmatch "(?m)^$name=\S+") {
+        $val = New-Hex $pair[1]
+        if ($raw -match "(?m)^$name=") { $raw = $raw -replace "(?m)^$name=.*", "$name=$val" }
+        else { $raw = $raw.TrimEnd() + "`r`n$name=$val`r`n" }
+        Write-Host "$name generado." -ForegroundColor Green
+    }
+}
+Set-Content -Path $envFile -Value $raw -Encoding ascii
+
 $envMap = @{}
 Get-Content $envFile | Where-Object { $_ -match '^\s*[^#].*=' } | ForEach-Object {
     $k, $v = $_ -split '=', 2; $envMap[$k.Trim()] = $v.Trim()

@@ -13,6 +13,7 @@ services:
       # Login del visor FalkorDB Browser (NextAuth); solo escucha en 127.0.0.1
       - NEXTAUTH_URL=http://localhost:3000
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-graphiti-local-browser-secret}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}  # 64 hex; lo genera 1-instalar-graphiti.ps1
     volumes:
       - ./config/config.yaml:/app/mcp/config/config.yaml:ro
       - falkordb_data:/var/lib/falkordb/data
