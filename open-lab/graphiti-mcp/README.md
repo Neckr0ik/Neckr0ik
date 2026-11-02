@@ -83,7 +83,7 @@ Consejo: usa un `group_id` distinto por proyecto (por ejemplo, el nombre del rep
 - `.env` está en `.gitignore`: nunca lo subas.
 
 ## Mantenimiento
-- **Ver el grafo:** http://127.0.0.1:3000
+- **Ver el grafo:** http://localhost:3000 (usa `localhost`, no `127.0.0.1`). Host `localhost`, puerto `6379`, sin usuario. Grafo: `default_db`.
 - **Logs:** `docker compose logs -f graphiti`
 - **Actualizar:** cambia la etiqueta de la imagen en `docker-compose.yml` y ejecuta `docker compose --profile tailscale up -d` (o `--profile tunnel`).
 - **Backup:** `docker run --rm -v graphiti-mcp_falkordb_data:/d -v ${PWD}:/b alpine tar czf /b/backup.tgz -C /d .`

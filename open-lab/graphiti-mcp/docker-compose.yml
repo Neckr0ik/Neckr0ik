@@ -10,6 +10,9 @@ services:
       - FALKORDB_URI=redis://localhost:6379
       - CONFIG_PATH=/app/mcp/config/config.yaml
       - BROWSER=${BROWSER:-1}
+      # Login del visor FalkorDB Browser (NextAuth); solo escucha en 127.0.0.1
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-graphiti-local-browser-secret}
     volumes:
       - ./config/config.yaml:/app/mcp/config/config.yaml:ro
       - falkordb_data:/var/lib/falkordb/data
