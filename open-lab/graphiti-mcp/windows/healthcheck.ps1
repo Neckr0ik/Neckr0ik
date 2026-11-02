@@ -2,7 +2,7 @@
 #  1) Internet (si falla: reconecta la Wi-Fi conocida)
 #  2) Docker Desktop (si no responde: lo arranca)
 #  3) Graphiti local /health (si falla: docker compose up -d, luego restart)
-#  4) URL publica (opcional, PUBLIC_HEALTH_URL en .env) via tunel (si falla: reinicia cloudflared)
+#  4) URL publica (opcional, PUBLIC_HEALTH_URL en .env) (si falla: reinicia tailscale o cloudflared)
 #  5) Si todo OK, avisa a un monitor externo (opcional, HEALTHCHECKS_PING_URL en .env)
 #     -> si el PC se apaga o pierde internet, ese servicio te manda un email.
 $root = Split-Path -Parent $PSScriptRoot
@@ -16,7 +16,9 @@ if (Test-Path '.env') {
     Get-Content '.env' | Where-Object { $_ -match '^\s*[^#].*=' } | ForEach-Object { $k, $v = $_ -split '=', 2; $envMap[$k.Trim()] = $v.Trim() }
 }
 function Http-Ok($url) { try { return (Invoke-WebRequest -UseBasicParsing $url -TimeoutSec 10).StatusCode -lt 500 } catch { return $false } }
-$profileArgs = @(); if ($envMap['CLOUDFLARE_TUNNEL_TOKEN']) { $profileArgs = @('--profile', 'tunnel') }
+$profileArgs = @(); $edge = ''
+if ($envMap['EXPOSE_MODE'] -eq 'tunnel' -and $envMap['CLOUDFLARE_TUNNEL_TOKEN']) { $profileArgs = @('--profile', 'tunnel'); $edge = 'cloudflared' }
+elseif ($envMap['EXPOSE_MODE'] -eq 'tailscale' -and $envMap['TS_AUTHKEY']) { $profileArgs = @('--profile', 'tailscale'); $edge = 'tailscale' }
 
 # 1) Internet
 if (-not (Test-Connection 1.1.1.1 -Count 2 -Quiet)) {
@@ -58,8 +60,8 @@ $publicOk = $true
 if ($envMap['PUBLIC_HEALTH_URL']) {
     $publicOk = Http-Ok $envMap['PUBLIC_HEALTH_URL']
     if (-not $publicOk) {
-        Log "URL publica no responde -> reiniciando cloudflared"
-        docker compose @profileArgs restart cloudflared *> $null
+        Log "URL publica no responde -> reiniciando $edge"
+        if ($edge) { docker compose @profileArgs restart $edge *> $null }
         Start-Sleep 20
         $publicOk = Http-Ok $envMap['PUBLIC_HEALTH_URL']
     }
