@@ -1,0 +1,4 @@
+.env
+windows/tools/
+windows/*.log
+windows/*.log.old

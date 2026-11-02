@@ -1,0 +1,39 @@
+# Graphiti MCP (FalkorDB incluido) + Caddy (ruta secreta) + Cloudflare Tunnel
+# Nada se expone a tu red local salvo 127.0.0.1; la salida pública es solo por el túnel.
+services:
+  graphiti:
+    image: zepai/knowledge-graph-mcp:1.1.3-graphiti-0.31.2
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - FALKORDB_URI=redis://localhost:6379
+      - CONFIG_PATH=/app/mcp/config/config.yaml
+      - BROWSER=${BROWSER:-1}
+    volumes:
+      - ./config/config.yaml:/app/mcp/config/config.yaml:ro
+      - falkordb_data:/var/lib/falkordb/data
+      - mcp_logs:/var/log/graphiti
+    ports:
+      - "127.0.0.1:8000:8000"  # MCP para uso local (Claude Code en tu PC)
+      - "127.0.0.1:3000:3000"  # FalkorDB Browser (ver el grafo)
+
+  caddy:
+    image: caddy:2.8
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on: [graphiti]
+
+  cloudflared:
+    image: cloudflare/cloudflared:2024.10.1
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on: [caddy]
+    profiles: [tunnel]   # solo arranca con: docker compose --profile tunnel up -d
+
+volumes:
+  falkordb_data:
+  mcp_logs:
