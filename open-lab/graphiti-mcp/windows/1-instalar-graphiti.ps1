@@ -14,7 +14,9 @@ if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
 $envFile = Join-Path $root '.env'
 if (-not (Test-Path $envFile)) {
     $content = Get-Content (Join-Path $root '.env.example') -Raw
-    $secret = -join ((48..57) + (97..122) | Get-Random -Count 40 | ForEach-Object { [char]$_ })
+    $sb = New-Object byte[] 24
+    [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($sb)
+    $secret = -join ($sb | ForEach-Object { $_.ToString('x2') })   # 48 hex = 192 bits, CSPRNG
     $anth = Read-Host "Pega tu ANTHROPIC_API_KEY (console.anthropic.com)"
     $goog = Read-Host "Pega tu GOOGLE_API_KEY (aistudio.google.com)"
     $mode = Read-Host "Salida publica: escribe 'tailscale' (recomendado) o 'tunnel' (Cloudflare)"
