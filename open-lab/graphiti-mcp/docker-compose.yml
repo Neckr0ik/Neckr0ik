@@ -1,0 +1,64 @@
+# Graphiti MCP (FalkorDB incluido) + Caddy (ruta secreta) + salida publica:
+#   Tailscale Funnel (perfil "tailscale", recomendado)  o  Cloudflare Tunnel (perfil "tunnel")
+# Nada se expone a tu red local salvo 127.0.0.1; la salida pública es solo por el túnel.
+services:
+  graphiti:
+    image: zepai/knowledge-graph-mcp:1.1.3-graphiti-0.31.2
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - FALKORDB_URI=redis://localhost:6379
+      - CONFIG_PATH=/app/mcp/config/config.yaml
+      - BROWSER=${BROWSER:-1}
+      # Login del visor FalkorDB Browser (NextAuth); solo escucha en 127.0.0.1
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-graphiti-local-browser-secret}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}  # 64 hex; lo genera 1-instalar-graphiti.ps1
+    volumes:
+      - ./config/config.yaml:/app/mcp/config/config.yaml:ro
+      # Parche: graphiti-core fija gemini-2.5-flash-lite (retirado) como modelo small y reranker
+      - ./patches/graphiti_gemini_patch.py:/app/mcp/.venv/lib/python3.13/site-packages/graphiti_gemini_patch.py:ro
+      - ./patches/zz_graphiti_gemini_patch.pth:/app/mcp/.venv/lib/python3.13/site-packages/zz_graphiti_gemini_patch.pth:ro
+      - falkordb_data:/var/lib/falkordb/data
+      - mcp_logs:/var/log/graphiti
+    ports:
+      - "127.0.0.1:8000:8000"  # MCP para uso local (Claude Code en tu PC)
+      - "127.0.0.1:3000:3000"  # FalkorDB Browser (ver el grafo)
+
+  caddy:
+    image: caddy:2.8
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on: [graphiti]
+
+  cloudflared:
+    image: cloudflare/cloudflared:2024.10.1
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on: [caddy]
+    profiles: [tunnel]   # solo arranca con: docker compose --profile tunnel up -d
+
+  tailscale:
+    image: tailscale/tailscale:v1.104.4
+    hostname: ${TS_HOSTNAME:-graphiti}
+    restart: unless-stopped
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_HOSTNAME=${TS_HOSTNAME:-graphiti}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_SERVE_CONFIG=/config/serve.json
+      - TS_USERSPACE=true
+    volumes:
+      - tailscale_state:/var/lib/tailscale
+      - ./tailscale/serve.json:/config/serve.json:ro
+    depends_on: [caddy]
+    profiles: [tailscale]  # docker compose --profile tailscale up -d
+
+volumes:
+  falkordb_data:
+  mcp_logs:
+  tailscale_state:
