@@ -16,6 +16,9 @@ services:
       - ENCRYPTION_KEY=${ENCRYPTION_KEY}  # 64 hex; lo genera 1-instalar-graphiti.ps1
     volumes:
       - ./config/config.yaml:/app/mcp/config/config.yaml:ro
+      # Parche: graphiti-core fija gemini-2.5-flash-lite (retirado) como modelo small y reranker
+      - ./patches/graphiti_gemini_patch.py:/app/mcp/.venv/lib/python3.13/site-packages/graphiti_gemini_patch.py:ro
+      - ./patches/zz_graphiti_gemini_patch.pth:/app/mcp/.venv/lib/python3.13/site-packages/zz_graphiti_gemini_patch.pth:ro
       - falkordb_data:/var/lib/falkordb/data
       - mcp_logs:/var/log/graphiti
     ports:

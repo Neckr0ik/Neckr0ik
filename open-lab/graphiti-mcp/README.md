@@ -10,6 +10,9 @@ Claude (nube) ──HTTPS──> Tailscale Funnel / Cloudflare ──> contenedo
 
 - **LLM:** Gemini (`gemini-3-flash-preview`, cambiable con `LLM_MODEL`). El cliente Anthropic de graphiti-core envía
   `temperature`, que el SDK/API actual de Anthropic rechaza, y cada episodio fallaba; por eso no se usa Anthropic.
+- **Modelo small y reranker:** `gemini-3.5-flash-lite`. graphiti-core los fija en `gemini-2.5-flash-lite` (retirado por
+  Google) sin opción de cambiarlo; `patches/graphiti_gemini_patch.py` los sustituye al arrancar (variables
+  `GEMINI_SMALL_MODEL`, `GEMINI_RERANKER_MODEL`). Si cambias la imagen, revisa que la ruta `python3.13` siga igual.
 - **Embeddings y reranker:** Gemini (`gemini-embedding-001`, 768 dimensiones). Con Gemini
   se evita la descarga de ~2.3 GB del reranker local.
 - **Base de datos:** FalkorDB, dentro del mismo contenedor y con los datos en un volumen de Docker.
