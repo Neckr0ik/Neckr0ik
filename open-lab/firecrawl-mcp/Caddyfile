@@ -1,0 +1,14 @@
+# Solo responde bajo /<MCP_SECRET_PATH>/...; todo lo demás devuelve 404.
+# firecrawl-mcp rechaza (403) cualquier Host/Origin que no sea localhost, así que
+# Caddy reescribe Host y quita Origin. La ruta secreta es la que protege el acceso.
+:80 {
+	handle_path /{$MCP_SECRET_PATH}/* {
+		reverse_proxy firecrawl-mcp:3000 {
+			header_up Host localhost:3000
+			header_up -Origin
+		}
+	}
+	handle {
+		respond 404
+	}
+}

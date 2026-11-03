@@ -21,6 +21,7 @@ Repo de perfil/portafolio de GitHub de Giovanni Oliveira (Impulse Labs, "Digital
   - `llm-gateway-metering` (CLI `llm-gateway`): pasarela Anthropic API / Bedrock / Vertex con cuotas y metering;
     núcleo solo stdlib, extras `anthropic`, `bedrock`, `vertex`, `postgres`; stores SQLite/Postgres.
   - `graphiti-mcp`: infraestructura (no es paquete Python, no está en CI). Ver abajo.
+  - `firecrawl-mcp`: infraestructura, mismo patrón que `graphiti-mcp`. Ver abajo.
 
 ## Comandos (verificados en `.github/workflows/open-lab.yml` y `open-lab/README.md`)
 ```bash
@@ -54,6 +55,17 @@ CI (`open-lab tests`): push a `main` y PRs; matriz de los 5 paquetes x Python 3.
 - Arranque: `docker compose --profile tailscale up -d` (o `--profile tunnel`). Logs: `docker compose logs -f graphiti`.
 - `.env` está en `.gitignore`: nunca lo subas ni copies sus valores. La ruta secreta es la única llave del grafo.
 - Según su README, los `.ps1` no se han probado en Windows y el contenedor de Tailscale no se ha arrancado con key real.
+
+## open-lab/firecrawl-mcp (scraping autoalojado)
+- `docker-compose.yml`: `firecrawl-mcp` (imagen propia del `Dockerfile`, versión npm fijada, modo HTTP en `127.0.0.1:3010/mcp`),
+  `caddy` (ruta secreta; reescribe `Host` a localhost y quita `Origin`, porque firecrawl-mcp da 403 si no) y `tailscale`
+  (Funnel, sin perfil: siempre activo).
+- Necesita el Firecrawl self-hosted (`$HOME\firecrawl`, repo upstream sin cambios) levantado antes: el MCP usa su red externa
+  `firecrawl_backend` (`http://api:3002`). `firecrawl/` guarda el `.env` y el `docker-compose.override.yaml` que se copian ahí
+  (restart automático y puerto 3002 solo en `127.0.0.1`).
+- `windows/1-instalar-firecrawl.ps1`: idempotente; instala Firecrawl, genera `MCP_SECRET_PATH`, pide `TS_AUTHKEY` oculta y
+  muestra la URL. En PS 5.1 los comandos nativos van por `Invoke-Native` (stderr + `Stop` rompe el script).
+- `.env` en `.gitignore`. No reutilizar valores del `.env` de `graphiti-mcp`.
 
 ## Convenciones
 - Commits estilo Conventional Commits (`feat(open-lab): ...`, `fix(graphiti-mcp): ...`, `docs: ...`, `chore: ...`).

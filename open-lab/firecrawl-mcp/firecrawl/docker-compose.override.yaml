@@ -1,0 +1,21 @@
+# Override para el Firecrawl self-hosted (se copia a <firecrawl>\docker-compose.override.yaml).
+# - restart: unless-stopped -> arranca solo con Docker Desktop, salvo que lo pares a mano.
+#   foundationdb-init se queda en "no": es una tarea de una sola vez.
+# - La API no tiene autenticacion: se publica solo en 127.0.0.1 (el compose original usa 0.0.0.0,
+#   lo que la deja abierta a toda tu red local). firecrawl-mcp la alcanza por la red interna
+#   firecrawl_backend como http://api:3002.
+services:
+  playwright-service:
+    restart: unless-stopped
+  api:
+    restart: unless-stopped
+    ports: !override
+      - "127.0.0.1:${PORT:-3002}:${INTERNAL_PORT:-3002}"
+  redis:
+    restart: unless-stopped
+  rabbitmq:
+    restart: unless-stopped
+  nuq-postgres:
+    restart: unless-stopped
+  foundationdb:
+    restart: unless-stopped
