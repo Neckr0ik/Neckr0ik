@@ -8,14 +8,15 @@ claude.ai y queda disponible en todas tus sesiones de Claude Code en la nube.
 Claude (nube) ──HTTPS──> Tailscale Funnel / Cloudflare ──> contenedor tailscale / cloudflared ──> Caddy (ruta secreta) ──> Graphiti + FalkorDB
 ```
 
-- **LLM:** Anthropic (`claude-haiku-5-5`), con tu API key de console.anthropic.com (no es la suscripción Pro/Max).
-- **Embeddings y reranker:** Gemini (`gemini-embedding-001`, 768 dimensiones). Anthropic no ofrece embeddings, y con Gemini
+- **LLM:** Gemini (`gemini-3-flash-preview`, cambiable con `LLM_MODEL`). El cliente Anthropic de graphiti-core envía
+  `temperature`, que el SDK/API actual de Anthropic rechaza, y cada episodio fallaba; por eso no se usa Anthropic.
+- **Embeddings y reranker:** Gemini (`gemini-embedding-001`, 768 dimensiones). Con Gemini
   se evita la descarga de ~2.3 GB del reranker local.
 - **Base de datos:** FalkorDB, dentro del mismo contenedor y con los datos en un volumen de Docker.
 
 ## Antes de empezar
 
-1. **API keys:** Anthropic (console.anthropic.com, con un límite de gasto puesto) y Google (aistudio.google.com).
+1. **API key de Google** (aistudio.google.com). Si superas la capa gratis, activa facturación y pon un límite de gasto.
 2. **Salida pública: elige una.**
    - **Tailscale (recomendado, gratis y sin dominio).** Tailscale corre como contenedor dentro de Docker (no hace falta
      instalarlo en Windows). En https://login.tailscale.com/admin:
@@ -82,6 +83,13 @@ Consejo: usa un `group_id` distinto por proyecto (por ejemplo, el nombre del rep
 - Autologin significa que quien tenga acceso físico al PC entra en tu sesión. Úsalo en un equipo que tengas en casa.
 - `.env` está en `.gitignore`: nunca lo subas.
 
+## Diagnóstico
+`add_memory` siempre responde "queued": el episodio se procesa después, en segundo plano, y si falla se pierde. Para ver
+los errores reales:
+```powershell
+docker compose logs --since 10m graphiti 2>&1 | Select-String -NotMatch "GET /health"
+```
+
 ## Mantenimiento
 - **Ver el grafo:** http://localhost:3000 (usa `localhost`, no `127.0.0.1`). Host `localhost`, puerto `6379`, sin usuario. Grafo: `default_db`.
 - **Logs:** `docker compose logs -f graphiti`
@@ -89,7 +97,7 @@ Consejo: usa un `group_id` distinto por proyecto (por ejemplo, el nombre del rep
 - **Backup:** `docker run --rm -v graphiti-mcp_falkordb_data:/d -v ${PWD}:/b alpine tar czf /b/backup.tgz -C /d .`
 
 ## Verificado
-Probado con Docker (en Linux) usando keys de prueba: el servidor arranca con `anthropic / claude-haiku-5-5` y
+Probado con Docker (en Linux) usando keys de prueba: el servidor arranca con `gemini / gemini-3-flash-preview` y
 `gemini / gemini-embedding-001` (reranker de Gemini), el `initialize` de MCP responde 200 por la ruta secreta y sin ella
 se recibe 404. El `docker-compose.yml` con el perfil `tailscale` es válido (`docker compose config`), pero el contenedor de
 Tailscale no se ha arrancado con una key real. Los scripts `.ps1` no se han ejecutado en Windows.

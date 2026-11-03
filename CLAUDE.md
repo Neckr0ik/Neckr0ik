@@ -46,7 +46,8 @@ CI (`open-lab tests`): push a `main` y PRs; matriz de los 5 paquetes x Python 3.
 - `docker-compose.yml`: `zepai/knowledge-graph-mcp` (Graphiti + FalkorDB en el mismo contenedor), `caddy` (solo responde
   bajo `/<MCP_SECRET_PATH>/`, lo demás 404) y una salida pública por perfil: `tailscale` (Funnel, recomendado) o
   `tunnel` (Cloudflare). Puertos 8000 (MCP) y 3000 (FalkorDB Browser) solo en `127.0.0.1`.
-- `config/config.yaml`: LLM Anthropic (`claude-haiku-5-5`), embeddings/reranker Gemini (`gemini-embedding-001`, 768 dim),
+- `config/config.yaml`: LLM Gemini (`gemini-3-flash-preview`, env `LLM_PROVIDER`/`LLM_MODEL`), embeddings/reranker Gemini
+  (`gemini-embedding-001`, 768 dim). No usar Anthropic: graphiti-core le envía `temperature` y la API lo rechaza;
   base FalkorDB (`default_db`).
 - `windows/`: `1-instalar-graphiti.ps1` (crea `.env`, levanta todo, muestra la URL), `2-configurar-pc-servidor.ps1`
   (Admin: autologin, sin suspensión, tareas programadas), `healthcheck.ps1` (cada 5 min).

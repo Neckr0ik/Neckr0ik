@@ -17,14 +17,12 @@ if (-not (Test-Path $envFile)) {
     $sb = New-Object byte[] 24
     [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($sb)
     $secret = -join ($sb | ForEach-Object { $_.ToString('x2') })   # 48 hex = 192 bits, CSPRNG
-    $anth = Read-Host "Pega tu ANTHROPIC_API_KEY (console.anthropic.com)"
     $goog = Read-Host "Pega tu GOOGLE_API_KEY (aistudio.google.com)"
     $mode = Read-Host "Salida publica: escribe 'tailscale' (recomendado) o 'tunnel' (Cloudflare)"
     if ($mode -ne 'tunnel') { $mode = 'tailscale' }
     $tsk = ''; $tok = ''
     if ($mode -eq 'tailscale') { $tsk = Read-Host "Pega tu TS_AUTHKEY (login.tailscale.com -> Settings -> Keys)" }
     else { $tok = Read-Host "Pega tu CLOUDFLARE_TUNNEL_TOKEN" }
-    $content = $content -replace '(?m)^ANTHROPIC_API_KEY=.*', "ANTHROPIC_API_KEY=$anth"
     $content = $content -replace '(?m)^GOOGLE_API_KEY=.*', "GOOGLE_API_KEY=$goog"
     $content = $content -replace '(?m)^MCP_SECRET_PATH=.*', "MCP_SECRET_PATH=$secret"
     $content = $content -replace '(?m)^CLOUDFLARE_TUNNEL_TOKEN=.*', "CLOUDFLARE_TUNNEL_TOKEN=$tok"

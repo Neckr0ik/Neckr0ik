@@ -1,4 +1,6 @@
-# Graphiti MCP - Anthropic (LLM) + Gemini (embeddings y reranker) + FalkorDB
+# Graphiti MCP - Gemini (LLM, embeddings y reranker) + FalkorDB
+# Nota: el cliente Anthropic de graphiti-core envia `temperature`, que el SDK/API actual de Anthropic
+# rechaza (nov-2026), asi que el LLM por defecto es Gemini. LLM_PROVIDER=anthropic solo cuando upstream lo arregle.
 
 server:
   transport: "http"  # HTTP transport (SSE is deprecated)
@@ -6,8 +8,8 @@ server:
   port: 8000
 
 llm:
-  provider: "anthropic"  # Options: openai, azure_openai, anthropic, gemini, groq
-  model: ${MODEL_NAME:claude-haiku-5-5}
+  provider: ${LLM_PROVIDER:gemini}  # Options: openai, azure_openai, anthropic, gemini, groq
+  model: ${LLM_MODEL:gemini-3-flash-preview}
   max_tokens: 4096
 
   providers:
