@@ -171,11 +171,45 @@ if (-not $dns) {
     exit 1
 }
 $base = "https://$dns/$($envMap['MCP_SECRET_PATH'])"
-Write-Host 'Comprobando la URL publica (el primer certificado HTTPS puede tardar 1-2 min)...'
-if (Wait-Http "$base/health" 150) { Write-Host 'URL publica OK' -ForegroundColor Green }
-else {
-    Write-Host 'La URL publica todavia no responde. Revisa en login.tailscale.com/admin:' -ForegroundColor Yellow
-    Write-Host '  DNS -> MagicDNS y HTTPS Certificates activados; Access controls -> nodeAttrs con "funnel".' -ForegroundColor Yellow
+
+# El registro DNS publico de un nodo con Funnel nuevo tarda ~5-10 min en aparecer. Mientras tanto los
+# resolvers (Windows, router, ISP) guardan el "no existe" ~5 min. Por eso se pregunta directamente al
+# servidor DNS autoritativo de la tailnet y luego se prueba con curl.exe --resolve, sin pasar por esas caches.
+$zone = $dns.Substring($dns.IndexOf('.') + 1)          # taildXXXX.ts.net
+$authNs = '1.1.1.1'
+try { $authNs = (Resolve-DnsName $zone -Type SOA -DnsOnly -ErrorAction Stop | Where-Object PrimaryServer | Select-Object -First 1).PrimaryServer } catch {}
+
+Write-Host "Esperando el DNS publico de $dns (puede tardar hasta 10 min)..."
+$ip = ''
+$deadline = (Get-Date).AddMinutes(12)
+while (-not $ip -and (Get-Date) -lt $deadline) {
+    try {
+        $ip = (Resolve-DnsName $dns -Type A -Server $authNs -DnsOnly -QuickTimeout -ErrorAction Stop |
+               Where-Object IPAddress | Select-Object -First 1).IPAddress
+    } catch {}
+    if (-not $ip) { Start-Sleep 15 }
+}
+
+$publicOk = $false
+if ($ip) {
+    Write-Host "DNS OK ($ip). Comprobando HTTPS..."
+    for ($i = 0; $i -lt 20 -and -not $publicOk; $i++) {
+        $code = Invoke-Native { curl.exe -s -o NUL -w '%{http_code}' -m 20 --resolve "${dns}:443:$ip" "$base/health" 2>$null }
+        $publicOk = ($code -eq '200')
+        if (-not $publicOk) { Start-Sleep 6 }
+    }
+}
+
+if ($publicOk) {
+    Write-Host 'URL publica OK' -ForegroundColor Green
+    Write-Host '(Si tu navegador dice que no existe, es la cache DNS de tu PC/router: espera 5 min.)' -ForegroundColor DarkGray
+} elseif (-not $ip) {
+    Write-Host 'El DNS publico aun no existe tras 12 min. Revisa en login.tailscale.com/admin:' -ForegroundColor Yellow
+    Write-Host '  Access controls -> nodeAttrs con "funnel" para autogroup:member, y que la key no tenga tags.' -ForegroundColor Yellow
+    Write-Host '  Estado: docker compose exec tailscale tailscale funnel status' -ForegroundColor Yellow
+} else {
+    Write-Host "El DNS existe pero HTTPS no responde. Revisa: DNS -> HTTPS Certificates activado;" -ForegroundColor Yellow
+    Write-Host '  docker compose logs tailscale   (busca "cert" o "acme")' -ForegroundColor Yellow
 }
 
 Write-Host ''

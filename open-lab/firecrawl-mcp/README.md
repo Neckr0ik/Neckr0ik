@@ -68,5 +68,10 @@ cd $HOME\firecrawl; docker compose logs -f api   # Firecrawl
 En Windows 11 con Docker Desktop: `initialize` y `tools/list` responden por `127.0.0.1:3010` y por Caddy con la ruta
 secreta (también con `Origin: https://claude.ai`); sin la ruta secreta se recibe 404; `firecrawl_scrape` de
 `https://example.com` devuelve el markdown por la red `firecrawl_backend`; el 3002 ya no responde desde la IP de la LAN.
-El script se ejecutó en Windows PowerShell 5.1 hasta el paso de la key (Docker y Firecrawl OK). El contenedor de
-Tailscale aún no se ha arrancado con una key real.
+El script se ejecutó completo en Windows PowerShell 5.1 con una key real: por Funnel, `/health` responde 200,
+`initialize` responde (con `Origin: https://claude.ai`) y sin la ruta secreta se recibe 404.
+
+**DNS de un nodo nuevo:** el certificado HTTPS sale en ~30 s, pero el registro DNS público de Funnel tardó ~5 min en
+existir, y los resolvers guardan el "no existe" otros 5 min (TTL negativo 300 s). El script pregunta al DNS autoritativo
+de la tailnet y prueba con `curl.exe --resolve` para no depender de esas cachés. Si al principio el navegador dice que el
+dominio no existe, espera unos minutos.
